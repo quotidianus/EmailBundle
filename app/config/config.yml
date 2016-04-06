@@ -1,0 +1,126 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: sonata.yml }
+
+parameters:
+    locale: fr
+    # TODO : this should be configured in BaseEntities bundle :
+    #doctrine.orm.metadata.yml.class: Librinfo\BaseEntitiesBundle\Doctrine\ORM\Driver\SearchableYamlDriver
+
+framework:
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale:  "%locale%"
+    translator: { fallback: %locale% }
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        handler_id:  ~
+    fragments:       ~
+    http_method_override: true
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    form:
+        resources:
+            - 'SonataCoreBundle:Form:datepicker.html.twig'
+            - 'bootstrap_3_layout.html.twig'
+
+# Assetic Configuration
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller:
+        enabled:  "%kernel.debug%"
+        profiler: false
+    bundles:
+        - LibrinfoDecoratorBundle
+    filters:
+        cssrewrite: ~
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_pgsql
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        types:
+            json: Sonata\Doctrine\Types\JsonType
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+        mappings:
+            # Librinfo bundles
+            LibrinfoCRMBundle:
+                type: yml
+            LibrinfoDoctrineBundle:
+                type: yml
+            LibrinfoUserBundle:
+                type: yml
+            # vendors bundles
+            FOSUserBundle:
+                type: xml
+            SonataUserBundle: ~
+            # TODO: this should go in BaseEntitiesBundle
+            gedmo_loggable:
+                type: annotation
+                prefix: Gedmo\Loggable\Entity
+                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Loggable/Entity"
+                alias: GedmoLoggable # (optional) it will default to the name set for the mappingmapping
+                is_bundle: false
+
+        dql:
+            string_functions:
+                ilike: Librinfo\DoctrinePgsqlBundle\DoctrineExtensions\Functions\Ilike
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    spool:     { type: memory }
+
+# FosUser Configuration
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: N/A
+    user_class: Librinfo\DoctrineBundle\Entity\GenericEntity
+    group:
+        group_class: Librinfo\DoctrineBundle\Entity\GenericEntity
+        group_manager: sonata.user.orm.group_manager
+    service:
+        user_manager: sonata.user.orm.user_manager
+
+# Enable LibrinfoDocrineBundle event listeners
+librinfo_doctrine:
+    orm:
+        default:
+            naming: true
+            guidable: true
+            traceable: true
+            addressable: true
+            treeable: true
+            nameable: true
+            labelable: true
+            emailable: true
+            descriptible: true
+            searchable: true
+            loggable: true
+            sortable: true

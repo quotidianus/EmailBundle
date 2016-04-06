@@ -1,0 +1,41 @@
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        sonata.admin.block.admin_list:
+
+sonata_admin:
+    dashboard:
+        groups:
+            Customers Relationship Management:
+                label: CRM
+                items:
+                    - crm.contact
+                    - crm.organism
+                    - crm.circle
+            CRM Admin:
+                label: CRM Admin
+                items:
+                    - crm.category
+                    - crm.position_type
+                    - crm.phone_type
+            Application Management:
+                label: APP Admin
+                items:
+                    - app.user
+                    - app.group
+            Development tools:
+                label: DEV
+                roles: [ROLE_SUPER_ADMIN]
+                items:
+                    - crm.position
+                    - crm.contactphone
+                    - crm.organismphone
+                    - crm.role
+                    - crm.contactgroup
+            Email:
+                label: Email
+                roles: [ROLE_SUPER_ADMIN]
+                items:
+                    - email.email
+    security:
+        handler: librinfo.security_bundle.sonata.voter

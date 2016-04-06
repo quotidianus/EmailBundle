@@ -1,0 +1,52 @@
+parameters:
+    librinfo:
+        Librinfo\EmailBundle\Entity\Email:
+            Sonata\AdminBundle\Show\ShowMapper:
+                _copy: Sonata\AdminBundle\Form\FormMapper
+            Sonata\AdminBundle\Form\FormMapper:
+                add:
+                    form_group_general:
+                        '':
+                            field_from:
+                                type: text
+                            field_to:
+                                type: text
+                            field_subject:
+                                type: text
+                            content:
+                                type: textarea
+                                attr:
+                                    class: tinymce
+                                    data-theme: advanced
+                            textContent:
+                                type: text
+                    _options:
+                        tabsOrder: [form_group_general, form_group_specifics]
+            Sonata\AdminBundle\Datagrid\ListMapper:
+                remove: [createdAt]
+                add:
+                    field_from: ~
+                    field_to: ~
+                    field_subject: ~
+                    _options:
+                        fieldsOrder:
+                            - field_from
+                            - field_to
+                            - field_subject
+                    _export_format:
+                        csv: [ field_from, field_to, field_subject, field_cc, field_bcc, textContent, createdAt, updatedAt]
+                        xls: csv
+                        json: csv
+                        xml: csv
+            Sonata\AdminBundle\Datagrid\DatagridMapper:
+                add:
+                    field_from: ~
+                    field_to: ~
+                    field_subject: ~
+                    content: ~
+                    textContent: ~
+                    sent: ~
+                    _options:
+                        fieldsOrder:
+                            - field_to
+                            - field_subject

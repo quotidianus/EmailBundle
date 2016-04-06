@@ -1,0 +1,3 @@
+librinfo_email_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: LibrinfoEmailBundle:Default:index }

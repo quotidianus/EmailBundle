@@ -16,7 +16,7 @@ class Email
     use Searchable;
     use Loggable;
     use Traceable;
-    
+
     /**
      * @var string
      */
@@ -58,13 +58,19 @@ class Email
     private $sent;
 
     /**
+     * @var Collection
+     */
+    private $attachments;
+
+    /**
      * constructor
      */
     public function __construct() {
-        
+
         $this->sent = false;
+        $this->attachments = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
 
     /**
      * Set fieldFrom
@@ -256,5 +262,41 @@ class Email
     public function getSent()
     {
         return $this->sent;
+    }
+
+    /**
+     * Add attachment
+     *
+     * @param \Librinfo\EmailBundle\Entity\EmailAttachment $attachment
+     *
+     * @return Email
+     */
+    public function addAttachment(\Librinfo\EmailBundle\Entity\EmailAttachment $attachment)
+    {
+        $this->attachments[] = $attachment;
+
+        return $this;
+    }
+
+    /**
+     * Remove attachment
+     *
+     * @param \Librinfo\EmailBundle\Entity\EmailAttachment $attachment
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeAttachment(\Librinfo\EmailBundle\Entity\EmailAttachment $attachment)
+    {
+        return $this->attachments->removeElement($attachment);
+    }
+
+    /**
+     * Get attachments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAttachments()
+    {
+        return $this->attachments;
     }
 }

@@ -1,8 +1,15 @@
 services:
     email.email:
         class: Librinfo\EmailBundle\Admin\EmailAdminConcrete
-        arguments: [~, Librinfo\EmailBundle\Entity\Email, SonataAdminBundle:CRUD]
+        arguments: [~, Librinfo\EmailBundle\Entity\Email, LibrinfoEmailBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Email }
+#        setting template for tinyMce textarea
         calls:
             - [ setTemplate, [edit, LibrinfoEmailBundle:CRUD:email_edit.html.twig]]
+
+    email.email_attachment:
+        class: Librinfo\EmailBundle\Admin\EmailAttachmentAdminConcrete
+        arguments: [~, Librinfo\EmailBundle\Entity\EmailAttachment, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: EmailAttachment }

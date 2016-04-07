@@ -2,6 +2,7 @@ sonata_block:
     default_contexts: [cms]
     blocks:
         sonata.admin.block.admin_list:
+        sonata.admin.block.search_result:
 
 sonata_admin:
     dashboard:
@@ -32,6 +33,7 @@ sonata_admin:
                     - crm.organismphone
                     - crm.role
                     - crm.contactgroup
+                    - email.email_attachment
             Email:
                 label: Email
                 roles: [ROLE_SUPER_ADMIN]

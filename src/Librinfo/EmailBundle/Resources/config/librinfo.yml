@@ -1,5 +1,6 @@
 parameters:
     librinfo:
+######  Email ##########
         Librinfo\EmailBundle\Entity\Email:
             Sonata\AdminBundle\Show\ShowMapper:
                 _copy: Sonata\AdminBundle\Form\FormMapper
@@ -20,8 +21,23 @@ parameters:
                                     data-theme: advanced
                             textContent:
                                 type: text
+                        form_group_attachments:
+                            attachments:
+                                type: sonata_type_collection
+                                by_reference: false
+                                type_options:
+                                    required: false
+                                    delete: true
+                                    btn_delete: true
+                                required: false
+                                label: false
+                                _options:
+                                    edit: inline
+                                    inline: table
+                                    allow_delete: true
                     _options:
                         tabsOrder: [form_group_general, form_group_specifics]
+                        groupsOrder: ['', attachments]
             Sonata\AdminBundle\Datagrid\ListMapper:
                 remove: [createdAt]
                 add:
@@ -50,3 +66,24 @@ parameters:
                         fieldsOrder:
                             - field_to
                             - field_subject
+
+###### EmailAttachment  ############
+        Librinfo\EmailBundle\Entity\EmailAttachment:
+              Sonata\AdminBundle\Show\ShowMapper:
+                  _copy: Sonata\AdminBundle\Form\FormMapper
+              Sonata\AdminBundle\Form\FormMapper:
+                  add:
+                      form_group_general:
+                          '':
+                              name: ~
+                              mimeType: ~
+                              size: ~
+              Sonata\AdminBundle\Datagrid\ListMapper:
+                  add:
+                      name: ~
+                      mimeType: ~
+                      size: ~
+              Sonata\AdminBundle\Datagrid\DatagridMapper:
+                  add:
+                      name: ~
+                      mimeType: ~

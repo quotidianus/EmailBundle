@@ -47,7 +47,7 @@ class AppKernel extends Kernel
             new Librinfo\UserBundle\LibrinfoUserBundle(),
             new Librinfo\DoctrinePgsqlBundle\LibrinfoDoctrinePgsqlBundle(),
             new Librinfo\EmailBundle\LibrinfoEmailBundle(),
-            
+
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
         );
 

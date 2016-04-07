@@ -78,6 +78,9 @@ parameters:
                               name: ~
                               mimeType: ~
                               size: ~
+                              file:
+                                  type: file
+                                  required: false
               Sonata\AdminBundle\Datagrid\ListMapper:
                   add:
                       name: ~

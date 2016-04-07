@@ -1,0 +1,9 @@
+Librinfo\EmailBundle\Entity\EmailAttachment:
+    type: entity
+    manyToOne:
+        email:
+            targetEntity: Librinfo\EmailBundle\Entity\Email
+            inversedBy: attachments
+            joinColumn:
+                name: email_id
+            cascade: [ persist ]

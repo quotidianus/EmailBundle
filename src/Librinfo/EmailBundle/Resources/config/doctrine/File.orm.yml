@@ -1,0 +1,11 @@
+Librinfo\EmailBundle\Entity\File:
+    type: mappedSuperclass
+    fields:
+        name:
+            type: string
+        mimeType:
+            type: string
+            nullable: true
+        size:
+            type: float
+            nullable: true

@@ -12,6 +12,8 @@ class EmailAttachment
 {
     use BaseEntity;
 
+    private $uploadDir;
+
     /**
      * @var string
      */
@@ -46,6 +48,12 @@ class EmailAttachment
     *@var String path
     */
     private $path;
+
+
+    public function __construct(){
+
+        $this->uploadDir = __DIR__.'/../../../../web/uploads/attachments';
+    }
 
     /**
      * Set path
@@ -227,16 +235,16 @@ class EmailAttachment
         $file = $this->getFile();
 
         if (null != $file) {
-
-            $this->size = $file->getClientSize();
-            $this->name = $file->getClientOriginalName();
+dump($file->getClientOriginalName());
+            $this->size = 999;//$file->getClientSize();
+            $this->name = "test";//$file->getClientOriginalName();
             $this->mimeType = $file->getMimeType();
-            $this->path = sha1(uniqid(mt_rand(), true)).'.'.$file->guessClientExtension();
+            $this->path = $file->getClientOriginalName();
 
             // if there is an error when moving the file, an exception will
             // be automatically thrown by move(). This will properly prevent
             // the entity from being persisted to the database on error
-            $file->move(__DIR__.'/../../../../web/uploads/attachments', $this->getPath());
+            $file->move($this->uploadDir, $this->getPath());
 
             $this->file = null;
         }
@@ -244,9 +252,9 @@ class EmailAttachment
 
     public function removeUpload()
     {
-        $file = __DIR__.'/../../../../web/uploads/attachments'.'/'.$this->getPath();
-        if ($file) {
-            unlink($file);
+        $file = $this->uploadDir.'/'.$this->getPath();
+        if ($filePath) {
+            unlink($filePath);
         }
     }
 }

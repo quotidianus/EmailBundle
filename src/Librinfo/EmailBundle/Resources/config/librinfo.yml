@@ -69,24 +69,21 @@ parameters:
 
 ###### EmailAttachment  ############
         Librinfo\EmailBundle\Entity\EmailAttachment:
-              Sonata\AdminBundle\Show\ShowMapper:
-                  _copy: Sonata\AdminBundle\Form\FormMapper
-              Sonata\AdminBundle\Form\FormMapper:
-                  add:
-                      form_group_general:
-                          '':
-                              name: ~
-                              mimeType: ~
-                              size: ~
-                              file:
-                                  type: file
-                                  required: false
-              Sonata\AdminBundle\Datagrid\ListMapper:
-                  add:
-                      name: ~
-                      mimeType: ~
-                      size: ~
-              Sonata\AdminBundle\Datagrid\DatagridMapper:
-                  add:
-                      name: ~
-                      mimeType: ~
+            Sonata\AdminBundle\Show\ShowMapper:
+                _copy: Sonata\AdminBundle\Datagrid\ListMapper
+            Sonata\AdminBundle\Form\FormMapper:
+                add:
+                    form_group_general:
+                        '':
+                            file:
+                                type: file
+                                required: false
+            Sonata\AdminBundle\Datagrid\ListMapper:
+                add:
+                    name: ~
+                    mimeType: ~
+                    size: ~
+            Sonata\AdminBundle\Datagrid\DatagridMapper:
+                add:
+                    name: ~
+                    mimeType: ~

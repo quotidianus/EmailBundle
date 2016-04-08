@@ -1,5 +1,24 @@
 Librinfo\EmailBundle\Entity\EmailAttachment:
     type: entity
+    fields:
+        name:
+            type: string
+        mimeType:
+            type: string
+            nullable: true
+        size:
+            type: float
+            nullable: true
+        updated:
+            type:     datetime
+            nullable: true
+        path:
+            type:     string
+            nullable: true
+    lifecycleCallbacks:
+        prePersist:   [ lifecycleFileUpload ]
+        preUpdate:    [ lifecycleFileUpload ]
+        preRemove:    [ removeUpload ]
     manyToOne:
         email:
             targetEntity: Librinfo\EmailBundle\Entity\Email

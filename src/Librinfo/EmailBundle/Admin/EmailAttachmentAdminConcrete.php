@@ -8,7 +8,7 @@ class EmailAttachmentAdminConcrete extends EmailAttachmentAdmin
 {
     use EmbeddedAdmin;
 
-    public function prePersist($attachement)
+    public function prePersist($attachment)
     {
         $this->manageFileUpload($attachment);
     }

@@ -45,7 +45,7 @@
         "ircmaxell/password-compat": "^1.0",
         "nelmio/api-doc-bundle": "^2.11",
         "friendsofsymfony/rest-bundle": "^1.7",
-        "stfalcon/tinymce-bundle": "dev-master",
+        "stfalcon/tinymce-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

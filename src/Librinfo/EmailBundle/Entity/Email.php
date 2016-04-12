@@ -287,6 +287,7 @@ class Email
      */
     public function removeAttachment(\Librinfo\EmailBundle\Entity\EmailAttachment $attachment)
     {
+        
         return $this->attachments->removeElement($attachment);
     }
 

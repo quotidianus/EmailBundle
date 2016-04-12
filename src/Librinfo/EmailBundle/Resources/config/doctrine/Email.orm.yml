@@ -19,10 +19,10 @@ Librinfo\EmailBundle\Entity\Email:
             type:       string(255)
             nullable:   true
         content:
-            type:       string(1000)
+            type:       text
             nullable:   true
         textContent:
-            type:       string(1000)
+            type:       text
             nullable:   false
         sent:
             type:       boolean

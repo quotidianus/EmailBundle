@@ -21,6 +21,7 @@ parameters:
                                     data-theme: advanced
                             textContent:
                                 type: text
+                                required: false
                         form_group_attachments:
                             attachments:
                                 type: sonata_type_collection
@@ -44,6 +45,12 @@ parameters:
                     field_from: ~
                     field_to: ~
                     field_subject: ~
+                    _action:
+                        type: actions
+                        _options:
+                            actions:
+                                send:
+                                    template: LibrinfoEmailBundle:CRUD:list__action_send.html.twig
                     _options:
                         fieldsOrder:
                             - field_from

@@ -6,11 +6,12 @@ use Librinfo\DoctrineBundle\Entity\Traits\BaseEntity;
 use Librinfo\DoctrineBundle\Entity\Traits\Searchable;
 use Librinfo\DoctrineBundle\Entity\Traits\Loggable;
 use Librinfo\UserBundle\Entity\Traits\Traceable;
+use Librinfo\EmailBundle\Entity\Spoolable;
 
 /**
  * Email
  */
-class Email
+class Email extends Spoolable
 {
     use BaseEntity;
     use Searchable;
@@ -287,6 +288,7 @@ class Email
      */
     public function removeAttachment(\Librinfo\EmailBundle\Entity\EmailAttachment $attachment)
     {
+
         return $this->attachments->removeElement($attachment);
     }
 

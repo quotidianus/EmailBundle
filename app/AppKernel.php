@@ -49,6 +49,8 @@ class AppKernel extends Kernel
             new Librinfo\EmailBundle\LibrinfoEmailBundle(),
 
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
+
+            new TSS\AutomailerBundle\TSSAutomailerBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test')))

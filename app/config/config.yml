@@ -91,13 +91,16 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
-    encryption: tls
-
-    #spool:     { type: memory }
+    default_mailer: direct_mailer
+    mailers:
+        direct_mailer:
+            transport: "%mailer_transport%"
+            host:      "%mailer_host%"
+            username:  "%mailer_user%"
+            password:  "%mailer_password%"
+            encryption: tls
+        spool_mailer:
+            spool: { type: db}
 
 # FosUser Configuration
 fos_user:

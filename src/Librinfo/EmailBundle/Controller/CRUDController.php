@@ -18,18 +18,30 @@ class CRUDController extends SonataCRUDController
             ->setFrom($object->getFieldFrom())
             ->setTo($object->getFieldTo())
             ->setBody($object->getContent(), 'text/html')
-            ->addPart($object->getTextContent(), 'text/plain');
+            ->addPart($object->getTextContent(), 'text/plain')
         ;
 
-        foreach ($object->getAttachments() as $file) {
-            $attachment = \Swift_Attachment::newInstance()
-                ->setFilename($file->getName())
-                ->setContentType($file->getMimeType())
-                ->setBody($file)
-  ;
-            $message->attach($attachment);
+        $attachments = $object->getAttachments();
+
+        if($attachments->count() > 0){
+            foreach ($attachments as $file) {
+                $attachment = \Swift_Attachment::newInstance()
+                    ->setFilename($file->getName())
+                    ->setContentType($file->getMimeType())
+                    ->setBody($file)
+                ;
+                $message->attach($attachment);
+
+            }
         }
-        $this->get('mailer')->send($message);
+
+        $object->setMessageId($message->getId());
+
+        $this->get('swiftmailer.mailer.spool_mailer')->send($message);
+
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($object);
+        $manager->flush();
 
        $this->addFlash('sonata_flash_success', "Message ".$id." envoyé");
 

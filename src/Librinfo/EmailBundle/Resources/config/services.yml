@@ -1,4 +1,4 @@
 services:
-#    librinfo_email.example:
-#        class: Librinfo\EmailBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    swiftmailer.mailer.spool_mailer.spool.db:
+        class: Librinfo\EmailBundle\Spool\DbSpool
+        arguments: [ @doctrine.orm.entity_manager, %kernel.environment% ]

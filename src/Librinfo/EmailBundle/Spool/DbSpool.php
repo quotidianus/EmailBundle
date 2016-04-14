@@ -69,7 +69,7 @@ class DbSpool extends \Swift_ConfigurableSpool
     public function queueMessage(\Swift_Mime_Message $message)
     {
         $email = $this->repository->findOneBy(array("messageId" => $message->getId()));
-        $email->setMessage(serialize($message));
+        $email->setMessage(base64_encode(serialize($message)));
         //dump($email->getMessage());
         $email->setStatus(SpoolStatus::STATUS_READY);
         $email->setEnvironment($this->environment);
@@ -111,7 +111,7 @@ class DbSpool extends \Swift_ConfigurableSpool
             //$this->manager->persist($email);
             //$this->manager->flush();
 
-            $message = unserialize($email->getMessage());
+            $message = unserialize(base64_decode($email->getMessage()));
 
             $count += $transport->send($message, $failedRecipients);
 

@@ -2,7 +2,7 @@ Librinfo\EmailBundle\Entity\Spoolable:
     type: mappedSuperclass
     fields:
         message:
-            type:       blob
+            type:       text
             nullable:   true
         messageId:
             type:       string(255)

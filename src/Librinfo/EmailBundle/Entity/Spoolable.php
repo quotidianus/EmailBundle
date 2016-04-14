@@ -9,19 +9,19 @@ abstract class Spoolable
     /**
      * @var Swift_Mime_Message
      */
-    protected $message;
+    private $message;
     /**
      * @var String
      */
-    protected $messageId;
+    private $messageId;
     /**
      * @var String
      */
-    protected $status;
+    private $status;
     /**
      * @var String
      */
-    protected $environment;
+    private $environment;
 
     /**
      * @return string

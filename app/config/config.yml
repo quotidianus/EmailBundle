@@ -100,6 +100,11 @@ swiftmailer:
             password:  "%mailer_password%"
             encryption: tls
         spool_mailer:
+            transport: "%mailer_transport%"
+            host:      "%mailer_host%"
+            username:  "%mailer_user%"
+            password:  "%mailer_password%"
+            encryption: tls
             spool: { type: db}
 
 # FosUser Configuration

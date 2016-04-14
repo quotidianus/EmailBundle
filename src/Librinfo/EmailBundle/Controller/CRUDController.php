@@ -37,13 +37,13 @@ class CRUDController extends SonataCRUDController
 
         $object->setMessageId($message->getId());
 
-        $this->get('swiftmailer.mailer.spool_mailer')->send($message);
-
         $manager = $this->getDoctrine()->getManager();
         $manager->persist($object);
         $manager->flush();
 
-       $this->addFlash('sonata_flash_success', "Message ".$id." envoyé");
+        $this->get('swiftmailer.mailer.spool_mailer')->send($message);
+
+        $this->addFlash('sonata_flash_success', "Message ".$id." envoyé");
 
         return new RedirectResponse($this->admin->generateUrl('list', $this->admin->getFilterParameters()));
     }

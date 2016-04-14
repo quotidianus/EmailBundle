@@ -6,7 +6,7 @@ use Librinfo\DoctrineBundle\Entity\Traits\BaseEntity;
 use Librinfo\DoctrineBundle\Entity\Traits\Searchable;
 use Librinfo\DoctrineBundle\Entity\Traits\Loggable;
 use Librinfo\UserBundle\Entity\Traits\Traceable;
-use Librinfo\EmailBundle\Entity\Spoolable;
+use Librinfo\EmailBundle\Spool\SpoolStatus;
 
 /**
  * Email

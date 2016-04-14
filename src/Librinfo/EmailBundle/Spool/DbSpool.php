@@ -69,13 +69,13 @@ class DbSpool extends \Swift_ConfigurableSpool
     public function queueMessage(\Swift_Mime_Message $message)
     {
         $email = $this->repository->findOneBy(array("messageId" => $message->getId()));
-        dump($email);
         $email->setMessage(serialize($message));
+        //dump($email->getMessage());
         $email->setStatus(SpoolStatus::STATUS_READY);
         $email->setEnvironment($this->environment);
         $this->manager->persist($email);
         $this->manager->flush();
-        
+
         return true;
     }
     /**
@@ -108,8 +108,8 @@ class DbSpool extends \Swift_ConfigurableSpool
         foreach ($emails as $email) {
 
             $email->setStatus(SpoolStatus::STATUS_PROCESSING);
-            $this->manager->persist($email);
-            $this->manager->flush();
+            //$this->manager->persist($email);
+            //$this->manager->flush();
 
             $message = unserialize($email->getMessage());
 
@@ -117,9 +117,9 @@ class DbSpool extends \Swift_ConfigurableSpool
 
             $email->setStatus(SpoolStatus::STATUS_COMPLETE);
 
-            $this->manager->persist($email);
+            //$this->manager->persist($email);
+            //$this->manager->flush();
 
-            $this->manager->flush();
             if ($this->getTimeLimit() && (time() - $time) >= $this->getTimeLimit()) {
                 break;
             }

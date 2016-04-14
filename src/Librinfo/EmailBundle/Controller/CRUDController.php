@@ -6,22 +6,24 @@ use Sonata\AdminBundle\Controller\CRUDController as SonataCRUDController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+use Librinfo\EmailBundle\SwiftMailer\DecoratorPlugin\Replacements;
+
 class CRUDController extends SonataCRUDController
 {
     public function sendAction(Request $request)
     {
         $id = $request->get($this->admin->getIdParameter());
-        $object = $this->admin->getObject($id);
+        $email = $this->admin->getObject($id);
 
         $message = \Swift_Message::newInstance()
-            ->setSubject($object->getFieldSubject())
-            ->setFrom($object->getFieldFrom())
-            ->setTo($object->getFieldTo())
-            ->setBody($object->getContent(), 'text/html')
-            ->addPart($object->getTextContent(), 'text/plain')
+            ->setSubject($email->getFieldSubject())
+            ->setFrom($email->getFieldFrom())
+            ->setTo($email->getFieldTo())
+            ->setBody($email->getContent(), 'text/html')
+            ->addPart($email->getTextContent(), 'text/plain')
         ;
 
-        $attachments = $object->getAttachments();
+        $attachments = $email->getAttachments();
 
         if($attachments->count() > 0){
             foreach ($attachments as $file) {
@@ -35,13 +37,17 @@ class CRUDController extends SonataCRUDController
             }
         }
 
-        $object->setMessageId($message->getId());
+        $email->setMessageId($message->getId());
 
         $manager = $this->getDoctrine()->getManager();
-        $manager->persist($object);
+        $manager->persist($email);
         $manager->flush();
 
-        $this->get('swiftmailer.mailer.spool_mailer')->send($message);
+        $decorator = new Swift_Plugins_DecoratorPlugin(new Replacements());
+
+        $mailer = $this->get('swiftmailer.mailer.spool_mailer');
+        $mailer->registerPlugin($decorator);
+        $mailer->send($message);
 
         $this->addFlash('sonata_flash_success', "Message ".$id." envoyé");
 
@@ -72,38 +78,38 @@ class CRUDController extends SonataCRUDController
 //             );
 //         }
 //
-//         $object = $this->admin->getNewInstance();
+//         $email = $this->admin->getNewInstance();
 //
-//         $preResponse = $this->preCreate($request, $object);
+//         $preResponse = $this->preCreate($request, $email);
 //         if ($preResponse !== null) {
 //             return $preResponse;
 //         }
 //
-//         $this->admin->setSubject($object);
+//         $this->admin->setSubject($email);
 //
 //         /** @var $form \Symfony\Component\Form\Form */
 //         $form = $this->admin->getForm();
-//         $form->setData($object);
+//         $form->setData($email);
 //         $form->handleRequest($request);
 //
 //         if ($form->isSubmitted()) {
 //             //TODO: remove this check for 3.0
 //             if (method_exists($this->admin, 'preValidate')) {
-//                 $this->admin->preValidate($object);
+//                 $this->admin->preValidate($email);
 //             }
 //             $isFormValid = $form->isValid();
 //
 //             // persist if the form was valid and if in preview mode the preview was approved
 //             if ($isFormValid && (!$this->isInPreviewMode($request) || $this->isPreviewApproved($request))) {
-//                 $this->admin->checkAccess('create', $object);
+//                 $this->admin->checkAccess('create', $email);
 //
 //                 try {
-//                     $object = $this->admin->create($object);
+//                     $email = $this->admin->create($email);
 //
 //                     if ($this->isXmlHttpRequest()) {
 //                         return $this->renderJson(array(
 //                             'result'   => 'ok',
-//                             'objectId' => $this->admin->getNormalizedIdentifier($object),
+//                             'objectId' => $this->admin->getNormalizedIdentifier($email),
 //                         ), 200, array());
 //                     }
 //
@@ -111,13 +117,13 @@ class CRUDController extends SonataCRUDController
 //                         'sonata_flash_success',
 //                         $this->admin->trans(
 //                             'flash_create_success',
-//                             array('%name%' => $this->escapeHtml($this->admin->toString($object))),
+//                             array('%name%' => $this->escapeHtml($this->admin->toString($email))),
 //                             'SonataAdminBundle'
 //                         )
 //                     );
 //
 //                     // redirect to edit mode
-//                     return $this->redirectTo($object);
+//                     return $this->redirectTo($email);
 //                 } catch (ModelManagerException $e) {
 //                     $this->handleModelManagerException($e);
 //
@@ -132,7 +138,7 @@ class CRUDController extends SonataCRUDController
 //                         'sonata_flash_error',
 //                         $this->admin->trans(
 //                             'flash_create_error',
-//                             array('%name%' => $this->escapeHtml($this->admin->toString($object))),
+//                             array('%name%' => $this->escapeHtml($this->admin->toString($email))),
 //                             'SonataAdminBundle'
 //                         )
 //                     );
@@ -152,7 +158,7 @@ class CRUDController extends SonataCRUDController
 //         return $this->render($this->admin->getTemplate($templateKey), array(
 //             'action' => 'create',
 //             'form'   => $view,
-//             'object' => $object,
+//             'object' => $email,
 //         ), null);
 //     }
 }

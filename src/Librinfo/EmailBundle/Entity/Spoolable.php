@@ -2,7 +2,7 @@
 
 namespace Librinfo\EmailBundle\Entity;
 
-use Librinfo\EmailBundle\Spool\SpoolStatus;
+use Librinfo\EmailBundle\SwiftMailer\Spool\SpoolStatus;
 
 abstract class Spoolable
 {

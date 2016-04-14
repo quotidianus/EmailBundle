@@ -1,5 +1,5 @@
 <?php
-namespace Librinfo\EmailBundle\Spool;
+namespace Librinfo\EmailBundle\SwiftMailer\Spool;
 interface SpoolStatus
 {
     const STATUS_FAILED = -1;

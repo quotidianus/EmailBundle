@@ -108,8 +108,9 @@ class DbSpool extends \Swift_ConfigurableSpool
         foreach ($emails as $email) {
 
             $email->setStatus(SpoolStatus::STATUS_PROCESSING);
-            //$this->manager->persist($email);
-            //$this->manager->flush();
+
+            $this->manager->persist($email);
+            $this->manager->flush();
 
             $message = unserialize(base64_decode($email->getMessage()));
 
@@ -117,8 +118,8 @@ class DbSpool extends \Swift_ConfigurableSpool
 
             $email->setStatus(SpoolStatus::STATUS_COMPLETE);
 
-            //$this->manager->persist($email);
-            //$this->manager->flush();
+            $this->manager->persist($email);
+            $this->manager->flush();
 
             if ($this->getTimeLimit() && (time() - $time) >= $this->getTimeLimit()) {
                 break;

@@ -80,7 +80,7 @@ class CRUDController extends SonataCRUDController
             ->setBody($this->email->getContent(), 'text/html')
             ->addPart($this->email->getTextContent(), 'text/plain')
         ;
-        //$this->addAttachments($message);
+        $this->addAttachments($message);
 
         return $message;
     }
@@ -88,7 +88,7 @@ class CRUDController extends SonataCRUDController
     private function addAttachments($message)
     {
          if(count($this->attachments) > 0){
-            foreach ($this->$attachments as $file) {
+            foreach ($this->attachments as $file) {
 
                 $attachment = \Swift_Attachment::newInstance()
                     ->setFilename($file->getName())
@@ -97,7 +97,7 @@ class CRUDController extends SonataCRUDController
                 ;
                 $message->attach($attachment);
             }
-        }
+        }else{dump("attachments");}
     }
 
     private function updateEmailEntity($message)

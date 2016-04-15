@@ -36,6 +36,13 @@ parameters:
                                     edit: inline
                                     inline: table
                                     allow_delete: true
+                        form_group_test:
+                            isTest:
+                                type: checkbox
+                                required: false
+                            testAdress:
+                                type: text
+                                required: false
                     _options:
                         tabsOrder: [form_group_general, form_group_specifics]
                         groupsOrder: ['', attachments]

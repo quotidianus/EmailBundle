@@ -6,7 +6,6 @@ use Librinfo\DoctrineBundle\Entity\Traits\BaseEntity;
 use Librinfo\DoctrineBundle\Entity\Traits\Searchable;
 use Librinfo\DoctrineBundle\Entity\Traits\Loggable;
 use Librinfo\UserBundle\Entity\Traits\Traceable;
-use Librinfo\EmailBundle\SwitMailer\Spool\SpoolStatus;
 
 /**
  * Email
@@ -62,6 +61,11 @@ class Email extends Spoolable
      * @var Collection
      */
     private $attachments;
+    
+    private $isTest;
+    
+    private $testAdress;
+    
 
     /**
      * constructor
@@ -300,5 +304,25 @@ class Email extends Spoolable
     public function getAttachments()
     {
         return $this->attachments;
+    }
+    
+     public function getIsTest()
+    {
+        return $this->isTest;
+    }
+
+    public function getTestAdress()
+    {
+        return $this->testAdress;
+    }
+
+    public function setIsTest($isTest = false)
+    {
+        $this->isTest = $isTest;
+    }
+
+    public function setTestAdress($testAdress = NULL)
+    {
+        $this->testAdress = $testAdress;
     }
 }

@@ -42,9 +42,9 @@ parameters:
             Sonata\AdminBundle\Datagrid\ListMapper:
                 remove: [createdAt]
                 add:
-                    field_from: ~
                     field_to: ~
                     field_subject: ~
+                    sent: ~
                     _action:
                         type: actions
                         _options:

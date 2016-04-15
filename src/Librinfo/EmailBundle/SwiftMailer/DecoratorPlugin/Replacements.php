@@ -3,25 +3,33 @@
 namespace Librinfo\EmailBundle\SwiftMailer\DecoratorPlugin;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
+use Doctrine\ORM\EntityManager;
 
-class Replacements extends ContainerAware implements Swift_Plugins_Decorator_Replacements
+class Replacements extends ContainerAware implements \Swift_Plugins_Decorator_Replacements
 {
+    /**
+    *@var EntityManager $manager
+    **/
+    private $manager;
 
-  public function getReplacementsFor($address)
-  {
-    if (class_exists('Librinfo\CRMBundle\LibrinfoCRMBundle')){
+    public function __construct(EntityManager $manager)
+    {
+        $this->manager = $manager;
+    }
 
-        $em = $this->container->get('doctrine')->getManager();
+    public function getReplacementsFor($address)
+    {
+        if (class_exists('Librinfo\CRMBundle\LibrinfoCRMBundle')){
 
-        $contact = $em->findOneBy(array("email" => $adress));
+        $contact = $this->manager->getRepository("LibrinfoCRMBundle:Contact")->findOneBy(array("email" => $address));
 
-        if ($contact) {
-          return array(
-            '{prenom}' => $contact->getFirstName(),
-            '{nom}' => $contact->getName(),
-            '{titre}' => $contact->getTitle()
-          );
+            if ($contact) {
+              return array(
+                '{prenom}' => $contact->getFirstName(),
+                '{nom}' => $contact->getName(),
+                '{titre}' => $contact->getTitle()
+              );
+            }
         }
     }
-  }
 }

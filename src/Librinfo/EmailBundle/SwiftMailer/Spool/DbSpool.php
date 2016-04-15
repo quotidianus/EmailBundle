@@ -2,10 +2,10 @@
 
 namespace Librinfo\EmailBundle\SwiftMailer\Spool;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
 use Librinfo\EmailBundle\Entity\Email;
-use Librinfo\EmailBundle\SwitMailer\Spool\SpoolStatus;
+use Librinfo\EmailBundle\SwiftMailer\Spool\SpoolStatus;
+use Librinfo\EmailBundle\SwiftMailer\DecoratorPlugin\Replacements;
 
 /**
  * Class DbSpool
@@ -70,7 +70,6 @@ class DbSpool extends \Swift_ConfigurableSpool
     {
         $email = $this->repository->findOneBy(array("messageId" => $message->getId()));
         $email->setMessage(base64_encode(serialize($message)));
-        //dump($email->getMessage());
         $email->setStatus(SpoolStatus::STATUS_READY);
         $email->setEnvironment($this->environment);
         $this->manager->persist($email);
@@ -114,8 +113,22 @@ class DbSpool extends \Swift_ConfigurableSpool
 
             $message = unserialize(base64_decode($email->getMessage()));
 
-            $count += $transport->send($message, $failedRecipients);
+            $replacements = new Replacements($this->manager);
+            $decorator = new \Swift_Plugins_DecoratorPlugin($replacements);
+            $transport->registerPlugin($decorator);
 
+            $addresses = explode(';', $email->getFieldTo());
+            foreach ($addresses as $address)
+            {
+                $message->setTo($address);
+                try{
+                    $count += $transport->send($message, $failedRecipients);
+                }catch(\Swift_TransportException $e){
+                    $email->setStatus(SpoolStatus::STATUS_READY);
+                    $this->manager->persist($email);
+                    $this->manager->flush();
+                }
+            }
             $email->setStatus(SpoolStatus::STATUS_COMPLETE);
 
             $this->manager->persist($email);

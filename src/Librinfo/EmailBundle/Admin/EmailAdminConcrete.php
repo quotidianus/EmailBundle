@@ -25,7 +25,7 @@ class EmailAdminConcrete extends EmailAdmin
 
     public function preUpdate($email){
 
-        Parent::prePersist($email);
+        Parent::preUpdate($email);
 
         $this->setText($email);
     }
@@ -40,9 +40,9 @@ class EmailAdminConcrete extends EmailAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('field_from')
             ->add('field_to')
             ->add('field_subject')
+            ->add('sent')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),

@@ -6,54 +6,107 @@ use Sonata\AdminBundle\Controller\CRUDController as SonataCRUDController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-use Librinfo\EmailBundle\SwiftMailer\DecoratorPlugin\Replacements;
-
 class CRUDController extends SonataCRUDController
 {
+    private $mailer;
+    private $manager;
+    private $email;
+    private $attachments;
+
     public function sendAction(Request $request)
     {
+        $this->manager = $this->getDoctrine()->getManager();
         $id = $request->get($this->admin->getIdParameter());
-        $email = $this->admin->getObject($id);
+        $this->email = $this->admin->getObject($id);
+        $this->attachments = $this->email->getAttachments();
+        $addresses = explode(';', $this->email->getFieldTo());
 
-        $message = \Swift_Message::newInstance()
-            ->setSubject($email->getFieldSubject())
-            ->setFrom($email->getFieldFrom())
-            ->setTo($email->getFieldTo())
-            ->setBody($email->getContent(), 'text/html')
-            ->addPart($email->getTextContent(), 'text/plain')
-        ;
+        if(count($addresses) > 1) {
 
-        $attachments = $email->getAttachments();
-
-        if($attachments->count() > 0){
-            foreach ($attachments as $file) {
-                $attachment = \Swift_Attachment::newInstance()
-                    ->setFilename($file->getName())
-                    ->setContentType($file->getMimeType())
-                    ->setBody($file)
-                ;
-                $message->attach($attachment);
-
-            }
+            $this->newsLetterSend($addresses);
+        }else{
+            $this->directSend($this->email->getFieldTo());
         }
-
-        $email->setMessageId($message->getId());
-
-        $manager = $this->getDoctrine()->getManager();
-        $manager->persist($email);
-        $manager->flush();
-
-        $decorator = new Swift_Plugins_DecoratorPlugin(new Replacements());
-
-        $mailer = $this->get('swiftmailer.mailer.spool_mailer');
-        $mailer->registerPlugin($decorator);
-        $mailer->send($message);
 
         $this->addFlash('sonata_flash_success', "Message ".$id." envoyé");
 
         return new RedirectResponse($this->admin->generateUrl('list', $this->admin->getFilterParameters()));
     }
 
+
+
+    private function directSend($address)
+    {
+        $this->setDirectMailer();
+
+        $message = $this->setupSwiftMessage($address);
+
+        $this->updateEmailEntity($message);
+
+        $replacements = $this->container->get('swiftdecorator.replacements');
+        $decorator = new \Swift_Plugins_DecoratorPlugin($replacements);
+        $this->mailer->registerPlugin($decorator);
+
+        $this->mailer->send($message);
+    }
+
+    private function newsLetterSend($addresses)
+    {
+        $this->setSpoolMailer();
+
+        $message = $this->setupSwiftMessage($addresses);
+
+        $this->updateEmailEntity($message);
+
+        $this->mailer->send($message);
+    }
+
+    public function setDirectMailer()
+    {
+        $this->mailer = $this->get('swiftmailer.mailer.direct_mailer');
+    }
+
+    public function setSpoolMailer()
+    {
+        $this->mailer = $this->get('swiftmailer.mailer.spool_mailer');
+    }
+
+    public function setupSwiftMessage($to){
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject($this->email->getFieldSubject())
+            ->setFrom($this->email->getFieldFrom())
+            ->setTo($to)
+            ->setBody($this->email->getContent(), 'text/html')
+            ->addPart($this->email->getTextContent(), 'text/plain')
+        ;
+        //$this->addAttachments($message);
+
+        return $message;
+    }
+
+    private function addAttachments($message)
+    {
+         if(count($this->attachments) > 0){
+            foreach ($this->$attachments as $file) {
+
+                $attachment = \Swift_Attachment::newInstance()
+                    ->setFilename($file->getName())
+                    ->setContentType($file->getMimeType())
+                    ->setBody($file)
+                ;
+                $message->attach($attachment);
+            }
+        }
+    }
+
+    private function updateEmailEntity($message)
+    {
+        $this->email->setMessageId($message->getId());
+        $this->manager->persist($this->email);
+        $this->manager->flush();
+        $this->email->setSent(true);
+    }
 
 //     public function createAction()
 //     {
@@ -78,38 +131,38 @@ class CRUDController extends SonataCRUDController
 //             );
 //         }
 //
-//         $email = $this->admin->getNewInstance();
+//         $this->email = $this->admin->getNewInstance();
 //
-//         $preResponse = $this->preCreate($request, $email);
+//         $preResponse = $this->preCreate($request, $this->email);
 //         if ($preResponse !== null) {
 //             return $preResponse;
 //         }
 //
-//         $this->admin->setSubject($email);
+//         $this->admin->setSubject($this->email);
 //
 //         /** @var $form \Symfony\Component\Form\Form */
 //         $form = $this->admin->getForm();
-//         $form->setData($email);
+//         $form->setData($this->email);
 //         $form->handleRequest($request);
 //
 //         if ($form->isSubmitted()) {
 //             //TODO: remove this check for 3.0
 //             if (method_exists($this->admin, 'preValidate')) {
-//                 $this->admin->preValidate($email);
+//                 $this->admin->preValidate($this->email);
 //             }
 //             $isFormValid = $form->isValid();
 //
 //             // persist if the form was valid and if in preview mode the preview was approved
 //             if ($isFormValid && (!$this->isInPreviewMode($request) || $this->isPreviewApproved($request))) {
-//                 $this->admin->checkAccess('create', $email);
+//                 $this->admin->checkAccess('create', $this->email);
 //
 //                 try {
-//                     $email = $this->admin->create($email);
+//                     $this->email = $this->admin->create($this->email);
 //
 //                     if ($this->isXmlHttpRequest()) {
 //                         return $this->renderJson(array(
 //                             'result'   => 'ok',
-//                             'objectId' => $this->admin->getNormalizedIdentifier($email),
+//                             'objectId' => $this->admin->getNormalizedIdentifier($this->email),
 //                         ), 200, array());
 //                     }
 //
@@ -117,13 +170,13 @@ class CRUDController extends SonataCRUDController
 //                         'sonata_flash_success',
 //                         $this->admin->trans(
 //                             'flash_create_success',
-//                             array('%name%' => $this->escapeHtml($this->admin->toString($email))),
+//                             array('%name%' => $this->escapeHtml($this->admin->toString($this->email))),
 //                             'SonataAdminBundle'
 //                         )
 //                     );
 //
 //                     // redirect to edit mode
-//                     return $this->redirectTo($email);
+//                     return $this->redirectTo($this->email);
 //                 } catch (ModelManagerException $e) {
 //                     $this->handleModelManagerException($e);
 //
@@ -138,7 +191,7 @@ class CRUDController extends SonataCRUDController
 //                         'sonata_flash_error',
 //                         $this->admin->trans(
 //                             'flash_create_error',
-//                             array('%name%' => $this->escapeHtml($this->admin->toString($email))),
+//                             array('%name%' => $this->escapeHtml($this->admin->toString($this->email))),
 //                             'SonataAdminBundle'
 //                         )
 //                     );
@@ -158,7 +211,7 @@ class CRUDController extends SonataCRUDController
 //         return $this->render($this->admin->getTemplate($templateKey), array(
 //             'action' => 'create',
 //             'form'   => $view,
-//             'object' => $email,
+//             'object' => $this->email,
 //         ), null);
 //     }
 }

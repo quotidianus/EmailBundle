@@ -13,3 +13,11 @@ services:
         arguments: [~, Librinfo\EmailBundle\Entity\EmailAttachment, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: EmailAttachment }
+
+    email.email_template:
+        class: Librinfo\EmailBundle\Admin\EmailTemplateAdminConcrete
+        arguments: [~, Librinfo\EmailBundle\Entity\EmailTemplate, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: EmailTemplate }
+        calls:
+            - [ setTemplate, [edit, LibrinfoEmailBundle:CRUD:email_template_edit.html.twig]]

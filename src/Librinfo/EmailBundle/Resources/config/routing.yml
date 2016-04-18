@@ -1,3 +1,6 @@
 librinfo_email_homepage:
     path:     /hello/{name}
     defaults: { _controller: LibrinfoEmailBundle:Default:index }
+librinfo_email_getTemplate:
+    path:     librinfo/email/email/getTemplate/{templateId}
+    defaults: { _controller: LibrinfoEmailBundle:Ajax:getEmailTemplate }

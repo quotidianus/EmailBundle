@@ -10,8 +10,8 @@ namespace Librinfo\EmailBundle\Entity;
 
 use Librinfo\DoctrineBundle\Entity\SearchIndexEntity;
 
-class EmailSearchIndex extends SearchIndexEntity
+class EmailTemplateSearchIndex extends SearchIndexEntity
 {
    
-    public static $fields = ['field_to', 'field_subject', 'textContent', 'sent'];
+    public static $fields = ['name', 'content'];
 }

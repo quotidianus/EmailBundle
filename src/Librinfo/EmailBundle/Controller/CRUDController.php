@@ -5,6 +5,7 @@ namespace Librinfo\EmailBundle\Controller;
 use Sonata\AdminBundle\Controller\CRUDController as SonataCRUDController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Librinfo\EmailBundle\Entity\EmailTemplate;
 
 class CRUDController extends SonataCRUDController
 {
@@ -158,13 +159,23 @@ class CRUDController extends SonataCRUDController
 
                  try {
                      $object = $this->admin->create($object);
-
+/***************************************************************************************/
                      if($object->getIsTest()){
                          $this->manager = $this->getDoctrine()->getManager();
                          $this->email = $object;
                          $this->directSend($object->getTestAdress());
                      }
                      
+                     if($object->getIsTemplate()){
+                         $this->manager = $this->getDoctrine()->getManager();
+                         $template = new \Librinfo\EmailBundle\Entity\EmailTemplate();
+                         $template->setContent($object->getContent());
+                         $template->setName($object->getNewTemplateName());
+                         $this->manager->persist($template);
+                         $this->manager->flush();
+                     }
+/***************************************************************************************/
+
                      if ($this->isXmlHttpRequest()) {
                          return $this->renderJson(array(
                              'result'   => 'ok',
@@ -259,13 +270,22 @@ class CRUDController extends SonataCRUDController
             if ($isFormValid && (!$this->isInPreviewMode() || $this->isPreviewApproved())) {
                 try {
                     $object = $this->admin->update($object);
-
+/*************************************************************************************************/
                      if($object->getIsTest()){
                          $this->manager = $this->getDoctrine()->getManager();
                          $this->email = $object;
                          $this->directSend($object->getTestAdress());
                      }
-                    
+                     
+                     if($object->getIsTemplate()){
+                         $this->manager = $this->getDoctrine()->getManager();
+                         $template = new \Librinfo\EmailBundle\Entity\EmailTemplate();
+                         $template->setContent($object->getContent());
+                         $template->setName($object->getNewTemplateName());
+                         $this->manager->persist($template);
+                         $this->manager->flush();
+                     }
+/*******************************************************************************************/                    
                     if ($this->isXmlHttpRequest()) {
                         return $this->renderJson(array(
                             'result'     => 'ok',

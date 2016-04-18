@@ -10,10 +10,14 @@ use Html2Text\Html2Text;
 class EmailAdminConcrete extends EmailAdmin
 {
     use HandlesRelationsAdmin;
+    
+    public $supportsPreviewMode = true;
 
     protected function configureRoutes(RouteCollection $collection)
     {
-    $collection->add('send', $this->getRouterIdParameter().'/send');
+    $collection->add('send', $this->getRouterIdParameter().'/send')
+               ->add('getTemplate', $this->getRouterIdParameter().'/getTemplate')
+            ;
     }
 
     public function prePersist($email){

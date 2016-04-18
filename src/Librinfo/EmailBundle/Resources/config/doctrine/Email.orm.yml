@@ -33,3 +33,9 @@ Librinfo\EmailBundle\Entity\Email:
             mappedBy: email
             cascade: [persist, merge, remove]
             orphanRemoval:  true
+    oneToOne:
+        template:
+          targetEntity: EmailTemplate
+          joinColumn:
+            name: template_id
+            referencedColumnName: id

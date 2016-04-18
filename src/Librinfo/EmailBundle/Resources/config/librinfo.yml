@@ -14,14 +14,14 @@ parameters:
                                 type: text
                             field_subject:
                                 type: text
+                            template:
+                                attr:
+                                    class: template_select
                             content:
                                 type: textarea
                                 attr:
                                     class: tinymce
                                     data-theme: advanced
-                            textContent:
-                                type: text
-                                required: false
                         form_group_attachments:
                             attachments:
                                 type: sonata_type_collection
@@ -36,6 +36,13 @@ parameters:
                                     edit: inline
                                     inline: table
                                     allow_delete: true
+                        form_group_template:
+                            isTemplate:
+                                type: checkbox
+                                required: false
+                            newTemplateName:
+                                type: text
+                                required: false
                         form_group_test:
                             isTest:
                                 type: checkbox
@@ -101,3 +108,25 @@ parameters:
                 add:
                     name: ~
                     mimeType: ~
+########## EmailTemplate ##########
+        Librinfo\EmailBundle\Entity\EmailTemplate:
+            Sonata\AdminBundle\Show\ShowMapper:
+                _copy: Sonata\AdminBundle\Form\FormMapper
+            Sonata\AdminBundle\Form\FormMapper:
+                add:
+                    form_group_general:
+                        '':
+                            name:
+                                type: text
+                            content:
+                                type: textarea
+                                attr:
+                                    class: tinymce
+                                    data-theme: advanced
+                    _options:
+                            tabsOrder: [form_group_general, form_group_specifics]
+            Sonata\AdminBundle\Datagrid\ListMapper:
+                remove: [createdAt]
+                add:
+                    name: ~
+                    content: ~

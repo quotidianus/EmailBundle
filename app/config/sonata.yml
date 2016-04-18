@@ -34,6 +34,7 @@ sonata_admin:
                     - crm.role
                     - crm.contactgroup
                     - email.email_attachment
+                    - email.email_template
             Email:
                 label: Email
                 roles: [ROLE_SUPER_ADMIN]

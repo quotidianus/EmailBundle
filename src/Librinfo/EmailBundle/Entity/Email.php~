@@ -6,12 +6,14 @@ use Librinfo\DoctrineBundle\Entity\Traits\BaseEntity;
 use Librinfo\DoctrineBundle\Entity\Traits\Searchable;
 use Librinfo\DoctrineBundle\Entity\Traits\Loggable;
 use Librinfo\UserBundle\Entity\Traits\Traceable;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Email
  */
 class Email extends Spoolable
 {
+
     use BaseEntity;
     use Searchable;
     use Loggable;
@@ -66,16 +68,31 @@ class Email extends Spoolable
     
     private $testAdress;
     
+    private $isTemplate;
+    
+    private $newTemplateName;
+    
     private $template;
     
+    /**
+     * @var bool
+     */
+    private $tracking;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $receipts;
+    
+    
     /**
      * constructor
      */
     public function __construct() {
 
         $this->sent = false;
-        $this->attachments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->attachments = new ArrayCollection();
+        $this->receipts = new ArrayCollection();
     }
 
 
@@ -313,16 +330,16 @@ class Email extends Spoolable
         return $this->isTest;
     }
 
-    public function getTestAdress()
-    {
-        return $this->testAdress;
-    }
-
     public function setIsTest($isTest = false)
     {
         $this->isTest = $isTest;
     }
 
+    public function getTestAdress()
+    {
+        return $this->testAdress;
+    }
+    
     public function setTestAdress($testAdress = NULL)
     {
         $this->testAdress = $testAdress;
@@ -336,5 +353,85 @@ class Email extends Spoolable
     public function setTemplate($template)
     {
         $this->template = $template;
+    }
+    
+     public function getIsTemplate()
+    {
+        return $this->isTemplate;
+    }
+
+    public function setIsTemplate($isTemplate = false)
+    {
+        $this->isTemplate = $isTemplate;
+    }
+    
+    public function getNewTemplateName()
+    {
+        return $this->newTemplateName;
+    }
+
+    public function setNewTemplateName($newTemplateName)
+    {
+        $this->newTemplateName = $newTemplateName;
+    }
+    
+    /**
+     * Set tracking
+     *
+     * @param bool $tracking
+     *
+     * @return Email
+     */
+    public function setTracking($tracking)
+    {
+        $this->tracking = $tracking;
+
+        return $this;
+    }
+
+    /**
+     * Get tracking
+     *
+     * @return bool
+     */
+    public function getTracking()
+    {
+        return $this->tracking;
+    }
+
+    /**
+     * Add receipt
+     *
+     * @param \Librinfo\EmailBundle\Entity\EmailReceipt $receipt
+     *
+     * @return Email
+     */
+    public function addReceipt(\Librinfo\EmailBundle\Entity\EmailReceipt $receipt)
+    {
+        $this->receipts[] = $receipt;
+
+        return $this;
+    }
+
+    /**
+     * Remove receipt
+     *
+     * @param \Librinfo\EmailBundle\Entity\EmailReceipt $receipt
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeReceipt(\Librinfo\EmailBundle\Entity\EmailReceipt $receipt)
+    {
+        return $this->receipts->removeElement($receipt);
+    }
+
+    /**
+     * Get receipts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReceipts()
+    {
+        return $this->receipts;
     }
 }

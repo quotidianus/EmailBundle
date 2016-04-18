@@ -27,9 +27,17 @@ Librinfo\EmailBundle\Entity\Email:
         sent:
             type:       boolean
             nullable:   true
+        tracking:
+            type:       boolean
+            nullable: true
     oneToMany:
         attachments:
             targetEntity: EmailAttachment
+            mappedBy: email
+            cascade: [persist, merge, remove]
+            orphanRemoval:  true
+        receipts:
+            targetEntity: EmailReceipt
             mappedBy: email
             cascade: [persist, merge, remove]
             orphanRemoval:  true

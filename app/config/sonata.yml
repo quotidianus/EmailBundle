@@ -33,12 +33,13 @@ sonata_admin:
                     - crm.organismphone
                     - crm.role
                     - crm.contactgroup
-                    - email.email_attachment
-                    - email.email_template
             Email:
                 label: Email
                 roles: [ROLE_SUPER_ADMIN]
                 items:
                     - email.email
+                    - email.email_attachment
+                    - email.email_template
+                    - email.email_receipt
     security:
         handler: librinfo.security_bundle.sonata.voter

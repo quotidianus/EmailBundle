@@ -42,13 +42,13 @@ class CRUDController extends SonataCRUDController
 
         $message = $this->setupSwiftMessage($address);
 
-        $this->updateEmailEntity($message);
-
         $replacements = $this->container->get('swiftdecorator.replacements');
         $decorator = new \Swift_Plugins_DecoratorPlugin($replacements);
         $this->mailer->registerPlugin($decorator);
 
         $this->mailer->send($message);
+        
+        $this->updateEmailEntity($message, false);
     }
 
     private function newsLetterSend($addresses)
@@ -57,7 +57,7 @@ class CRUDController extends SonataCRUDController
 
         $message = $this->setupSwiftMessage($addresses);
 
-        $this->updateEmailEntity($message);
+        $this->updateEmailEntity($message, true);
 
         $this->mailer->send($message);
     }
@@ -74,11 +74,16 @@ class CRUDController extends SonataCRUDController
 
     public function setupSwiftMessage($to){
 
+        $content = $this->email->getContent();
+        $tracker = "";
+        
+        $content = $this->email->getTracking()? $content.$tracker : $content;
+        
         $message = \Swift_Message::newInstance()
             ->setSubject($this->email->getFieldSubject())
             ->setFrom($this->email->getFieldFrom())
             ->setTo($to)
-            ->setBody($this->email->getContent(), 'text/html')
+            ->setBody($content, 'text/html')
             ->addPart($this->email->getTextContent(), 'text/plain')
         ;
         $this->addAttachments($message);
@@ -101,12 +106,18 @@ class CRUDController extends SonataCRUDController
         }
     }
 
-    private function updateEmailEntity($message)
+    private function updateEmailEntity($message, $isNewsLetter)
     {
-        $this->email->setMessageId($message->getId());
+        if($isNewsLetter){
+            
+            $this->email->setMessageId($message->getId());
+            
+        }else if(!$this->email->getIsTest()){
+            
+            $this->email->setSent(true);
+        }
         $this->manager->persist($this->email);
-        $this->manager->flush();
-        $this->email->setSent(true);
+        $this->manager->flush();   
     }
 
      public function createAction()

@@ -6,6 +6,7 @@ use Librinfo\DoctrineBundle\Entity\Traits\BaseEntity;
 use Librinfo\DoctrineBundle\Entity\Traits\Searchable;
 use Librinfo\DoctrineBundle\Entity\Traits\Loggable;
 use Librinfo\UserBundle\Entity\Traits\Traceable;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Email
@@ -73,14 +74,25 @@ class Email extends Spoolable
     
     private $template;
     
+    /**
+     * @var bool
+     */
+    private $tracking;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $receipts;
+    
+    
     /**
      * constructor
      */
     public function __construct() {
 
         $this->sent = false;
-        $this->attachments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->attachments = new ArrayCollection();
+        $this->receipts = new ArrayCollection();
     }
 
 
@@ -361,5 +373,65 @@ class Email extends Spoolable
     public function setNewTemplateName($newTemplateName)
     {
         $this->newTemplateName = $newTemplateName;
+    }
+    
+    /**
+     * Set tracking
+     *
+     * @param bool $tracking
+     *
+     * @return Email
+     */
+    public function setTracking($tracking)
+    {
+        $this->tracking = $tracking;
+
+        return $this;
+    }
+
+    /**
+     * Get tracking
+     *
+     * @return bool
+     */
+    public function getTracking()
+    {
+        return $this->tracking;
+    }
+
+    /**
+     * Add receipt
+     *
+     * @param \Librinfo\EmailBundle\Entity\EmailReceipt $receipt
+     *
+     * @return Email
+     */
+    public function addReceipt(\Librinfo\EmailBundle\Entity\EmailReceipt $receipt)
+    {
+        $this->receipts[] = $receipt;
+
+        return $this;
+    }
+
+    /**
+     * Remove receipt
+     *
+     * @param \Librinfo\EmailBundle\Entity\EmailReceipt $receipt
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeReceipt(\Librinfo\EmailBundle\Entity\EmailReceipt $receipt)
+    {
+        return $this->receipts->removeElement($receipt);
+    }
+
+    /**
+     * Get receipts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReceipts()
+    {
+        return $this->receipts;
     }
 }

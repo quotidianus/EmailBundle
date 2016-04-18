@@ -50,6 +50,20 @@ parameters:
                             testAdress:
                                 type: text
                                 required: false
+                    form_group_tracking:
+                        '':
+                            receipts:
+                                type: sonata_type_collection
+                                by_reference: false
+                                btn_add: false
+                                type_options:
+                                    required: false
+                                required: false
+                                label: false
+                                _options:
+                                    edit: inline
+                                    inline: table
+                                    allow_delete: true
                     _options:
                         tabsOrder: [form_group_general, form_group_specifics]
                         groupsOrder: ['', attachments]

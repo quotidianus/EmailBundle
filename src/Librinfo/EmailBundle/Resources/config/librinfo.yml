@@ -65,7 +65,7 @@ parameters:
                                     inline: table
                                     allow_delete: true
                     _options:
-                        tabsOrder: [form_group_general, form_group_specifics]
+                        tabsOrder: [form_group_general, form_group_tracking, form_group_specifics]
                         groupsOrder: ['', attachments]
             Sonata\AdminBundle\Datagrid\ListMapper:
                 remove: [createdAt]

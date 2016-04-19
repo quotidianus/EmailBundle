@@ -4,3 +4,6 @@ librinfo_email_homepage:
 librinfo_email_getTemplate:
     path:     librinfo/email/email/getTemplate/{templateId}
     defaults: { _controller: LibrinfoEmailBundle:Ajax:getEmailTemplate }
+librinfo_email_trackOpens:
+    path:     librinfo/email/tracking/{emailId}/{recipient}/logo.png
+    defaults: { _controller: LibrinfoEmailBundle:Tracking:trackOpens }

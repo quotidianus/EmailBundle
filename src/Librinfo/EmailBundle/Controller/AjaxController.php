@@ -14,4 +14,5 @@ class AjaxController extends Controller
         
         return new Response($template->getContent(), 200);
     }
+    
 }

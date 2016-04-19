@@ -3,7 +3,6 @@
 namespace Librinfo\EmailBundle\SwiftMailer\Spool;
 
 use Doctrine\ORM\EntityManager;
-use Librinfo\EmailBundle\Entity\Email;
 use Librinfo\EmailBundle\SwiftMailer\Spool\SpoolStatus;
 use Librinfo\EmailBundle\SwiftMailer\DecoratorPlugin\Replacements;
 
@@ -72,8 +71,7 @@ class DbSpool extends \Swift_ConfigurableSpool
         $email->setMessage(base64_encode(serialize($message)));
         $email->setStatus(SpoolStatus::STATUS_READY);
         $email->setEnvironment($this->environment);
-        $this->manager->persist($email);
-        $this->manager->flush();
+        $this->updateEmail($email);
 
         return true;
     }
@@ -108,8 +106,7 @@ class DbSpool extends \Swift_ConfigurableSpool
 
             $email->setStatus(SpoolStatus::STATUS_PROCESSING);
 
-            $this->manager->persist($email);
-            $this->manager->flush();
+            $this->updateEmail($email);
 
             $message = unserialize(base64_decode($email->getMessage()));
 
@@ -118,26 +115,40 @@ class DbSpool extends \Swift_ConfigurableSpool
             $transport->registerPlugin($decorator);
 
             $addresses = explode(';', $email->getFieldTo());
+            
             foreach ($addresses as $address)
             {
                 $message->setTo($address);
+                
+                if ($this->email->getTracking()){
+
+                    $content = $this->getContent();
+                    $tracker = '<img src="http://localhost:8000/app_dev.php/librinfo/email/tracking/'. 
+                    $this->email->getID() . '/' . $address . '/logo.png" alt="" width="1" height="1">';
+
+                    $this->email->setContent($content.$tracker);
+                }
                 try{
                     $count += $transport->send($message, $failedRecipients);
                 }catch(\Swift_TransportException $e){
                     $email->setStatus(SpoolStatus::STATUS_READY);
-                    $this->manager->persist($email);
-                    $this->manager->flush();
+                    $this->updateEmail($email);
                 }
             }
             $email->setStatus(SpoolStatus::STATUS_COMPLETE);
 
-            $this->manager->persist($email);
-            $this->manager->flush();
+            $this->updateEmail($email);
 
             if ($this->getTimeLimit() && (time() - $time) >= $this->getTimeLimit()) {
                 break;
             }
         }
         return $count;
+    }
+    
+    public function updateEmail($email)
+    {
+            $this->manager->persist($email);
+            $this->manager->flush();
     }
 }

@@ -39,6 +39,10 @@ class TrackingController extends Controller
         
         $email = $this->manager->getRepository("LibrinfoEmailBundle:Email")->find($emailId);
        
+        if(!$email){
+            return;
+        }
+        
         $receipts = $email->getReceipts();
           
         if($receipts->count() > 0){
@@ -62,6 +66,10 @@ class TrackingController extends Controller
         
         $email = $this->manager->getRepository("LibrinfoEmailBundle:Email")->find($emailId);
        
+        if(!$email){
+            return;
+        }
+        
         $links = $email->getLinks();
           
         if($links->count() > 0){

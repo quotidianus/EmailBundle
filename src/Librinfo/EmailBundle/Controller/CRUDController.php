@@ -44,7 +44,7 @@ class CRUDController extends SonataCRUDController
         {
 
             $content = $this->email->getContent();
-            $tracker = '<img src="http:localhost:8000/app_dev.php/librinfo/email/tracking/' . 
+            $tracker = '<img src="http:localhost:8000/app_dev.php/tracking/' . 
                 $this->email->getID() . '/' . $this->email->getFieldTo() .'.png" alt="" width="1" height="1"/>';
 
             $this->email->setContent($content.$tracker);
@@ -141,7 +141,7 @@ class CRUDController extends SonataCRUDController
         foreach($links as $link){
             $content = str_replace(
               $link[0],
-              '<a '.$link[1].'href="http:localhost:8000/app_dev.php/librinfo/email/tracking/'.$this->email->getId().'/'.$address.'/'.base64_encode($link[2]).'" '.$link[3].'>'.$link[4].'</a>',
+              '<a '.$link[1].'href="http:localhost:8000/app_dev.php/tracking/'.$this->email->getId().'/'.$address.'/'.base64_encode($link[2]).'" '.$link[3].'>'.$link[4].'</a>',
               $content
             );
         }

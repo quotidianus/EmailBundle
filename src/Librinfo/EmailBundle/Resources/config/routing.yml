@@ -4,9 +4,9 @@ librinfo_email_getTemplate:
     defaults: { _controller: LibrinfoEmailBundle:Ajax:getEmailTemplate }
 #tracking of email openings
 librinfo_email_trackOpens:
-    path:     librinfo/email/tracking/{emailId}/{recipient}.png
+    path:     tracking/{emailId}/{recipient}.png
     defaults: { _controller: LibrinfoEmailBundle:Tracking:trackOpens }
 #tracking of email internal links clicks
 librinfo_email_trackLinks:
-    path:     librinfo/email/tracking/{emailId}/{recipient}/{destination}
+    path:     tracking/{emailId}/{recipient}/{destination}
     defaults: { _controller: LibrinfoEmailBundle:Tracking:trackLinks }

@@ -134,3 +134,6 @@ librinfo_doctrine:
             searchable: true
             loggable: true
             sortable: true
+            
+librinfo_email:
+    upload_path: attachments

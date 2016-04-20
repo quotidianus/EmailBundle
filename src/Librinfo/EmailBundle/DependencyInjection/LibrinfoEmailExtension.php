@@ -22,6 +22,8 @@ class LibrinfoEmailExtension extends LibrinfoCoreExtension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter( 'librinfo_email.upload_path', $config[ 'upload_path' ]);
+        
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
         $loader->load('admin.yml');

@@ -15,10 +15,6 @@ Librinfo\EmailBundle\Entity\EmailAttachment:
         path:
             type:     string
             nullable: true
-    lifecycleCallbacks:
-        prePersist:   [ lifecycleFileUpload ]
-        preUpdate:    [ lifecycleFileUpload ]
-        preRemove:    [ removeUpload ]
     manyToOne:
         email:
             targetEntity: Librinfo\EmailBundle\Entity\Email

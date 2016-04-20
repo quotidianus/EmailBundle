@@ -16,13 +16,16 @@ class EmailAdminConcrete extends EmailAdmin
     protected function configureRoutes(RouteCollection $collection)
     {
     $collection->add('send', $this->getRouterIdParameter().'/send')
-               ->add('getTemplate', $this->getRouterIdParameter().'/getTemplate')
             ;
     }
 
     public function prePersist($email){
 
         Parent::prePersist($email);
+        
+        foreach ($email->getAttachments() as $attachment) {
+            $this->getAttachmentAdmin()->prePersist($attachment);
+        }
 
         $this->setText($email);
     }
@@ -30,8 +33,21 @@ class EmailAdminConcrete extends EmailAdmin
     public function preUpdate($email){
 
         Parent::preUpdate($email);
+        
+        foreach ($email->getAttachments() as $attachment) {
+            $this->getAttachmentAdmin()->preUpdate($attachment);
+        }
 
         $this->setText($email);
+    }
+    
+        public function preRemove($email)
+    {
+        Parent::preRemove($email);
+            
+        foreach ($email->getAttachments($email) as $attachment) {
+            $this->getAttachmentAdmin()->preRemove($attachment);
+        }
     }
 
     protected function setText($email){
@@ -39,6 +55,12 @@ class EmailAdminConcrete extends EmailAdmin
         $html2T = new Html2Text($email->getContent());
         $textContent= $html2T->getText();
         $email->setTextContent($textContent);
+    }
+    
+    private function getAttachmentAdmin(){
+        return $this
+            ->getConfigurationPool()
+            ->getAdminByAdminCode('email.email_attachment');
     }
 
     protected function configureListFields(ListMapper $listMapper)

@@ -124,7 +124,7 @@ class DbSpool extends \Swift_ConfigurableSpool
 
                     $content = $this->getContent();
                     $tracker = '<img src="http://localhost:8000/app_dev.php/librinfo/email/tracking/'. 
-                    $this->email->getID() . '/' . $address . '/logo.png" alt="" width="1" height="1">';
+                    $this->email->getID() . '/' . $address . '.png" alt="" width="1" height="1">';
 
                     $this->email->setContent($content.$tracker);
                 }

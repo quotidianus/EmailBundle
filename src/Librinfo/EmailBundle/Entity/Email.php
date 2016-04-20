@@ -64,14 +64,29 @@ class Email extends Spoolable
      */
     private $attachments;
     
+    /**
+     * @var bool
+     */
     private $isTest;
     
+    /**
+     * @var string
+     */
     private $testAdress;
     
+    /**
+     * @var bool
+     */
     private $isTemplate;
     
+    /**
+     * @var string
+     */
     private $newTemplateName;
     
+    /**
+     * @var EmailTemplate
+     */
     private $template;
     
     /**
@@ -84,6 +99,11 @@ class Email extends Spoolable
      */
     private $receipts;
     
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $links;
+    
     
     /**
      * constructor
@@ -93,6 +113,7 @@ class Email extends Spoolable
         $this->sent = false;
         $this->attachments = new ArrayCollection();
         $this->receipts = new ArrayCollection();
+        $this->links = new ArrayCollection();
     }
 
 
@@ -433,5 +454,41 @@ class Email extends Spoolable
     public function getReceipts()
     {
         return $this->receipts;
+    }
+    
+    /**
+     * Add link
+     *
+     * @param \Librinfo\EmailBundle\Entity\EmailLink $link
+     *
+     * @return Email
+     */
+    public function addLink(\Librinfo\EmailBundle\Entity\EmailLink $link)
+    {
+        $this->links[] = $link;
+
+        return $this;
+    }
+
+    /**
+     * Remove link
+     *
+     * @param \Librinfo\EmailBundle\Entity\EmailLink $link
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeLink(\Librinfo\EmailBundle\Entity\EmailLink $link)
+    {
+        return $this->links->removeElement($link);
+    }
+
+    /**
+     * Get links
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLinks()
+    {
+        return $this->links;
     }
 }

@@ -1,9 +1,12 @@
-librinfo_email_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: LibrinfoEmailBundle:Default:index }
+#ajac call to insert chosen template in edit form
 librinfo_email_getTemplate:
     path:     librinfo/email/email/getTemplate/{templateId}
     defaults: { _controller: LibrinfoEmailBundle:Ajax:getEmailTemplate }
+#tracking of email openings
 librinfo_email_trackOpens:
-    path:     librinfo/email/tracking/{emailId}/{recipient}/logo.png
+    path:     librinfo/email/tracking/{emailId}/{recipient}.png
     defaults: { _controller: LibrinfoEmailBundle:Tracking:trackOpens }
+#tracking of email internal links clicks
+librinfo_email_trackLinks:
+    path:     librinfo/email/tracking/{emailId}/{recipient}/{destination}
+    defaults: { _controller: LibrinfoEmailBundle:Tracking:trackLinks }

@@ -4,7 +4,6 @@ services:
         arguments: [~, Librinfo\EmailBundle\Entity\Email, LibrinfoEmailBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Email }
-#        setting template for tinyMce textarea
         calls:
             - [ setTemplate, [edit, LibrinfoEmailBundle:CRUD:email_edit.html.twig]]
 
@@ -27,3 +26,9 @@ services:
         arguments: [~, Librinfo\EmailBundle\Entity\EmailReceipt, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: EmailReceipt }
+
+    email.email_link:
+        class: Librinfo\EmailBundle\Admin\EmailLinkAdminConcrete
+        arguments: [~, Librinfo\EmailBundle\Entity\EmailLink, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: EmailLink }

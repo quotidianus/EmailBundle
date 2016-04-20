@@ -21,7 +21,7 @@ class CRUDController extends SonataCRUDController
         $this->email = $this->admin->getObject($id);
         $this->attachments = $this->email->getAttachments();
         $addresses = explode(';', $this->email->getFieldTo());
-
+        
         if (count($addresses) > 1)
         {
 
@@ -43,11 +43,14 @@ class CRUDController extends SonataCRUDController
         if ($this->email->getTracking())
         {
 
-            $content = $this->getContent();
+            $content = $this->email->getContent();
             $tracker = '<img src="http:localhost:8000/app_dev.php/librinfo/email/tracking/' . 
-                $this->email->getID() . '/' . $this->email->getFieldTo .'/logo.png" alt="" width="1" height="1"';
+                $this->email->getID() . '/' . $this->email->getFieldTo() .'.png" alt="" width="1" height="1"/>';
 
             $this->email->setContent($content.$tracker);
+            
+            $this->processLinks($this->email->getContent(), $address);
+            //$this->processLinks($this->email->getTextContent(), $address);
         }
 
         $message = $this->setupSwiftMessage($address);
@@ -128,7 +131,25 @@ class CRUDController extends SonataCRUDController
         $this->manager->persist($this->email);
         $this->manager->flush();
     }
-
+    
+    private function processLinks($content, $address)
+    {
+        $links = array();
+   
+        preg_match_all('!<a\s(.*)href="(http.*)"(.*)>(.*)</a>!U', $content, $links, PREG_SET_ORDER);
+        
+        foreach($links as $link){
+            $content = str_replace(
+              $link[0],
+              '<a '.$link[1].'href="http:localhost:8000/app_dev.php/librinfo/email/tracking/'.$this->email->getId().'/'.$address.'/'.base64_encode($link[2]).'" '.$link[3].'>'.$link[4].'</a>',
+              $content
+            );
+        }
+        $this->email->setContent($content);
+    }
+/********************************************************************************************************************************/
+/*****************               OVERRIDED  CRUD  ACTIONS                         *********************************************/
+/********************************************************************************************************************************/    
     public function createAction()
     {
         $request = $this->getRequest();
@@ -181,7 +202,7 @@ class CRUDController extends SonataCRUDController
 
                 try {
                     $object = $this->admin->create($object);
-                    /*                     * ************************************************************************************ */
+                    /** ************************************************************************************ */
                     if ($object->getIsTest())
                     {
                         $this->manager = $this->getDoctrine()->getManager();
@@ -198,7 +219,7 @@ class CRUDController extends SonataCRUDController
                         $this->manager->persist($template);
                         $this->manager->flush();
                     }
-                    /*                     * ************************************************************************************ */
+                    /** ************************************************************************************ */
 
                     if ($this->isXmlHttpRequest())
                     {
@@ -297,7 +318,7 @@ class CRUDController extends SonataCRUDController
             {
                 try {
                     $object = $this->admin->update($object);
-                    /*                     * ********************************************************************************************** */
+                    /************************************************************************************************ */
                     if ($object->getIsTest())
                     {
                         $this->manager = $this->getDoctrine()->getManager();
@@ -314,7 +335,7 @@ class CRUDController extends SonataCRUDController
                         $this->manager->persist($template);
                         $this->manager->flush();
                     }
-                    /*                     * **************************************************************************************** */
+                    /****************************************************************************************** */
                     if ($this->isXmlHttpRequest())
                     {
                         return $this->renderJson(array(

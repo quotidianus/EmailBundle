@@ -41,5 +41,6 @@ sonata_admin:
                     - email.email_attachment
                     - email.email_template
                     - email.email_receipt
+                    - email.email_link
     security:
         handler: librinfo.security_bundle.sonata.voter

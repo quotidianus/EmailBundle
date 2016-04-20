@@ -41,6 +41,11 @@ Librinfo\EmailBundle\Entity\Email:
             mappedBy: email
             cascade: [persist, merge, remove]
             orphanRemoval:  true
+        links:
+            targetEntity: EmailLink
+            mappedBy: email
+            cascade: [persist, merge, remove]
+            orphanRemoval:  true
     oneToOne:
         template:
           targetEntity: EmailTemplate

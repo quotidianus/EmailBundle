@@ -79,7 +79,10 @@ class CRUDController extends SonataCRUDController
         if ($this->email->getTracking())
         {
             $tracker = '<img src="http:localhost:8000/app_dev.php/tracking/' . 
-                $this->email->getID() . '/' . $this->email->getFieldTo() .'.png" alt="" width="1" height="1"/>';
+                $this->email->getID() . '/' . 
+                $this->email->getFieldTo() .
+                '.png" alt="" width="1" height="1"/>'
+            ;
             
             $updatedContent = $this->processLinks($this->email->getContent(), $address).$tracker;
             $content = $updatedContent;

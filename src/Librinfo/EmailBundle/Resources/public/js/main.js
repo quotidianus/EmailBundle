@@ -10,19 +10,20 @@ function templateSelect(){
         var templateId = $(this).val();
         
         getTemplate(templateId);
-    });
-    
-//    $(".select2-search-choice-close").on("mousedown", function(){
-//       
+        
+//        $("abbr.select2-search-choice-close").click(function(){
+//     
 //        console.log("hello");
-//    });
+//        });
+    });
 }
 
 function getTemplate(templateId){
     
-    $.get("getTemplate/" + templateId, function(data){
+    $.get("http://" + window.location.host + "/librinfo/email/email/getTemplate/" + templateId, function(data){
+       
+            tinymce.activeEditor.execCommand('mceInsertContent', false, data);
+            tinymce.activeEditor.execCommand('mceEndUndoLevel', false, data);
         
-        tinymce.activeEditor.execCommand('mceInsertContent', false, data);
-        tinymce.activeEditor.execCommand('mceEndUndoLevel', false, data);
     });
 }

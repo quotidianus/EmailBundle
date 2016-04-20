@@ -371,7 +371,7 @@ class Email extends Spoolable
         return $this->template;
     }
 
-    public function setTemplate($template)
+    public function setTemplate($template = NULL)
     {
         $this->template = $template;
     }

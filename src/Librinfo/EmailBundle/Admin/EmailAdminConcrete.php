@@ -26,6 +26,8 @@ class EmailAdminConcrete extends EmailAdmin
         foreach ($email->getAttachments() as $attachment) {
             $this->getAttachmentAdmin()->prePersist($attachment);
         }
+        
+        $email->setTemplate(NULL);
 
         $this->setText($email);
     }
@@ -37,6 +39,8 @@ class EmailAdminConcrete extends EmailAdmin
         foreach ($email->getAttachments() as $attachment) {
             $this->getAttachmentAdmin()->preUpdate($attachment);
         }
+        
+         $email->setTemplate(NULL);
 
         $this->setText($email);
     }

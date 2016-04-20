@@ -26,10 +26,10 @@ parameters:
                             attachments:
                                 type: sonata_type_collection
                                 by_reference: false
-                                type_options:
-                                    required: false
-                                    delete: true
-                                    btn_delete: true
+#                                type_options:
+#                                    required: false
+#                                    delete: true
+#                                    btn_delete: true
                                 required: false
                                 label: false
                                 _options:

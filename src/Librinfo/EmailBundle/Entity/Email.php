@@ -111,6 +111,7 @@ class Email extends Spoolable
     public function __construct() {
 
         $this->sent = false;
+        $this->isTemplate = false;
         $this->attachments = new ArrayCollection();
         $this->receipts = new ArrayCollection();
         $this->links = new ArrayCollection();
@@ -351,7 +352,7 @@ class Email extends Spoolable
         return $this->isTest;
     }
 
-    public function setIsTest($isTest = false)
+    public function setIsTest($isTest)
     {
         $this->isTest = $isTest;
     }
@@ -381,7 +382,7 @@ class Email extends Spoolable
         return $this->isTemplate;
     }
 
-    public function setIsTemplate($isTemplate = false)
+    public function setIsTemplate($isTemplate)
     {
         $this->isTemplate = $isTemplate;
     }

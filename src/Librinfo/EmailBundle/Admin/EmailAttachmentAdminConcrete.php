@@ -35,7 +35,6 @@ class EmailAttachmentAdminConcrete extends EmailAttachmentAdmin
 
     protected function upload($attachment)
     {
-        dump($this->rootDir);
         $file = $attachment->getFile();
         if (null != $file)
         {

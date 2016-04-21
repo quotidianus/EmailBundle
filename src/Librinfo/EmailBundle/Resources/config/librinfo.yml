@@ -26,10 +26,10 @@ parameters:
                             attachments:
                                 type: sonata_type_collection
                                 by_reference: false
-#                                type_options:
-#                                    required: false
-#                                    delete: true
-#                                    btn_delete: true
+                                type_options:
+                                    required: false
+                                    delete: true
+                                    btn_delete: true
                                 required: false
                                 label: false
                                 _options:
@@ -47,6 +47,8 @@ parameters:
                             isTest:
                                 type: checkbox
                                 required: false
+                                attr:
+                                    class: is_test
                             testAdress:
                                 type: text
                                 required: false
@@ -54,8 +56,6 @@ parameters:
                             tracking:
                                 type: checkbox
                                 required: false
-                            receipts: ~
-                            links: ~
                     _options:
                         tabsOrder: [form_group_general, form_group_specifics]
                         groupsOrder: ['', attachments]
@@ -163,13 +163,13 @@ parameters:
                 add:
                     form_group_general:
                         '':
-                            name: ~
+                            destination: ~
                             address: ~
                             date: ~
                     _options:
                             tabsOrder: [form_group_general, form_group_specifics]
             Sonata\AdminBundle\Datagrid\ListMapper:
                 add:
-                    name: ~
+                    destination: ~
                     address: ~
                     date:

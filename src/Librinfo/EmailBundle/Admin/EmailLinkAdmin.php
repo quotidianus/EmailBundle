@@ -16,7 +16,6 @@ class EmailLinkAdmin extends CoreAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('name')
             ->add('destination')
             ->add('address')
             ->add('date')
@@ -30,7 +29,6 @@ class EmailLinkAdmin extends CoreAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('name')
             ->add('destination')
             ->add('address')
             ->add('date')
@@ -51,7 +49,6 @@ class EmailLinkAdmin extends CoreAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('name')
             ->add('destination')
             ->add('address')
             ->add('date')
@@ -65,7 +62,6 @@ class EmailLinkAdmin extends CoreAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('name')
             ->add('destination')
             ->add('address')
             ->add('date')

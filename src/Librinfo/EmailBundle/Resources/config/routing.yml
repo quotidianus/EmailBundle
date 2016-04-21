@@ -1,6 +1,6 @@
-#ajac call to insert chosen template in edit form
+#ajax call to insert chosen template in edit form
 librinfo_email_getTemplate:
-    path:     librinfo/email/email/getTemplate/{templateId}
+    path:     librinfo/email/getTemplate/{templateId}
     defaults: { _controller: LibrinfoEmailBundle:Ajax:getEmailTemplate }
 #tracking of email openings
 librinfo_email_trackOpens:

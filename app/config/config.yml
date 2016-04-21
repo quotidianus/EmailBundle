@@ -105,7 +105,7 @@ swiftmailer:
             username:  "%mailer_user%"
             password:  "%mailer_password%"
             encryption: tls
-            spool: { type: db}
+            spool: { type: db }
 
 # FosUser Configuration
 fos_user:

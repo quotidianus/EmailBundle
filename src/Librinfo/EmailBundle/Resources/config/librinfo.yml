@@ -102,9 +102,9 @@ parameters:
                 add:
                     form_group_general:
                         '':
-                            file: 
-                               type: file
-                               required: false
+                            file:
+                                type: file
+                                required: false
             Sonata\AdminBundle\Datagrid\ListMapper:
                 add:
                     name: ~

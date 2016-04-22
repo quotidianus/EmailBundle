@@ -8,8 +8,6 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Librinfo\CoreBundle\Admin\CoreAdmin;
 
-use Librinfo\EmailBundle\Admin\FileTransformer;
-
 class EmailAttachmentAdmin extends CoreAdmin
 {
     /**
@@ -61,10 +59,7 @@ class EmailAttachmentAdmin extends CoreAdmin
             ->add('createdAt')
             ->add('updatedAt')
             ->add('id')
-            ->add('file')
         ;
-        
-        $formMapper->getFormBuilder()->get('file')->addViewTransformer(new FileTransformer());
     }
 
     /**

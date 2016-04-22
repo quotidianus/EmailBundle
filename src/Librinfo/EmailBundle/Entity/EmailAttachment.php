@@ -119,7 +119,7 @@ class EmailAttachment
         return $this->email;
     }
 
-    public function setFile($file = null)
+    public function setFile(UploadedFile $file = null)
     {
         $this->file = $file;
 

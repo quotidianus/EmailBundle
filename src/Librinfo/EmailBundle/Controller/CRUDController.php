@@ -22,12 +22,12 @@ class CRUDController extends SonataCRUDController
         $this->attachments = $this->email->getAttachments();
         $addresses = explode(';', $this->email->getFieldTo());
        
-        if($this->email->getSent()){
-            
-            $this->addFlash('sonata_flash_error', "Message " . $id . " déjà envoyé");
-            
-            return new RedirectResponse($this->admin->generateUrl('list', $this->admin->getFilterParameters()));
-        }
+//        if($this->email->getSent()){
+//            
+//            $this->addFlash('sonata_flash_error', "Message " . $id . " déjà envoyé");
+//            
+//            return new RedirectResponse($this->admin->generateUrl('list', $this->admin->getFilterParameters()));
+//        }
         
         if (count($addresses) > 1)
         {

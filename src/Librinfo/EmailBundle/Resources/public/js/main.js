@@ -36,7 +36,7 @@ function checkIsTest(){
     
    checkbox.iCheck('check');
     
-    if(action === 'create'){
+    if(action === 'create' || action === 'duplicate'){
         
         checkbox.iCheck('disable');
     }

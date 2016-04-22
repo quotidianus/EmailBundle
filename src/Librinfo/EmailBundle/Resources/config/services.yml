@@ -2,8 +2,13 @@ services:
     swiftmailer.mailer.spool_mailer.spool.db:
         class: Librinfo\EmailBundle\SwiftMailer\Spool\DbSpool
         arguments: [ @doctrine.orm.entity_manager, %kernel.environment% ]
+        
     librinfo.email.replacements:
         class: Librinfo\EmailBundle\SwiftMailer\DecoratorPlugin\Replacements
         arguments: [ @doctrine.orm.entity_manager ]
+        
     librinfo.email.tracking:
         class: Librinfo\EmailBundle\SwiftMailer\Tracking
+        
+    librinfo.email.cloning:
+        class: Librinfo\EmailBundle\Cloning\EmailCloning

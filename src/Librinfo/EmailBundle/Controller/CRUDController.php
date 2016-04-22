@@ -4,7 +4,6 @@ namespace Librinfo\EmailBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as SonataCRUDController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 class CRUDController extends SonataCRUDController
 {
@@ -13,11 +12,22 @@ class CRUDController extends SonataCRUDController
     private $manager;
     private $email;
     private $attachments;
+    
+    public function duplicateAction()
+    {
+        $id = $this->getRequest()->get($this->admin->getIdParameter());
+        $email = $this->admin->getObject($id);
+        $cloner = $this->container->get('librinfo.email.cloning');
+        
+        $object = $cloner->cloneEmail($email);
+        
+        return $this->createAction($object);
+    }
 
-    public function sendAction(Request $request)
+    public function sendAction()
     {
         $this->manager = $this->getDoctrine()->getManager();
-        $id = $request->get($this->admin->getIdParameter());
+        $id = $this->getRequest()->get($this->admin->getIdParameter());
         $this->email = $this->admin->getObject($id);
         $this->attachments = $this->email->getAttachments();
         $addresses = explode(';', $this->email->getFieldTo());
@@ -138,7 +148,7 @@ class CRUDController extends SonataCRUDController
     /*     * ***************               OVERRIDED  CRUD  ACTIONS                         ******************************************** */
     /*     * ***************************************************************************************************************************** */
 
-    public function createAction()
+    public function createAction($object = NULL)
     {
         $request = $this->getRequest();
         // the key used to lookup the template
@@ -159,7 +169,7 @@ class CRUDController extends SonataCRUDController
             );
         }
 
-        $object = $this->admin->getNewInstance();
+        $object = $object ? $object : $this->admin->getNewInstance();
 
         $preResponse = $this->preCreate($request, $object);
         if ($preResponse !== null)

@@ -17,6 +17,7 @@ class EmailAdminConcrete extends EmailAdmin
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->add('send', $this->getRouterIdParameter() . '/send');
+        $collection->add('duplicate', $this->getRouterIdParameter() . '/duplicate');
     }
 
     public function prePersist($email)
@@ -87,6 +88,9 @@ class EmailAdminConcrete extends EmailAdmin
                         'delete' => array(),
                         'send' => array(
                             'template' => 'LibrinfoEmailBundle:CRUD:list__action_send.html.twig'
+                        ),
+                        'duplicate' => array(
+                            'template' => 'LibrinfoEmailBundle:CRUD:list__action_duplicate.html.twig'
                         )
                     )
                 ))

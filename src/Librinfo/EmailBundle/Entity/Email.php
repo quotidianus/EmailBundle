@@ -347,6 +347,15 @@ class Email extends Spoolable
         return $this->attachments;
     }
     
+    /**
+     * Set attachments
+     *  Used for duplicating purposes
+     */
+    public function setAttachments($attachments)
+    {
+        $this->attachments = $attachments;
+    }
+    
      public function getIsTest()
     {
         return $this->isTest;

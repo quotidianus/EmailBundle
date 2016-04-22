@@ -12,6 +12,7 @@ class CRUDController extends SonataCRUDController
     private $manager;
     private $email;
     private $attachments;
+    private $isNewsLetter;
     
     public function duplicateAction()
     {

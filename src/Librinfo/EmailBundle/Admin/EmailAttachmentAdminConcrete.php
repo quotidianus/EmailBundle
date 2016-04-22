@@ -35,19 +35,19 @@ class EmailAttachmentAdminConcrete extends EmailAttachmentAdmin
 
     protected function upload($attachment)
     {
-        $file = $attachment->getFile();
-        if (null != $file)
-        {
-            $attachment->setSize($file->getClientSize());
-            $attachment->setName($file->getClientOriginalName());
-            $attachment->setMimeType($file->getMimeType());
-            $attachment->setPath(sha1(uniqid(mt_rand(), true)) . '.' . $file->guessClientExtension());
-            // if there is an error when moving the file, an exception will
-            // be automatically thrown by move(). This will properly prevent
-            // the entity from being persisted on error
-            $file->move($this->getAbsolutePath(), $attachment->getPath());
-            $attachment->setFile(null);
-        }
+//        $file = $attachment->getFile();
+//        if (null != $file)
+//        {
+//            $attachment->setSize($file->getClientSize());
+//            $attachment->setName($file->getClientOriginalName());
+//            $attachment->setMimeType($file->getMimeType());
+//            $attachment->setPath(sha1(uniqid(mt_rand(), true)) . '.' . $file->guessClientExtension());
+//            // if there is an error when moving the file, an exception will
+//            // be automatically thrown by move(). This will properly prevent
+//            // the entity from being persisted on error
+//            $file->move($this->getAbsolutePath(), $attachment->getPath());
+//            $attachment->setFile(null);
+//        }
     }
 
     protected function remove($attachment)

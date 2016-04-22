@@ -14,11 +14,6 @@ class EmailLink
     /**
      * @var string
      */
-    private $name;
-
-    /**
-     * @var string
-     */
     private $destination;
 
     /**
@@ -36,30 +31,6 @@ class EmailLink
      */
     private $email;
 
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return EmailLink
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
 
     /**
      * Set destination
@@ -157,4 +128,3 @@ class EmailLink
         return $this->email;
     }
 }
-

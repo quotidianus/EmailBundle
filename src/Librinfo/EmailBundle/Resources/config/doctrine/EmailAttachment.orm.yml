@@ -15,6 +15,9 @@ Librinfo\EmailBundle\Entity\EmailAttachment:
         path:
             type:     string
             nullable: true
+        file:
+            type:     blob
+            nullable: true
     manyToOne:
         email:
             targetEntity: Librinfo\EmailBundle\Entity\Email

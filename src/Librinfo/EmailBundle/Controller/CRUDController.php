@@ -21,15 +21,16 @@ class CRUDController extends SonataCRUDController
         $this->email = $this->admin->getObject($id);
         $this->attachments = $this->email->getAttachments();
         $addresses = explode(';', $this->email->getFieldTo());
-       
+        $this->isNewsLetter = count($addresses) > 1;
+
 //        if($this->email->getSent()){
 //            
 //            $this->addFlash('sonata_flash_error', "Message " . $id . " déjà envoyé");
 //            
 //            return new RedirectResponse($this->admin->generateUrl('list', $this->admin->getFilterParameters()));
 //        }
-        
-        if (count($addresses) > 1)
+
+        if ($this->isNewsLetter)
         {
             $this->newsLetterSend($addresses);
         } else
@@ -48,7 +49,7 @@ class CRUDController extends SonataCRUDController
 
         $message = $this->setupSwiftMessage($address);
 
-        $replacements = $this->container->get('swiftdecorator.replacements');
+        $replacements = $this->container->get('librinfo.email.replacements');
         $decorator = new \Swift_Plugins_DecoratorPlugin($replacements);
         $this->mailer->registerPlugin($decorator);
 
@@ -81,19 +82,15 @@ class CRUDController extends SonataCRUDController
     public function setupSwiftMessage($to)
     {
         $content = $this->email->getContent();
-
-        if ($this->email->getTracking())
+        
+        if (!$this->isNewsLetter && $this->email->getTracking())
         {
-            $tracker = '<img src="http:localhost:8000/app_dev.php/tracking/' .
-                    $this->email->getID() . '/' .
-                    $this->email->getFieldTo() .
-                    '.png" alt="" width="1" height="1"/>'
-            ;
+            
+            $tracker = $this->container->get('librinfo.email.tracking');
 
-            $updatedContent = $this->processLinks($this->email->getContent(), $address) . $tracker;
-            $content = $updatedContent;
+            $content = $tracker->addTracking($content, $to, $this->email->getId());
         }
-
+        
         $message = \Swift_Message::newInstance()
                 ->setSubject($this->email->getFieldSubject())
                 ->setFrom($this->email->getFieldFrom())
@@ -101,6 +98,7 @@ class CRUDController extends SonataCRUDController
                 ->setBody($content, 'text/html')
                 ->addPart($this->email->getTextContent(), 'text/plain')
         ;
+        
         $this->addAttachments($message);
 
         return $message;
@@ -134,23 +132,6 @@ class CRUDController extends SonataCRUDController
         }
         $this->manager->persist($this->email);
         $this->manager->flush();
-    }
-
-    private function processLinks($content, $address)
-    {
-        $links = array();
-
-        preg_match_all('!<a\s(.*)href="(http.*)"(.*)>(.*)</a>!U', $content, $links, PREG_SET_ORDER)
-        ;
-
-        foreach ($links as $link)
-        {
-            $content = str_replace(
-                    $link[0], '<a ' . $link[1] . 'href="http:localhost:8000/app_dev.php/tracking/'
-                    . $this->email->getId() . '/' . $address . '/' . base64_encode($link[2]) . '" ' . $link[3] . '>' . $link[4] . '</a>', $content
-            );
-        }
-        return $content;
     }
 
     /*     * ***************************************************************************************************************************** */

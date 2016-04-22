@@ -5,6 +5,7 @@ namespace Librinfo\EmailBundle\SwiftMailer\Spool;
 use Doctrine\ORM\EntityManager;
 use Librinfo\EmailBundle\SwiftMailer\Spool\SpoolStatus;
 use Librinfo\EmailBundle\SwiftMailer\DecoratorPlugin\Replacements;
+use Librinfo\EmailBundle\SwiftMailer\Tracking;
 
 /**
  * Class DbSpool
@@ -26,29 +27,36 @@ class DbSpool extends \Swift_ConfigurableSpool
      * @var EntityRepository
      */
     private $repository;
+    
+    private $pauseTime;
 
     /**
      * @param EntityManager $manager
      * @param string $environment
      */
-    public function __construct(EntityManager  $manager, $environment)
+    public function __construct(EntityManager $manager, $environment)
     {
         $this->manager = $manager;
         $this->environment = $environment;
         $this->repository = $this->manager->getRepository('LibrinfoEmailBundle:Email');
     }
+
     /**
      * Starts this Spool mechanism.
      */
     public function start()
     {
+        
     }
+
     /**
      * Stops this Spool mechanism.
      */
     public function stop()
     {
+        
     }
+
     /**
      * Tests if this Spool mechanism has started.
      *
@@ -58,6 +66,7 @@ class DbSpool extends \Swift_ConfigurableSpool
     {
         return true;
     }
+
     /**
      * Queues a message.
      *
@@ -75,6 +84,7 @@ class DbSpool extends \Swift_ConfigurableSpool
 
         return true;
     }
+
     /**
      * Sends messages using the given transport instance.
      *
@@ -91,10 +101,11 @@ class DbSpool extends \Swift_ConfigurableSpool
         }
 
         $emails = $this->repository->findBy(
-            array("status" => SpoolStatus::STATUS_READY, "environment" => $this->environment), null
+                array("status" => SpoolStatus::STATUS_READY, "environment" => $this->environment), null
         );
 
-        if (!count($emails)) {
+        if (!count($emails))
+        {
             return 0;
         }
 
@@ -102,8 +113,8 @@ class DbSpool extends \Swift_ConfigurableSpool
         $count = 0;
         $time = time();
 
-        foreach ($emails as $email) {
-
+        foreach ($emails as $email)
+        {
             $email->setStatus(SpoolStatus::STATUS_PROCESSING);
 
             $this->updateEmail($email);
@@ -119,36 +130,47 @@ class DbSpool extends \Swift_ConfigurableSpool
             foreach ($addresses as $address)
             {
                 $message->setTo($address);
-                
-                if ($this->email->getTracking()){
 
-                    $content = $this->getContent();
-                    $tracker = '<img src="http://localhost:8000/app_dev.php/librinfo/email/tracking/'. 
-                    $this->email->getID() . '/' . $address . '.png" alt="" width="1" height="1">';
+                if ($email->getTracking())
+                {
+                    $tracker = new Tracking();
 
-                    $this->email->setContent($content.$tracker);
+                    $content = $tracker->addTracking($email->getContent(), $address, $email->getId());
+                    
+                    $message->setBody($content);
                 }
-                try{
+                
+                try 
+                {
                     $count += $transport->send($message, $failedRecipients);
-                }catch(\Swift_TransportException $e){
+                    sleep($this->pauseTime);
+                } catch (\Swift_TransportException $e) {
                     $email->setStatus(SpoolStatus::STATUS_READY);
                     $this->updateEmail($email);
                 }
+                dump("reprise");
             }
             $email->setStatus(SpoolStatus::STATUS_COMPLETE);
 
             $this->updateEmail($email);
 
-            if ($this->getTimeLimit() && (time() - $time) >= $this->getTimeLimit()) {
+            if ($this->getTimeLimit() && (time() - $time) >= $this->getTimeLimit())
+            {
                 break;
             }
         }
         return $count;
     }
-    
+
     public function updateEmail($email)
     {
-            $this->manager->persist($email);
-            $this->manager->flush();
+        $this->manager->persist($email);
+        $this->manager->flush();
     }
+    
+    public function setPauseTime($pauseTime){
+        
+        $this->pauseTime = $pauseTime;
+    }
+
 }

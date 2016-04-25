@@ -45,8 +45,8 @@ class EmailAttachmentAdminConcrete extends EmailAttachmentAdmin
             // if there is an error when moving the file, an exception will
             // be automatically thrown by move(). This will properly prevent
             // the entity from being persisted on error
-            $file->move($this->getAbsolutePath(), $attachment->getPath());
-            $attachment->setFile(null);
+            //$file->move($this->getAbsolutePath(), $attachment->getPath());
+            $attachment->setFile($file);
         }
     }
 

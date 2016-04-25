@@ -10,3 +10,6 @@ librinfo_email_trackOpens:
 librinfo_email_trackLinks:
     path:     tracking/{emailId}/{recipient}/{destination}
     defaults: { _controller: LibrinfoEmailBundle:Tracking:trackLinks }
+librinfo_email_tracktest:
+    path:     tracking/test
+    defaults: { _controller: LibrinfoEmailBundle:Tracking:test }

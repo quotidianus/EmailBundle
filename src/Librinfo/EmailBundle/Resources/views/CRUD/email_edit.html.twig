@@ -3,7 +3,7 @@
 
 {% block form %}
     {{ parent() }}
-    {#init tinyMce in content textarea of the email create/edit form #}
+    {# init tinyMce in content textarea of the email create/edit form #}
     {{ tinymce_init() }}
     <script type="text/javascript" src="{{ asset('bundles/librinfoemail/js/main.js') }}"></script>
 {% endblock %}
@@ -16,8 +16,8 @@
     {% endif %}
 {% endblock %}
 
-{% block field %}
-    {{ parent() }}
-    dfmlkjhsdkfmlsmhk
+{% block sonata_post_fieldsets %}
+    
 {% endblock %}
+
 

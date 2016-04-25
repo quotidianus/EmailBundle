@@ -1,9 +1,23 @@
-{#view to init tinyMce in content textarea of the email create/edit form#}
 
 {% extends 'SonataAdminBundle:CRUD:base_edit.html.twig' %}
 
-    {% block form %}
-        {{ parent() }}
-        {{ tinymce_init() }}
-        <script type="text/javascript" src="{{ asset('bundles/librinfoemail/js/main.js') }}"></script>
-    {% endblock %}
+{% block form %}
+    {{ parent() }}
+    {#init tinyMce in content textarea of the email create/edit form #}
+    {{ tinymce_init() }}
+    <script type="text/javascript" src="{{ asset('bundles/librinfoemail/js/main.js') }}"></script>
+{% endblock %}
+
+{# add the send button to update form #}
+{% block sonata_form_actions %}
+    {{ parent() }}
+    {% if admin.id(object) is not null %}
+        <a class="btn btn-info" href="{{ admin.generateObjectUrl('send', object) }}"><i class="fa fa-paper-plane"></i> Send</a>
+    {% endif %}
+{% endblock %}
+
+{% block field %}
+    {{ parent() }}
+    dfmlkjhsdkfmlsmhk
+{% endblock %}
+

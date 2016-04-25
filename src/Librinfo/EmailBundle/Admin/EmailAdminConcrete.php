@@ -12,8 +12,6 @@ class EmailAdminConcrete extends EmailAdmin
 
     use HandlesRelationsAdmin;
 
-    public $supportsPreviewMode = true;
-
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->add('send', $this->getRouterIdParameter() . '/send');

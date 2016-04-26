@@ -12,6 +12,7 @@ class CRUDController extends SonataCRUDController
     private $manager;
     private $email;
     private $attachments;
+    private $isNewsLetter;
     
     public function duplicateAction()
     {
@@ -124,7 +125,8 @@ class CRUDController extends SonataCRUDController
                 $attachment = \Swift_Attachment::newInstance()
                         ->setFilename($file->getName())
                         ->setContentType($file->getMimeType())
-                        ->setBody($file)
+                        ->setBody($file->getFile())
+                        
                 ;
                 $message->attach($attachment);
             }

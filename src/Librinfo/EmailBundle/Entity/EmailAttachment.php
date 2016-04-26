@@ -10,6 +10,7 @@ use Librinfo\DoctrineBundle\Entity\Traits\BaseEntity;
  */
 class EmailAttachment
 {
+
     use BaseEntity;
 
     /**
@@ -33,18 +34,13 @@ class EmailAttachment
     private $email;
 
     /**
-    *@var UploadedFile file
-    */
+     * @var UploadedFile file
+     */
     private $file;
 
     /**
-    *@var DateTime updated
-    */
-    private $updated;
-
-    /**
-    *@var String path
-    */
+     * @var String path
+     */
     private $path;
 
     /**
@@ -74,30 +70,6 @@ class EmailAttachment
     /**
      * Set email
      *
-     * @param DateTime updated
-     *
-     * @return updated
-     */
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated
-     *
-     * @return DateTime updated
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-
-    /**
-     * Set email
-     *
      * @param \Librinfo\EmailBundle\Entity\Email $email
      *
      * @return EmailAttachment
@@ -119,16 +91,22 @@ class EmailAttachment
         return $this->email;
     }
 
-    public function setFile($file = null)
+    public function setFile(UploadedFile $file = null)
     {
-        $this->file = $file;
+        if ($file != null)
+        {
+            $this->file = base64_encode(file_get_contents($file));
 
+            $this->name = $file->getClientOriginalName();
+            $this->size = $file->getClientSize();
+            $this->mimeType = $file->getClientMimeType();
+        }
         return $this;
     }
 
     public function getFile()
     {
-        return $this->file;
+        return base64_decode($this->file);
     }
 
     /**
@@ -202,4 +180,5 @@ class EmailAttachment
     {
         return $this->size;
     }
+
 }

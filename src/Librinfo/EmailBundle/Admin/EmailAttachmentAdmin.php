@@ -19,8 +19,7 @@ class EmailAttachmentAdmin extends CoreAdmin
             ->add('name')
             ->add('mimeType')
             ->add('size')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('file')
             ->add('id')
         ;
     }
@@ -34,8 +33,7 @@ class EmailAttachmentAdmin extends CoreAdmin
             ->add('name')
             ->add('mimeType')
             ->add('size')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('file')
             ->add('id')
             ->add('_action', 'actions', array(
                 'actions' => array(
@@ -56,8 +54,7 @@ class EmailAttachmentAdmin extends CoreAdmin
             ->add('name')
             ->add('mimeType')
             ->add('size')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('file')
             ->add('id')
         ;
     }
@@ -71,8 +68,7 @@ class EmailAttachmentAdmin extends CoreAdmin
             ->add('name')
             ->add('mimeType')
             ->add('size')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('file')
             ->add('id')
         ;
     }

@@ -23,11 +23,6 @@ class EmailAdminConcrete extends EmailAdmin
 
         parent::prePersist($email);
 
-        foreach ($email->getAttachments() as $attachment)
-        {
-            $this->getAttachmentAdmin()->prePersist($attachment);
-        }
-
         $email->setTemplate(NULL);
 
         $this->setText($email);
@@ -38,24 +33,9 @@ class EmailAdminConcrete extends EmailAdmin
 
         parent::preUpdate($email);
 
-        foreach ($email->getAttachments() as $attachment)
-        {
-            $this->getAttachmentAdmin()->preUpdate($attachment);
-        }
-
         $email->setTemplate(NULL);
 
         $this->setText($email);
-    }
-
-    public function preRemove($email)
-    {
-        parent::preRemove($email);
-
-        foreach ($email->getAttachments($email) as $attachment)
-        {
-            $this->getAttachmentAdmin()->preRemove($attachment);
-        }
     }
 
     protected function setText($email)
@@ -64,13 +44,6 @@ class EmailAdminConcrete extends EmailAdmin
         $html2T = new Html2Text($email->getContent());
         $textContent = $html2T->getText();
         $email->setTextContent($textContent);
-    }
-
-    private function getAttachmentAdmin()
-    {
-        return $this
-                        ->getConfigurationPool()
-                        ->getAdminByAdminCode('email.email_attachment');
     }
 
     protected function configureListFields(ListMapper $listMapper)

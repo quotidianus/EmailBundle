@@ -12,8 +12,6 @@ services:
         arguments: [~, Librinfo\EmailBundle\Entity\EmailAttachment, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: EmailAttachment }
-        calls:
-            - [ setContainer, [ @service_container ] ]
             
     email.email_template:
         class: Librinfo\EmailBundle\Admin\EmailTemplateAdminConcrete

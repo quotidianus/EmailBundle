@@ -3,20 +3,15 @@ Librinfo\EmailBundle\Entity\EmailAttachment:
     fields:
         name:
             type: string
+            nullable: true
         mimeType:
             type: string
             nullable: true
         size:
             type: float
             nullable: true
-        updated:
-            type:     datetime
-            nullable: true
-        path:
-            type:     string
-            nullable: true
         file:
-            type: blob
+            type: text
             nullable: true
     manyToOne:
         email:

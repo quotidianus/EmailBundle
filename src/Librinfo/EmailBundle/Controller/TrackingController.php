@@ -18,10 +18,7 @@ class TrackingController extends Controller
         $e = $this->getDoctrine()->getManager()->getRepository('LibrinfoEmailBundle:EmailAttachment')->findAll();
         
         dump($e);
-         header("Content-Type: ". $e[27]->getMimeType());
-                 header("Content-Length: ". $e[27]->getSize());
-                 header("Content-Disposition: attachment; filename=". $e[27]->getName());
-                 readFile(base64_decode($e[27]->getFile));
+        file_put_contents('zeiu.png', $e[28]->getFile());
         return new Response("ok", 200);
     }
     

@@ -24,18 +24,10 @@ parameters:
                                     data-theme: advanced
                         form_group_attachments:
                             attachments:
-                                type: sonata_type_collection
-                                by_reference: false
-                                type_options:
-                                    required: false
-                                    delete: true
-                                    btn_delete: true
+                                type: dropzone
                                 required: false
-                                label: false
-                                _options:
-                                    edit: inline
-                                    inline: table
-                                    allow_delete: true
+                                attr:
+                                    class: dropzone
                         form_group_template:
                             isTemplate:
                                 type: checkbox

@@ -5,6 +5,8 @@
     {{ parent() }}
     {# init tinyMce in content textarea of the email create/edit form #}
     {{ tinymce_init() }}
+    <link href="{{ asset('bundles/librinfoemail/css/dropzone.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('bundles/librinfoemail/css/main.css') }}" type="text/css" rel="stylesheet" />
     <script type="text/javascript" src="{{ asset('bundles/librinfoemail/js/dropzone.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/librinfoemail/js/main.js') }}"></script>
 {% endblock %}

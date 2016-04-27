@@ -16,7 +16,7 @@ class AjaxController extends Controller
         return new Response($template->getContent(), 200);
     }
 
-    public function upload()
+    public function uploadAction()
     {
         return new Response("Ok", 200);
     }

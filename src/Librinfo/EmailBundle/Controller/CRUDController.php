@@ -18,6 +18,7 @@ class CRUDController extends SonataCRUDController
     {
         $id = $this->getRequest()->get($this->admin->getIdParameter());
         $email = $this->admin->getObject($id);
+        
         $cloner = $this->container->get('librinfo.email.cloning');
         
         $object = $cloner->cloneEmail($email);
@@ -150,11 +151,14 @@ class CRUDController extends SonataCRUDController
     /*     * ***************               OVERRIDED  CRUD  ACTIONS                         ******************************************** */
     /*     * ***************************************************************************************************************************** */
 
-    public function createAction($object = NULL)
+    public function createAction($object = Null)
     {
         $request = $this->getRequest();
+        $this->manager = $this->getDoctrine()->getManager();
         // the key used to lookup the template
         $templateKey = 'edit';
+        
+        $tempId = $request->get('temp_id');
 
         $this->admin->checkAccess('create');
 
@@ -173,6 +177,8 @@ class CRUDController extends SonataCRUDController
 
         $object = $object ? $object : $this->admin->getNewInstance();
 
+        $this->handleAttachments($object, $tempId);
+        
         $preResponse = $this->preCreate($request, $object);
         if ($preResponse !== null)
         {
@@ -205,14 +211,12 @@ class CRUDController extends SonataCRUDController
                     /**                     * *********************************************************************************** */
                     if ($object->getIsTest())
                     {
-                        $this->manager = $this->getDoctrine()->getManager();
                         $this->email = $object;
                         $this->directSend($object->getTestAdress());
                     }
 
                     if ($object->getIsTemplate())
                     {
-                        $this->manager = $this->getDoctrine()->getManager();
                         $template = new \Librinfo\EmailBundle\Entity\EmailTemplate();
                         $template->setContent($object->getContent());
                         $template->setName($object->getNewTemplateName());
@@ -277,12 +281,16 @@ class CRUDController extends SonataCRUDController
     public function editAction($id = null)
     {
         $request = $this->getRequest();
+        $tempId = $request->get('temp_id');
+        $this->manager = $this->getDoctrine()->getManager();
         // the key used to lookup the template
         $templateKey = 'edit';
 
         $id = $request->get($this->admin->getIdParameter());
         $object = $this->admin->getObject($id);
 
+        $this->handleAttachments($object, $tempId);
+        
         if (!$object)
         {
             throw $this->createNotFoundException(sprintf('unable to find the object with id : %s', $id));
@@ -320,14 +328,12 @@ class CRUDController extends SonataCRUDController
                     /*                     * ********************************************************************************************** */
                     if ($object->getIsTest())
                     {
-                        $this->manager = $this->getDoctrine()->getManager();
                         $this->email = $object;
                         $this->directSend($object->getTestAdress());
                     }
 
                     if ($object->getIsTemplate())
                     {
-                        $this->manager = $this->getDoctrine()->getManager();
                         $template = new \Librinfo\EmailBundle\Entity\EmailTemplate();
                         $template->setContent($object->getContent());
                         $template->setName($object->getNewTemplateName());
@@ -394,6 +400,18 @@ class CRUDController extends SonataCRUDController
                     'form' => $view,
                     'object' => $object,
                         ), null);
+    }
+    
+    private function handleAttachments($object, $tempId)
+    {
+        $repo = $this->manager->getRepository("LibrinfoEmailBundle:EmailAttachment");
+        $attachments = $repo->findBy(array("tempId" => $tempId));
+        
+        foreach ($attachments as $attachment)
+        {
+            $attachment->setEmail($object);
+            $this->manager->persist($attachment);
+        }
     }
 
 }

@@ -34,7 +34,7 @@ Librinfo\EmailBundle\Entity\Email:
         attachments:
             targetEntity: EmailAttachment
             mappedBy: email
-            cascade: [persist, merge, remove]
+            cascade: [persist, remove]
             orphanRemoval:  true
         receipts:
             targetEntity: EmailReceipt

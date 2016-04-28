@@ -97,9 +97,9 @@ class EmailAttachment
         {
             $this->file = base64_encode(file_get_contents($file));
 
-            $this->name = $file->getClientOriginalName();
-            $this->size = $file->getClientSize();
-            $this->mimeType = $file->getClientMimeType();
+//            $this->name = $file->getClientOriginalName();
+//            $this->size = $file->getClientSize();
+//            $this->mimeType = $file->getClientMimeType();
         }
         return $this;
     }
@@ -181,4 +181,33 @@ class EmailAttachment
         return $this->size;
     }
 
+    /**
+     * @var string
+     */
+    private $tempId;
+
+
+    /**
+     * Set tempId
+     *
+     * @param string $tempId
+     *
+     * @return EmailAttachment
+     */
+    public function setTempId($tempId)
+    {
+        $this->tempId = $tempId;
+
+        return $this;
+    }
+
+    /**
+     * Get tempId
+     *
+     * @return string
+     */
+    public function getTempId()
+    {
+        return $this->tempId;
+    }
 }

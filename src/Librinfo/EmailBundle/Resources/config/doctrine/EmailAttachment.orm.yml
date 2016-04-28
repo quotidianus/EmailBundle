@@ -13,6 +13,9 @@ Librinfo\EmailBundle\Entity\EmailAttachment:
         file:
             type: text
             nullable: true
+        tempId:
+            type: string
+            nullable: true
     manyToOne:
         email:
             targetEntity: Librinfo\EmailBundle\Entity\Email

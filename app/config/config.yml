@@ -36,6 +36,7 @@ twig:
         resources:
             - 'SonataCoreBundle:Form:datepicker.html.twig'
             - 'bootstrap_3_layout.html.twig'
+            - 'LibrinfoEmailBundle:form:dropzone_field.html.twig'
 
 # Assetic Configuration
 assetic:

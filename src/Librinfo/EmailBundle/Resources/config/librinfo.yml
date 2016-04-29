@@ -26,8 +26,6 @@ parameters:
                             attachments:
                                 type: dropzone
                                 required: false
-                                attr:
-                                    class: dropzone
                         form_group_template:
                             isTemplate:
                                 type: checkbox

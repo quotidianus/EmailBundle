@@ -39,5 +39,22 @@ class AjaxController extends Controller
         
         return new Response("Ok", 200);
     }
+    
+    public function removeUploadAction($fileName, $fileSize){
+        
+        $manager = $this->getDoctrine()->getManager();
+        $repo = $this->getDoctrine()->getRepository('LibrinfoEmailBundle:EmailAttachment');
+        
+        $attachment = $repo->findOneBy(array(
+            
+            'name' => $fileName,
+            'size' => $fileSize
+        ));
+        
+        $manager->remove($attachment);
+        $manager->flush();
+        
+        return new Response($fileName." removed successfully", 200);
+    }
 
 }

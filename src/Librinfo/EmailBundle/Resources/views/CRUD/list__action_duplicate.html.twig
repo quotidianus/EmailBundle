@@ -1,6 +1,6 @@
-{% if admin.hasRoute('send') %}
+{% if admin.hasRoute('duplicate') %}
     <a href="{{ admin.generateObjectUrl('duplicate', object) }}" class="btn btn-sm btn-default delete_link" title="{{ 'action_duplicate'|trans({}, 'SonataAdminBundle') }}">
         <i class="fa fa-files-o"></i>
-        {{ 'action_send'|trans({}, 'SonataAdminBundle') }}
+        {{ 'action_duplicate'|trans({}, 'SonataAdminBundle') }}
     </a>
 {% endif %}

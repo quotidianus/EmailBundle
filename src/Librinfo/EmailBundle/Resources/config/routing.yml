@@ -6,6 +6,10 @@ librinfo_email_getTemplate:
 librinfo_email_upload:
     path:     librinfo/email/ajax/upload
     defaults: { _controller: LibrinfoEmailBundle:Ajax:upload }
+#ajax call to remove uploaded attachments
+librinfo_email_upload_remove:
+    path:     librinfo/email/ajax/upload/remove/{fileName}/{fileSize}
+    defaults: { _controller: LibrinfoEmailBundle:Ajax:removeUpload }
 #tracking of email openings
 librinfo_email_trackOpens:
     path:     tracking/{emailId}/{recipient}.png

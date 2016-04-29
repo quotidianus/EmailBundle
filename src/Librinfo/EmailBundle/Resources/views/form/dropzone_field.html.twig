@@ -1,0 +1,26 @@
+{# empty Twig template #}
+{% block dropzone_widget %}
+    {% spaceless %}
+        <div class="dropzone add_files">
+
+        </div>
+        <div class="dropzone-btn">
+            <button class="btn btn-success add_files">
+                <i class="glyphicon glyphicon-plus"></i>
+                {{ 'Add files'|trans({}, 'SonataAdminBundle') }}
+            </button>
+        </div>
+        {#<div class="dropzone-btn">
+            <button class="btn btn-primary upload">
+                <i class="glyphicon glyphicon-upload"></i>
+                {{ 'Upload'|trans({}, 'SonataAdminBundle') }}
+            </button>
+        </div>#}
+        <div class="dropzone-btn">
+            <button class="btn btn-danger clear">
+                <i class="glyphicon glyphicon-trash"></i>
+                {{ 'Clear'|trans({}, 'SonataAdminBundle') }}
+            </button>
+        </div>
+    {% endspaceless %}
+{% endblock %}

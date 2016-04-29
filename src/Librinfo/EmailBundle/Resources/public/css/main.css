@@ -4,3 +4,9 @@
     
     z-index: 0
 }
+
+.dropzone-btn{
+    
+    margin: 5px 3px 0px 0px;
+    display: inline-block;
+}

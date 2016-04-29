@@ -5,22 +5,23 @@
     {{ parent() }}
     {# init tinyMce in content textarea of the email create/edit form #}
     {{ tinymce_init() }}
-    <link href="{{ asset('bundles/librinfoemail/css/dropzone.css') }}" type="text/css" rel="stylesheet" />
-    <link href="{{ asset('bundles/librinfoemail/css/main.css') }}" type="text/css" rel="stylesheet" />
-    <script type="text/javascript" src="{{ asset('bundles/librinfoemail/js/dropzone.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/librinfoemail/js/main.js') }}"></script>
 {% endblock %}
 
 {# add the send button to update form #}
 {% block sonata_form_actions %}
     {{ parent() }}
     {% if admin.id(object) is not null %}
-        <a class="btn btn-info" href="{{ admin.generateObjectUrl('send', object) }}"><i class="fa fa-paper-plane"></i> Send</a>
+        <a class="btn btn-info" href="{{ admin.generateObjectUrl('send', object) }}"><i class="fa fa-paper-plane"></i> {{ 'action_send'|trans({}, 'SonataAdminBundle') }}</a>
     {% endif %}
 {% endblock %}
 
-{% block sonata_post_fieldsets %}
-    
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/librinfoemail/css/dropzone.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('bundles/librinfoemail/css/main.css') }}" type="text/css" rel="stylesheet" />
 {% endblock %}
-
-
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/librinfoemail/js/dropzone.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/librinfoemail/js/main.js') }}"></script>
+{% endblock %}

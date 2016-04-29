@@ -1,15 +1,19 @@
-#ajax call to insert chosen template in edit form
+#insert chosen template in edit form
 librinfo_email_getTemplate:
     path:     librinfo/email/ajax/getTemplate/{templateId}
     defaults: { _controller: LibrinfoEmailBundle:Ajax:getEmailTemplate }
-#ajax call to upload attachments
+#upload attachments
 librinfo_email_upload:
     path:     librinfo/email/ajax/upload
     defaults: { _controller: LibrinfoEmailBundle:Ajax:upload }
-#ajax call to remove uploaded attachments
+# remove uploaded attachments
 librinfo_email_upload_remove:
     path:     librinfo/email/ajax/upload/remove/{fileName}/{fileSize}
     defaults: { _controller: LibrinfoEmailBundle:Ajax:removeUpload }
+# insert attachments into content
+librinfo_email_insert:
+    path:     librinfo/email/ajax/insert/{fileName}/{fileSize}
+    defaults: { _controller: LibrinfoEmailBundle:Ajax:addTocontent }
 #tracking of email openings
 librinfo_email_trackOpens:
     path:     tracking/{emailId}/{recipient}.png

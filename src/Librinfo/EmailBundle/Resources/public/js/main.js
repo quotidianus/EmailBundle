@@ -18,9 +18,7 @@ function getTemplate(templateId) {
     //ajax call to retrieve the template content
     $.get("http://" + window.location.host + "/librinfo/email/ajax/getTemplate/" + templateId, function (data) {
         //insertion of the content into the tinyMce editor
-        tinymce.activeEditor.execCommand('mceInsertContent', false, data);
-        tinymce.activeEditor.execCommand('mceEndUndoLevel', false, data);
-
+        tinyMceInsert(data);
     });
 }
 
@@ -70,15 +68,15 @@ function setupDropzone() {
         formData.append("temp_id", tempId);
         console.log(file);
     });
-    
-    $('.clear').click(function(e){
-        
+
+    $('.clear').click(function (e) {
+
         e.preventDefault();
         dropzone.removeAllFiles(true);
     });
-    
-    $('.add_files').click(function(e){
-        
+
+    $('.add_files').click(function (e) {
+
         e.preventDefault();
     });
 
@@ -89,18 +87,34 @@ function setupDropzone() {
 
     dropzone.on("removedfile", function (file) {
 
-        $.get("http://" + window.location.host + "/librinfo/email/ajax/upload/remove/" + file.name + "/" + file.size, function () {
-            
+        $.get("http://" + window.location.host + "/librinfo/email/ajax/upload/remove/" + file.name + "/" + file.size, function (response) {
+
+            console.log(response);
         });
-        console.log(file.status);
     });
 
-    dropzone.on("addedfile", function(file){
+    dropzone.on("addedfile", function (file) {
+
+        $('button.inline').attr("file_name", file.name);
+        $('button.inline').attr("file_size", file.size);
+    });
+
+    inline(dropzone);
+}
+
+function inline(dropzone) {
+
+    $('.dropzone').on('click', '.inline', function (e) {
+        e.preventDefault();
         
-        console.log(file.name);
+        var fileName = $(this).attr('file_name');
+        var fileSize = $(this).attr('file_size');
+        
+        $.get("http://" + window.location.host + "/librinfo/email/ajax/insert/" + fileName + "/" + fileSize, function(data){
+            
+            tinyMceInsert(data);
+        });
     });
-
-//    inline(dropzone);
 }
 
 function generateUUID() {
@@ -114,12 +128,8 @@ function generateUUID() {
     return uuid.toUpperCase();
 }
 
-//function inline(dropzone) {
-//
-//
-//    $('.dropzone').on('click', '.inline', function (e) {
-//
-//        e.preventDefault();
-//        console.log("hello");
-//    });
-//}
+function tinyMceInsert(data) {
+
+    tinymce.activeEditor.execCommand('mceInsertContent', false, data);
+    tinymce.activeEditor.execCommand('mceEndUndoLevel', false, data);
+}

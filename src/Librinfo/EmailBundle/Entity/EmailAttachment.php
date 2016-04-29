@@ -96,10 +96,6 @@ class EmailAttachment
         if ($file != null)
         {
             $this->file = base64_encode(file_get_contents($file));
-
-//            $this->name = $file->getClientOriginalName();
-//            $this->size = $file->getClientSize();
-//            $this->mimeType = $file->getClientMimeType();
         }
         return $this;
     }
@@ -107,6 +103,12 @@ class EmailAttachment
     public function getFile()
     {
         return base64_decode($this->file);
+    }
+    
+    // used for insertion of images into content
+    public function getBase64File()
+    {
+        return $this->file;
     }
 
     /**

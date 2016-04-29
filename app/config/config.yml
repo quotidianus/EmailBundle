@@ -136,5 +136,7 @@ librinfo_doctrine:
             loggable: true
             sortable: true
             
-librinfo_email:
-    upload_path: attachments
+stfalcon_tinymce:
+    theme:
+        advanced:
+            paste_data_images: true

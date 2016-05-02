@@ -22,25 +22,25 @@ function getTemplate(templateId) {
     });
 }
 
-function getAction(){
-    
+function getAction() {
+
     var url = window.location.href;
-    
+
     return url.split("/").pop();
 }
 
-function getEmailId(){
-    
+function getEmailId() {
+
     var splitUrl = window.location.href.split("/");
-    
+
     splitUrl.pop();
-    
+
     return splitUrl.pop();
 }
 
 //handles checking and disabling of isTest checkbox
 function checkIsTest() {
-    
+
     var action = getAction();
     var checkbox = $("input.is_test");
 
@@ -73,7 +73,7 @@ function setupDropzone() {
 
     var action = getAction();
     var tempId = '';
-    
+
     tempId = generateUUID();
 
     //append the id to the form so it can be retrieved in CreateAction
@@ -104,7 +104,7 @@ function setupDropzone() {
     dropzone.on("removedfile", function (file) {
 
         var tempId = $('input[name="temp_id"]').attr("value");
-        
+
         $.get("http://" + window.location.host + "/librinfo/email/ajax/upload/remove/" + file.name + "/" + file.size + "/" + tempId, function (response) {
 
             console.log(response);
@@ -112,9 +112,9 @@ function setupDropzone() {
     });
 
     dropzone.on("addedfile", function (file) {
-        
-        if(getAction() == 'edit'){
-            
+
+        if (getAction() == 'edit') {
+
             $('input[name="temp_id"]').attr("value", file.tempId);
         }
 
@@ -123,40 +123,40 @@ function setupDropzone() {
     });
 
     inline(dropzone);
-    
-    if(getAction() == 'edit')
-    retrieveAttachments(dropzone);
+
+    if (getAction() == 'edit')
+        retrieveAttachments(dropzone);
 }
 
 function inline(dropzone) {
 
     var tempId = $('input[name="temp_id"]').attr("value");
-    
+
     $('.dropzone').on('click', '.inline', function (e) {
         e.preventDefault();
-        
+
         var fileName = $(this).attr('file_name');
         var fileSize = $(this).attr('file_size');
-        
-        $.get("http://" + window.location.host + "/librinfo/email/ajax/insert/" + fileName + "/" + fileSize + "/" + tempId, function(data){
-            
+
+        $.get("http://" + window.location.host + "/librinfo/email/ajax/insert/" + fileName + "/" + fileSize + "/" + tempId, function (data) {
+
             tinyMceInsert(data);
         });
     });
 }
 
-function retrieveAttachments(dropzone){
-    
+function retrieveAttachments(dropzone) {
+
     var emailId = getEmailId();
-    
-    $.get("http://" + window.location.host + "/librinfo/email/ajax/upload/load/" + emailId, function(data){
-        
+
+    $.get("http://" + window.location.host + "/librinfo/email/ajax/upload/load/" + emailId, function (data) {
+
         var files = JSON.parse(data);
-       
-        for (var i = 0; i < files.length; i++){
-            
+
+        for (var i = 0; i < files.length; i++) {
+
             dropzone.emit("addedfile", files[i]);
-            dropzone.emit("complete", files[i]);            
+            dropzone.emit("complete", files[i]);
         }
     });
 }

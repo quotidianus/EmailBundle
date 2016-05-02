@@ -13,16 +13,16 @@ class CRUDController extends SonataCRUDController
     private $email;
     private $attachments;
     private $isNewsLetter;
-    
+
     public function duplicateAction()
     {
         $id = $this->getRequest()->get($this->admin->getIdParameter());
         $email = $this->admin->getObject($id);
-        
+
         $cloner = $this->container->get('librinfo.email.cloning');
-        
+
         $object = $cloner->cloneEmail($email);
-        
+
         return $this->createAction($object);
     }
 
@@ -94,15 +94,15 @@ class CRUDController extends SonataCRUDController
     public function setupSwiftMessage($to)
     {
         $content = $this->email->getContent();
-        
+
         if (!$this->isNewsLetter && $this->email->getTracking())
         {
-            
+
             $tracker = $this->container->get('librinfo.email.tracking');
 
             $content = $tracker->addTracking($content, $to, $this->email->getId());
         }
-        
+
         $message = \Swift_Message::newInstance()
                 ->setSubject($this->email->getFieldSubject())
                 ->setFrom($this->email->getFieldFrom())
@@ -110,7 +110,7 @@ class CRUDController extends SonataCRUDController
                 ->setBody($content, 'text/html')
                 ->addPart($this->email->getTextContent(), 'text/plain')
         ;
-        
+
         $this->addAttachments($message);
 
         return $message;
@@ -127,7 +127,7 @@ class CRUDController extends SonataCRUDController
                         ->setFilename($file->getName())
                         ->setContentType($file->getMimeType())
                         ->setBody($file->getFile())
-                        
+
                 ;
                 $message->attach($attachment);
             }
@@ -157,7 +157,7 @@ class CRUDController extends SonataCRUDController
         $this->manager = $this->getDoctrine()->getManager();
         // the key used to lookup the template
         $templateKey = 'edit';
-        
+
         $tempId = $request->get('temp_id');
 
         $this->admin->checkAccess('create');
@@ -178,7 +178,7 @@ class CRUDController extends SonataCRUDController
         $object = $object ? $object : $this->admin->getNewInstance();
 
         $this->handleAttachments($object, $tempId);
-        
+
         $preResponse = $this->preCreate($request, $object);
         if ($preResponse !== null)
         {
@@ -290,7 +290,7 @@ class CRUDController extends SonataCRUDController
         $object = $this->admin->getObject($id);
 
         $this->handleAttachments($object, $tempId);
-        
+
         if (!$object)
         {
             throw $this->createNotFoundException(sprintf('unable to find the object with id : %s', $id));
@@ -401,12 +401,12 @@ class CRUDController extends SonataCRUDController
                     'object' => $object,
                         ), null);
     }
-    
+
     private function handleAttachments($object, $tempId)
     {
         $repo = $this->manager->getRepository("LibrinfoEmailBundle:EmailAttachment");
         $attachments = $repo->findBy(array("tempId" => $tempId));
-        
+
         foreach ($attachments as $attachment)
         {
             $attachment->setEmail($object);

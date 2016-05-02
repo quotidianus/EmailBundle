@@ -10,17 +10,18 @@ use Librinfo\CoreBundle\Admin\CoreAdmin;
 
 class EmailAttachmentAdmin extends CoreAdmin
 {
+
     /**
      * @param DatagridMapper $datagridMapper
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('name')
-            ->add('mimeType')
-            ->add('size')
-            ->add('file')
-            ->add('id')
+                ->add('name')
+                ->add('mimeType')
+                ->add('size')
+                ->add('file')
+                ->add('id')
         ;
     }
 
@@ -30,18 +31,18 @@ class EmailAttachmentAdmin extends CoreAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('name')
-            ->add('mimeType')
-            ->add('size')
-            ->add('file')
-            ->add('id')
-            ->add('_action', 'actions', array(
-                'actions' => array(
-                    'show' => array(),
-                    'edit' => array(),
-                    'delete' => array(),
-                )
-            ))
+                ->add('name')
+                ->add('mimeType')
+                ->add('size')
+                ->add('file')
+                ->add('id')
+                ->add('_action', 'actions', array(
+                    'actions' => array(
+                        'show' => array(),
+                        'edit' => array(),
+                        'delete' => array(),
+                    )
+                ))
         ;
     }
 
@@ -51,11 +52,11 @@ class EmailAttachmentAdmin extends CoreAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('name')
-            ->add('mimeType')
-            ->add('size')
-            ->add('file')
-            ->add('id')
+                ->add('name')
+                ->add('mimeType')
+                ->add('size')
+                ->add('file')
+                ->add('id')
         ;
     }
 
@@ -65,11 +66,12 @@ class EmailAttachmentAdmin extends CoreAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('name')
-            ->add('mimeType')
-            ->add('size')
-            ->add('file')
-            ->add('id')
+                ->add('name')
+                ->add('mimeType')
+                ->add('size')
+                ->add('file')
+                ->add('id')
         ;
     }
+
 }

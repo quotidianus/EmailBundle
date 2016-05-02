@@ -10,16 +10,17 @@ use Librinfo\CoreBundle\Admin\CoreAdmin;
 
 class EmailLinkAdmin extends CoreAdmin
 {
+
     /**
      * @param DatagridMapper $datagridMapper
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('destination')
-            ->add('address')
-            ->add('date')
-            ->add('id')
+                ->add('destination')
+                ->add('address')
+                ->add('date')
+                ->add('id')
         ;
     }
 
@@ -29,17 +30,17 @@ class EmailLinkAdmin extends CoreAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('destination')
-            ->add('address')
-            ->add('date')
-            ->add('id')
-            ->add('_action', 'actions', array(
-                'actions' => array(
-                    'show' => array(),
-                    'edit' => array(),
-                    'delete' => array(),
-                )
-            ))
+                ->add('destination')
+                ->add('address')
+                ->add('date')
+                ->add('id')
+                ->add('_action', 'actions', array(
+                    'actions' => array(
+                        'show' => array(),
+                        'edit' => array(),
+                        'delete' => array(),
+                    )
+                ))
         ;
     }
 
@@ -49,10 +50,10 @@ class EmailLinkAdmin extends CoreAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('destination')
-            ->add('address')
-            ->add('date')
-            ->add('id')
+                ->add('destination')
+                ->add('address')
+                ->add('date')
+                ->add('id')
         ;
     }
 
@@ -62,10 +63,11 @@ class EmailLinkAdmin extends CoreAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('destination')
-            ->add('address')
-            ->add('date')
-            ->add('id')
+                ->add('destination')
+                ->add('address')
+                ->add('date')
+                ->add('id')
         ;
     }
+
 }

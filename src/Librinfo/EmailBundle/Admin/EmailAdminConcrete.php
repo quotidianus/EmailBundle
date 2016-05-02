@@ -24,7 +24,7 @@ class EmailAdminConcrete extends EmailAdmin
         parent::prePersist($email);
 
         $email->setTemplate(NULL);
-        
+
         $this->setText($email);
     }
 

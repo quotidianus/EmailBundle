@@ -6,18 +6,22 @@ use Librinfo\EmailBundle\SwiftMailer\Spool\SpoolStatus;
 
 abstract class Spoolable
 {
+
     /**
      * @var Swift_Mime_Message
      */
     private $message;
+
     /**
      * @var String
      */
     private $messageId;
+
     /**
      * @var String
      */
     private $status;
+
     /**
      * @var String
      */
@@ -26,7 +30,8 @@ abstract class Spoolable
     /**
      * @return string
      */
-    public function getMessage(){
+    public function getMessage()
+    {
 
         return $this->message;
     }
@@ -34,7 +39,8 @@ abstract class Spoolable
     /**
      * @return string
      */
-    public function getMessageId(){
+    public function getMessageId()
+    {
 
         return $this->messageId;
     }
@@ -42,7 +48,8 @@ abstract class Spoolable
     /**
      * @return string
      */
-    public function getStatus(){
+    public function getStatus()
+    {
 
         return $this->status;
     }
@@ -50,7 +57,8 @@ abstract class Spoolable
     /**
      * @return string
      */
-    public function getEnvironment(){
+    public function getEnvironment()
+    {
 
         return $this->environment;
     }
@@ -58,7 +66,8 @@ abstract class Spoolable
     /**
      * @param $message string Serialized \Swift_Mime_Message
      */
-    public function setMessage($message){
+    public function setMessage($message)
+    {
 
         $this->message = $message;
     }
@@ -66,7 +75,8 @@ abstract class Spoolable
     /**
      * @param $message string Serialized \Swift_Mime_Message
      */
-    public function setMessageId($messageId){
+    public function setMessageId($messageId)
+    {
 
         $this->messageId = $messageId;
     }
@@ -74,9 +84,11 @@ abstract class Spoolable
     /**
      * @param $status string
      */
-    public function setStatus($status){
+    public function setStatus($status)
+    {
 
-        if($status == SpoolStatus::STATUS_COMPLETE){
+        if ($status == SpoolStatus::STATUS_COMPLETE)
+        {
             $this->setSent(true);
         }
         $this->status = $status;
@@ -85,7 +97,9 @@ abstract class Spoolable
     /**
      * @param $environment string
      */
-    public function setEnvironment($environment){
+    public function setEnvironment($environment)
+    {
         $this->environment = $environment;
     }
+
 }

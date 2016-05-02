@@ -27,7 +27,6 @@ class DbSpool extends \Swift_ConfigurableSpool
      * @var EntityRepository
      */
     private $repository;
-    
     private $pauseTime;
 
     /**
@@ -126,7 +125,7 @@ class DbSpool extends \Swift_ConfigurableSpool
             $transport->registerPlugin($decorator);
 
             $addresses = explode(';', $email->getFieldTo());
-            
+
             foreach ($addresses as $address)
             {
                 $message->setTo($address);
@@ -136,12 +135,11 @@ class DbSpool extends \Swift_ConfigurableSpool
                     $tracker = new Tracking();
 
                     $content = $tracker->addTracking($email->getContent(), $address, $email->getId());
-                    
+
                     $message->setBody($content);
                 }
-                
-                try 
-                {
+
+                try {
                     $count += $transport->send($message, $failedRecipients);
                     sleep($this->pauseTime);
                 } catch (\Swift_TransportException $e) {
@@ -167,9 +165,10 @@ class DbSpool extends \Swift_ConfigurableSpool
         $this->manager->persist($email);
         $this->manager->flush();
     }
-    
-    public function setPauseTime($pauseTime){
-        
+
+    public function setPauseTime($pauseTime)
+    {
+
         $this->pauseTime = $pauseTime;
     }
 

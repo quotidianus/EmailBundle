@@ -7,9 +7,10 @@ use Doctrine\ORM\EntityManager;
 
 class Replacements extends ContainerAware implements \Swift_Plugins_Decorator_Replacements
 {
+
     /**
-    *@var EntityManager $manager
-    **/
+     * @var EntityManager $manager
+     * */
     private $manager;
 
     public function __construct(EntityManager $manager)
@@ -19,17 +20,20 @@ class Replacements extends ContainerAware implements \Swift_Plugins_Decorator_Re
 
     public function getReplacementsFor($address)
     {
-        if (class_exists('Librinfo\CRMBundle\LibrinfoCRMBundle')){
+        if (class_exists('Librinfo\CRMBundle\LibrinfoCRMBundle'))
+        {
 
-        $contact = $this->manager->getRepository("LibrinfoCRMBundle:Contact")->findOneBy(array("email" => $address));
+            $contact = $this->manager->getRepository("LibrinfoCRMBundle:Contact")->findOneBy(array("email" => $address));
 
-            if ($contact) {
-              return array(
-                '{prenom}' => $contact->getFirstName(),
-                '{nom}' => $contact->getName(),
-                '{titre}' => $contact->getTitle()
-              );
+            if ($contact)
+            {
+                return array(
+                    '{prenom}' => $contact->getFirstName(),
+                    '{nom}' => $contact->getName(),
+                    '{titre}' => $contact->getTitle()
+                );
             }
         }
     }
+
 }

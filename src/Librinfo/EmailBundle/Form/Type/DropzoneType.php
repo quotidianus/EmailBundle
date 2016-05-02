@@ -7,6 +7,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DropzoneType extends AbstractType
 {
+
     public function configureOptions(OptionsResolver $resolver)
     {
         
@@ -21,4 +22,5 @@ class DropzoneType extends AbstractType
     {
         return 'dropzone';
     }
+
 }

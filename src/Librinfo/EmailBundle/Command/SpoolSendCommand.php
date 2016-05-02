@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\InputOption;
  */
 class SpoolSendCommand extends ContainerAwareCommand
 {
+
     /**
      * @see Command
      */

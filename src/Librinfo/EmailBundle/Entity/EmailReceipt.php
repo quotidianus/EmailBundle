@@ -9,8 +9,9 @@ use Librinfo\DoctrineBundle\Entity\Traits\BaseEntity;
  */
 class EmailReceipt
 {
+
     use BaseEntity;
-    
+
     /**
      * @var string
      */
@@ -25,7 +26,6 @@ class EmailReceipt
      * @var \Librinfo\EmailBundle\Entity\Email
      */
     private $email;
-
 
     /**
      * Set address
@@ -98,4 +98,5 @@ class EmailReceipt
     {
         return $this->email;
     }
+
 }

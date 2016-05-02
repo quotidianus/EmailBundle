@@ -12,21 +12,23 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
+
     /**
      * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        
+
         $rootNode = $treeBuilder->root('librinfo_email');
         $rootNode
-            ->children()
+                ->children()
                 ->scalarNode('upload_path')
-                    ->defaultValue('attachments')
+                ->defaultValue('attachments')
                 ->end()
-            ->end()
+                ->end()
         ;
         return $treeBuilder;
     }
+
 }

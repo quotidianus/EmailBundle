@@ -10,17 +10,18 @@ use Librinfo\CoreBundle\Admin\CoreAdmin;
 
 class EmailTemplateAdmin extends CoreAdmin
 {
+
     /**
      * @param DatagridMapper $datagridMapper
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('name')
-            ->add('content')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('id')
+                ->add('name')
+                ->add('content')
+                ->add('createdAt')
+                ->add('updatedAt')
+                ->add('id')
         ;
     }
 
@@ -30,18 +31,18 @@ class EmailTemplateAdmin extends CoreAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('name')
-            ->add('content')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('id')
-            ->add('_action', 'actions', array(
-                'actions' => array(
-                    'show' => array(),
-                    'edit' => array(),
-                    'delete' => array(),
-                )
-            ))
+                ->add('name')
+                ->add('content')
+                ->add('createdAt')
+                ->add('updatedAt')
+                ->add('id')
+                ->add('_action', 'actions', array(
+                    'actions' => array(
+                        'show' => array(),
+                        'edit' => array(),
+                        'delete' => array(),
+                    )
+                ))
         ;
     }
 
@@ -51,11 +52,11 @@ class EmailTemplateAdmin extends CoreAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('name')
-            ->add('content')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('id')
+                ->add('name')
+                ->add('content')
+                ->add('createdAt')
+                ->add('updatedAt')
+                ->add('id')
         ;
     }
 
@@ -65,11 +66,12 @@ class EmailTemplateAdmin extends CoreAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('name')
-            ->add('content')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('id')
+                ->add('name')
+                ->add('content')
+                ->add('createdAt')
+                ->add('updatedAt')
+                ->add('id')
         ;
     }
+
 }

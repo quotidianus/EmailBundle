@@ -10,15 +10,16 @@ use Librinfo\CoreBundle\Admin\CoreAdmin;
 
 class EmailReceiptAdmin extends CoreAdmin
 {
+
     /**
      * @param DatagridMapper $datagridMapper
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('address')
-            ->add('date')
-            ->add('id')
+                ->add('address')
+                ->add('date')
+                ->add('id')
         ;
     }
 
@@ -28,16 +29,16 @@ class EmailReceiptAdmin extends CoreAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('address')
-            ->add('date')
-            ->add('id')
-            ->add('_action', 'actions', array(
-                'actions' => array(
-                    'show' => array(),
-                    'edit' => array(),
-                    'delete' => array(),
-                )
-            ))
+                ->add('address')
+                ->add('date')
+                ->add('id')
+                ->add('_action', 'actions', array(
+                    'actions' => array(
+                        'show' => array(),
+                        'edit' => array(),
+                        'delete' => array(),
+                    )
+                ))
         ;
     }
 
@@ -47,9 +48,9 @@ class EmailReceiptAdmin extends CoreAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('address')
-            ->add('date')
-            ->add('id')
+                ->add('address')
+                ->add('date')
+                ->add('id')
         ;
     }
 
@@ -59,9 +60,10 @@ class EmailReceiptAdmin extends CoreAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('address')
-            ->add('date')
-            ->add('id')
+                ->add('address')
+                ->add('date')
+                ->add('id')
         ;
     }
+
 }

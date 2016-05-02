@@ -10,23 +10,24 @@ use Sonata\AdminBundle\Show\ShowMapper;
 
 class EmailAdmin extends CoreAdmin
 {
+
     /**
      * @param DatagridMapper $datagridMapper
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('field_from')
-            ->add('field_to')
-            ->add('field_cc')
-            ->add('field_bcc')
-            ->add('field_subject')
-            ->add('content')
-            ->add('textContent')
-            ->add('sent')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('id')
+                ->add('field_from')
+                ->add('field_to')
+                ->add('field_cc')
+                ->add('field_bcc')
+                ->add('field_subject')
+                ->add('content')
+                ->add('textContent')
+                ->add('sent')
+                ->add('createdAt')
+                ->add('updatedAt')
+                ->add('id')
         ;
     }
 
@@ -36,24 +37,24 @@ class EmailAdmin extends CoreAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('field_from')
-            ->add('field_to')
-            ->add('field_cc')
-            ->add('field_bcc')
-            ->add('field_subject')
-            ->add('content')
-            ->add('textContent')
-            ->add('sent')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('id')
-            ->add('_action', 'actions', array(
-                'actions' => array(
-                    'show' => array(),
-                    'edit' => array(),
-                    'delete' => array(),
-                )
-            ))
+                ->add('field_from')
+                ->add('field_to')
+                ->add('field_cc')
+                ->add('field_bcc')
+                ->add('field_subject')
+                ->add('content')
+                ->add('textContent')
+                ->add('sent')
+                ->add('createdAt')
+                ->add('updatedAt')
+                ->add('id')
+                ->add('_action', 'actions', array(
+                    'actions' => array(
+                        'show' => array(),
+                        'edit' => array(),
+                        'delete' => array(),
+                    )
+                ))
         ;
     }
 
@@ -63,17 +64,17 @@ class EmailAdmin extends CoreAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('field_from')
-            ->add('field_to')
-            ->add('field_cc')
-            ->add('field_bcc')
-            ->add('field_subject')
-            ->add('content')
-            ->add('textContent')
-            ->add('sent')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('id')
+                ->add('field_from')
+                ->add('field_to')
+                ->add('field_cc')
+                ->add('field_bcc')
+                ->add('field_subject')
+                ->add('content')
+                ->add('textContent')
+                ->add('sent')
+                ->add('createdAt')
+                ->add('updatedAt')
+                ->add('id')
         ;
     }
 
@@ -83,17 +84,18 @@ class EmailAdmin extends CoreAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('field_from')
-            ->add('field_to')
-            ->add('field_cc')
-            ->add('field_bcc')
-            ->add('field_subject')
-            ->add('content')
-            ->add('textContent')
-            ->add('sent')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('id')
+                ->add('field_from')
+                ->add('field_to')
+                ->add('field_cc')
+                ->add('field_bcc')
+                ->add('field_subject')
+                ->add('content')
+                ->add('textContent')
+                ->add('sent')
+                ->add('createdAt')
+                ->add('updatedAt')
+                ->add('id')
         ;
     }
+
 }

@@ -41,7 +41,6 @@ class AjaxController extends Controller
 
     public function removeUploadAction($fileName, $fileSize, $tempId)
     {
-        dump($tempId);
 
         $manager = $this->getDoctrine()->getManager();
         $repo = $this->getDoctrine()->getRepository('LibrinfoEmailBundle:EmailAttachment');
@@ -60,7 +59,7 @@ class AjaxController extends Controller
 
     public function addToContentAction($fileName, $fileSize, $tempId)
     {
-        
+
         $repo = $this->getDoctrine()->getRepository('LibrinfoEmailBundle:EmailAttachment');
 
         $attachment = $repo->findOneBy(array(
@@ -85,28 +84,31 @@ class AjaxController extends Controller
 
         return new Response($this->attachmentsToJson($attachments), 200);
     }
-    
-    private function attachmentsToJson($attachments){
-        
+
+    private function attachmentsToJson($attachments)
+    {
+
         $jsonAttachments = '[';
         $keySet = array_keys($attachments);
         $lastKey = end($keySet);
-   
-        foreach ($attachments as $key=>$attachment)
+
+        foreach ($attachments as $key => $attachment)
         {
-            if($key == $lastKey){
+            if ($key == $lastKey)
+            {
                 $end = '}';
-            }else{
+            } else
+            {
                 $end = '},';
             }
-         $jsonAttachments .= '{"name": "'.$attachment->getName().
-                 '", "size": ' .$attachment->getSize().
-                // ', "file":"' .$attachment->getBase64File().'"'.
-                 ', "tempId":"' .$attachment->getTempId().'"'.
-                 $end;   
+            $jsonAttachments .= '{"name": "' . $attachment->getName() .
+                    '", "size": ' . $attachment->getSize() .
+                    // ', "file":"' .$attachment->getBase64File().'"'.
+                    ', "tempId":"' . $attachment->getTempId() . '"' .
+                    $end;
         }
-        
-        return $jsonAttachments."]";
+
+        return $jsonAttachments . "]";
     }
 
     private function isImage($attachment)

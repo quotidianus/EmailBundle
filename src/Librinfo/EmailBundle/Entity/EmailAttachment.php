@@ -38,7 +38,6 @@ class EmailAttachment
      */
     private $file;
 
-
     /**
      * Set email
      *
@@ -76,7 +75,7 @@ class EmailAttachment
     {
         return base64_decode($this->file);
     }
-    
+
     // used for insertion of images into content
     public function getBase64File()
     {
@@ -160,7 +159,6 @@ class EmailAttachment
      */
     private $tempId;
 
-
     /**
      * Set tempId
      *
@@ -184,4 +182,5 @@ class EmailAttachment
     {
         return $this->tempId;
     }
+
 }

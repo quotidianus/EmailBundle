@@ -12,6 +12,7 @@ use Librinfo\DoctrineBundle\Entity\SearchIndexEntity;
 
 class EmailTemplateSearchIndex extends SearchIndexEntity
 {
-   
+
     public static $fields = ['name', 'content'];
+
 }

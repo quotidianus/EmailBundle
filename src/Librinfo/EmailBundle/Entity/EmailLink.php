@@ -9,8 +9,9 @@ use Librinfo\DoctrineBundle\Entity\Traits\BaseEntity;
  */
 class EmailLink
 {
+
     use BaseEntity;
-    
+
     /**
      * @var string
      */
@@ -30,7 +31,6 @@ class EmailLink
      * @var \Librinfo\EmailBundle\Entity\Email
      */
     private $email;
-
 
     /**
      * Set destination
@@ -127,4 +127,5 @@ class EmailLink
     {
         return $this->email;
     }
+
 }

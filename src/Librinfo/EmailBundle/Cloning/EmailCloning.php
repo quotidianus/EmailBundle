@@ -18,7 +18,7 @@ class EmailCloning
         $newEmail->setFieldSubject($email->getFieldSubject());
         $newEmail->setContent($email->getContent());
         $newEmail->setAttachments($email->getAttachments());
-        
+
         return $newEmail;
     }
 

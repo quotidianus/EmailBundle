@@ -39,15 +39,17 @@ class AjaxController extends Controller
         return new Response("Ok", 200);
     }
 
-    public function removeUploadAction($fileName, $fileSize)
+    public function removeUploadAction($fileName, $fileSize, $tempId)
     {
+        dump($tempId);
 
         $manager = $this->getDoctrine()->getManager();
         $repo = $this->getDoctrine()->getRepository('LibrinfoEmailBundle:EmailAttachment');
 
         $attachment = $repo->findOneBy(array(
             'name' => $fileName,
-            'size' => $fileSize
+            'size' => $fileSize,
+            'tempId' => $tempId
         ));
 
         $manager->remove($attachment);
@@ -56,40 +58,73 @@ class AjaxController extends Controller
         return new Response($fileName . " removed successfully", 200);
     }
 
-    public function addToContentAction($fileName, $fileSize)
+    public function addToContentAction($fileName, $fileSize, $tempId)
     {
-
+        
         $repo = $this->getDoctrine()->getRepository('LibrinfoEmailBundle:EmailAttachment');
 
         $attachment = $repo->findOneBy(array(
             'name' => $fileName,
-            'size' => $fileSize
+            'size' => $fileSize,
+            'tempId' => $tempId
         ));
 
-        if ( $this->isImage($attachment) )
+        if ($this->isImage($attachment))
         {
-           return new Response( $this->generateImgTag($attachment) , 200);
+            return new Response($this->generateImgTag($attachment), 200);
         }
 
         return new Response($fileName . " is not an image", 300);
     }
 
+    public function loadAttachmentsAction($emailId)
+    {
+        $repo = $this->getDoctrine()->getRepository('LibrinfoEmailBundle:EmailAttachment');
+
+        $attachments = $repo->findBy(array('email' => $emailId));
+
+        return new Response($this->attachmentsToJson($attachments), 200);
+    }
+    
+    private function attachmentsToJson($attachments){
+        
+        $jsonAttachments = '[';
+        $keySet = array_keys($attachments);
+        $lastKey = end($keySet);
+   
+        foreach ($attachments as $key=>$attachment)
+        {
+            if($key == $lastKey){
+                $end = '}';
+            }else{
+                $end = '},';
+            }
+         $jsonAttachments .= '{"name": "'.$attachment->getName().
+                 '", "size": ' .$attachment->getSize().
+                // ', "file":"' .$attachment->getBase64File().'"'.
+                 ', "tempId":"' .$attachment->getTempId().'"'.
+                 $end;   
+        }
+        
+        return $jsonAttachments."]";
+    }
+
     private function isImage($attachment)
     {
-        if ($attachment && preg_match('!^image\/!', $attachment->getMimeType()) === 1 )
+        if ($attachment && preg_match('!^image\/!', $attachment->getMimeType()) === 1)
         {
             return true;
         }
         return false;
     }
-    
+
     private function generateImgTag($attachment)
     {
         $alt = explode('.', $attachment->getName())[0];
-        
-        
-        $tag = '<img src="data:'.$attachment->getMimeType().';base64,'.$attachment->getBase64File().'" alt="'.$alt.'" />';
-        
+
+        $tag = '<img src="data:' . $attachment->getMimeType() . ';base64,' . $attachment->getBase64File() . '" alt="' . $alt . '" />';
+
         return $tag;
     }
+
 }

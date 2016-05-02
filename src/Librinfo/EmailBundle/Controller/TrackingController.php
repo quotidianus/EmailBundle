@@ -13,15 +13,6 @@ class TrackingController extends Controller
 {   
     private $manager;
     
-    public function testAction()
-    {
-        $e = $this->getDoctrine()->getManager()->getRepository('LibrinfoEmailBundle:EmailAttachment')->findAll();
-        
-        dump($e);
-        file_put_contents('zeiu.png', $e[28]->getFile());
-        return new Response("ok", 200);
-    }
-    
     public function trackOpensAction($emailId, $recipient)
     {
         $this->trackOpens($emailId, $recipient);

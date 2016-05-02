@@ -38,34 +38,6 @@ class EmailAttachment
      */
     private $file;
 
-    /**
-     * @var String path
-     */
-    private $path;
-
-    /**
-     * Set path
-     *
-     * @param string $path
-     *
-     * @return EmailAttachment
-     */
-    public function setPath($path)
-    {
-        $this->path = $path;
-
-        return $this;
-    }
-
-    /**
-     * Get path
-     *
-     * @return string
-     */
-    public function getPath()
-    {
-        return $this->path;
-    }
 
     /**
      * Set email

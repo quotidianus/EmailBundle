@@ -135,8 +135,3 @@ librinfo_doctrine:
             searchable: true
             loggable: true
             sortable: true
-            
-stfalcon_tinymce:
-    theme:
-        advanced:
-            paste_data_images: true

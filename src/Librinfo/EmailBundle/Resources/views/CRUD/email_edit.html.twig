@@ -4,7 +4,7 @@
 {% block form %}
     {{ parent() }}
     {# init tinyMce in content textarea of the email create/edit form #}
-    {{ tinymce_init({paste_data_images : true}) }}
+    {{ tinymce_init({'theme': { 'advanced': {'paste_data_images' : true, 'height': 280 }}}) }}
 {% endblock %}
 
 {# add the send button to update form #}

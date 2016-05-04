@@ -17,3 +17,7 @@ services:
         class: Librinfo\EmailBundle\Form\Type\DropzoneType
         tags:
             - { name: form.type, alias: dropzone }
+    librinfo.email.form.type.chartist:
+        class: Librinfo\EmailBundle\Form\Type\ChartistType
+        tags:
+            - { name: form.type, alias: chartist }

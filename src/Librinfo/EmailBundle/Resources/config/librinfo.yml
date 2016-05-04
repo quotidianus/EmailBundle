@@ -4,6 +4,22 @@ parameters:
         Librinfo\EmailBundle\Entity\Email:
             Sonata\AdminBundle\Show\ShowMapper:
                 _copy: Sonata\AdminBundle\Form\FormMapper
+                remove: [ content ]
+                add:
+                    form_group_general:
+                        '':
+                            textContent:
+                                type: textarea
+                                label: Content
+                    form_group_tracking:
+                        'tracking':
+                            links:
+                                type: chartist
+                            receipts:
+                                type: chartist
+                    _options:
+                        forceTabs: form_group_general
+                        tabsOrder: ['form_group_general', 'form_group_tracking']
             Sonata\AdminBundle\Form\FormMapper:
                 add:
                     form_group_general:
@@ -13,6 +29,10 @@ parameters:
                             field_to:
                                 type: text
                             field_subject:
+                                type: text
+                            field_cc:
+                                type: text
+                            field_bcc:
                                 type: text
                             template:
                                 attr:
@@ -33,7 +53,6 @@ parameters:
                             newTemplateName:
                                 type: text
                                 required: false
-                        form_group_test:
                             isTest:
                                 type: checkbox
                                 required: false
@@ -42,12 +61,11 @@ parameters:
                             testAdress:
                                 type: text
                                 required: false
-                        form_group_tracking:
                             tracking:
                                 type: checkbox
                                 required: false
                     _options:
-                        tabsOrder: [form_group_general, form_group_specifics]
+                        tabsOrder: [ form_group_general, form_group_specifics ]
                         groupsOrder: ['', attachments]
             Sonata\AdminBundle\Datagrid\ListMapper:
                 remove: [createdAt]

@@ -55,17 +55,22 @@ parameters:
                     field_to: ~
                     field_subject: ~
                     sent: ~
-                    _action:
+                    _actions:
                         type: actions
-                        _options:
-                            actions:
-                                send:
-                                    template: LibrinfoEmailBundle:CRUD:list__action_send.html.twig
+                        label: Action
+                        actions:
+                            show: ~
+                            edit: ~
+                            delete: ~
+                            send:
+                                template: LibrinfoEmailBundle:CRUD:list__action_send.html.twig
+                            duplicate:
+                                template: LibrinfoEmailBundle:CRUD:list__action_duplicate.html.twig
                     _options:
                         fieldsOrder:
-                            - field_from
                             - field_to
                             - field_subject
+                            - sent
                     _export_format:
                         csv: [ field_from, field_to, field_subject, field_cc, field_bcc, textContent, createdAt, updatedAt]
                         xls: csv

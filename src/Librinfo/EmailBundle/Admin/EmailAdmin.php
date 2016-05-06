@@ -28,6 +28,7 @@ class EmailAdmin extends CoreAdmin
                 ->add('createdAt')
                 ->add('updatedAt')
                 ->add('id')
+                ->add('tracking')
         ;
     }
 
@@ -48,6 +49,7 @@ class EmailAdmin extends CoreAdmin
                 ->add('createdAt')
                 ->add('updatedAt')
                 ->add('id')
+                ->add('tracking')
                 ->add('_action', 'actions', array(
                     'actions' => array(
                         'show' => array(),
@@ -75,6 +77,7 @@ class EmailAdmin extends CoreAdmin
                 ->add('createdAt')
                 ->add('updatedAt')
                 ->add('id')
+                ->add('tracking')
         ;
     }
 
@@ -95,6 +98,7 @@ class EmailAdmin extends CoreAdmin
                 ->add('createdAt')
                 ->add('updatedAt')
                 ->add('id')
+                ->add('tracking')
         ;
     }
 

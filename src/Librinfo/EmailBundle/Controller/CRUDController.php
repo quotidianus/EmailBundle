@@ -4,6 +4,8 @@ namespace Librinfo\EmailBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as SonataCRUDController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CRUDController extends SonataCRUDController
 {
@@ -145,6 +147,22 @@ class CRUDController extends SonataCRUDController
         }
         $this->manager->persist($this->email);
         $this->manager->flush();
+    }
+
+    protected function preShow(Request $request, $object)
+    {
+        if ($object->getTracking())
+        {
+            $statHelper = $this->get('librinfo.email.stats');
+
+            $this->admin->setSubject($object);
+        }
+        return $this->render($this->admin->getTemplate('show'), array(
+                    'action' => 'show',
+                    'object' => $object,
+                    'elements' => $this->admin->getShow(),
+                    'stats' => $statHelper->getStats($object)
+                        ), null);
     }
 
     /*     * ***************************************************************************************************************************** */

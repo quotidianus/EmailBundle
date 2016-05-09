@@ -146,7 +146,6 @@ class DbSpool extends \Swift_ConfigurableSpool
                     $email->setStatus(SpoolStatus::STATUS_READY);
                     $this->updateEmail($email);
                 }
-                dump("reprise");
             }
             $email->setStatus(SpoolStatus::STATUS_COMPLETE);
 

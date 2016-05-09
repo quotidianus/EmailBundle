@@ -3,11 +3,11 @@
 
 {% block show %}
     {{ parent() }}
-   
+  <p class="test_stat"> {{ dump(stats) }} </p>
 {% endblock %}    
 
 {% block stylesheets %}
-    {{ parent() }}
+  {{ parent() }}
 {% endblock %}
 
 {% block javascripts %}

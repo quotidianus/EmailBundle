@@ -15,7 +15,7 @@ class ChartistType extends AbstractType
 
     public function getParent()
     {
-        return 'form';
+        return 'textarea';
     }
 
     public function getName()

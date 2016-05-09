@@ -12,8 +12,12 @@ services:
         
     librinfo.email.cloning:
         class: Librinfo\EmailBundle\Cloning\EmailCloning
-        
-    librinfo.email.form.type.dropzone:
+    
+    librinfo.email.stats:
+        class: Librinfo\EmailBundle\Stats\EmailStats
+     
+    ###Form types###    
+    librinfo.email.formtype.dropzone:
         class: Librinfo\EmailBundle\Form\Type\DropzoneType
         tags:
             - { name: form.type, alias: dropzone }

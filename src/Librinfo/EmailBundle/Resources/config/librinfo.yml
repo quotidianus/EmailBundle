@@ -151,6 +151,10 @@ parameters:
         Librinfo\EmailBundle\Entity\EmailReceipt:
             Sonata\AdminBundle\Show\ShowMapper:
                 _copy: Sonata\AdminBundle\Form\FormMapper
+                add:
+                    form_group_general:
+                        '':
+                            email: ~
             Sonata\AdminBundle\Form\FormMapper:
                 add:
                     form_group_general:
@@ -163,11 +167,16 @@ parameters:
                 add:
                     address: ~
                     date: ~
+                    email: ~
                     
 ########## EmailLink ##########
         Librinfo\EmailBundle\Entity\EmailLink:
             Sonata\AdminBundle\Show\ShowMapper:
                 _copy: Sonata\AdminBundle\Form\FormMapper
+                add:
+                    form_group_general:
+                        '':
+                            email: ~
             Sonata\AdminBundle\Form\FormMapper:
                 add:
                     form_group_general:
@@ -181,4 +190,5 @@ parameters:
                 add:
                     destination: ~
                     address: ~
-                    date:
+                    date: ~
+                    email: ~

@@ -1,9 +1,33 @@
 parameters:
     librinfo:
+        configuration:
+            templates:
+                show:
+                    stats: LibrinfoEmailBundle:CRUD:show_field_stats.html.twig
 ######  Email ##########
         Librinfo\EmailBundle\Entity\Email:
             Sonata\AdminBundle\Show\ShowMapper:
-                _copy: Sonata\AdminBundle\Form\FormMapper
+                add:
+                    form_group_general:
+                        '':
+                            field_to: ~
+                            field_cc: ~
+                            field_bcc: ~
+                            
+                            textContent:
+                                type: textarea
+                                label: Content
+                        form_group_attachments:
+                            attachments: ~
+                        form_group_tracking:
+                            stats:
+                                type: stats
+                            _options:
+                                groupsOrder:
+                                - form_group_tracking
+                                - ''
+                                - form_group_attachments
+                                - from_group_misc
             Sonata\AdminBundle\Form\FormMapper:
                 add:
                     form_group_general:
@@ -13,6 +37,10 @@ parameters:
                             field_to:
                                 type: text
                             field_subject:
+                                type: text
+                            field_cc:
+                                type: text
+                            field_bcc:
                                 type: text
                             template:
                                 attr:
@@ -33,7 +61,6 @@ parameters:
                             newTemplateName:
                                 type: text
                                 required: false
-                        form_group_test:
                             isTest:
                                 type: checkbox
                                 required: false
@@ -42,16 +69,17 @@ parameters:
                             testAdress:
                                 type: text
                                 required: false
-                        form_group_tracking:
                             tracking:
                                 type: checkbox
                                 required: false
                     _options:
-                        tabsOrder: [form_group_general, form_group_specifics]
+                        tabsOrder: [ form_group_general, form_group_specifics ]
                         groupsOrder: ['', attachments]
             Sonata\AdminBundle\Datagrid\ListMapper:
                 remove: [createdAt]
                 add:
+                    chartist: ~
+                        
                     field_to: ~
                     field_subject: ~
                     sent: ~
@@ -138,6 +166,10 @@ parameters:
         Librinfo\EmailBundle\Entity\EmailReceipt:
             Sonata\AdminBundle\Show\ShowMapper:
                 _copy: Sonata\AdminBundle\Form\FormMapper
+                add:
+                    form_group_general:
+                        '':
+                            email: ~
             Sonata\AdminBundle\Form\FormMapper:
                 add:
                     form_group_general:
@@ -150,11 +182,16 @@ parameters:
                 add:
                     address: ~
                     date: ~
+                    email: ~
                     
 ########## EmailLink ##########
         Librinfo\EmailBundle\Entity\EmailLink:
             Sonata\AdminBundle\Show\ShowMapper:
                 _copy: Sonata\AdminBundle\Form\FormMapper
+                add:
+                    form_group_general:
+                        '':
+                            email: ~
             Sonata\AdminBundle\Form\FormMapper:
                 add:
                     form_group_general:
@@ -168,4 +205,5 @@ parameters:
                 add:
                     destination: ~
                     address: ~
-                    date:
+                    date: ~
+                    email: ~

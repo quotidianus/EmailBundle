@@ -46,7 +46,8 @@
         "nelmio/api-doc-bundle": "^2.11",
         "friendsofsymfony/rest-bundle": "^1.7",
         "stfalcon/tinymce-bundle": "dev-master",
-        "html2text/html2text": "^4.0"
+        "html2text/html2text": "^4.0",
+        "ob/highcharts-bundle": "*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

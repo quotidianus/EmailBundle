@@ -51,10 +51,8 @@ class TrackingController extends Controller
         {
             foreach ($receipts->getSnapshot() as $receipt)
             {
-
                 if ($receipt->getAddress() == $recipient)
                 {
-
                     $count++;
                 }
             }

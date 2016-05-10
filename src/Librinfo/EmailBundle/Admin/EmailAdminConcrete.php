@@ -41,8 +41,12 @@ class EmailAdminConcrete extends EmailAdmin
     {
 
         $html2T = new Html2Text($email->getContent());
+<<<<<<< HEAD
      
         $email->setTextContent($html2T->getText());
+=======
+        
+>>>>>>> stats
     }
 
 }

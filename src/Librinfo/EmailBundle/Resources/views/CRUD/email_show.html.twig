@@ -14,9 +14,8 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('bundles/librinfoemail/js/jquery.classyloader.min.js') }}"></script>
-    {{dump(stats['links']['mostClicked'])}}
     {% if stats is defined %}
-        {% include 'LibrinfoEmailBundle:script:stats_script.js.twig' %}
+        {% include 'LibrinfoEmailBundle:script:stats_script.js.twig' %}      
     {% endif %}
 
 {% endblock %}

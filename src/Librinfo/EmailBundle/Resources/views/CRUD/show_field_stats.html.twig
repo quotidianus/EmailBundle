@@ -2,7 +2,7 @@
 {% extends 'SonataAdminBundle:CRUD:base_show_field.html.twig' %}
 
 {% block field %}
-    <div class="row">
+    <div class="row tracking">
         <div class=" stats">
             <p class = stat_label>Read receipts</p>
             <canvas id="receipts_loader"></canvas>
@@ -11,8 +11,7 @@
             <p class = stat_label>Links clicked (avg/recipient)</p>
             <canvas id="links_loader"></canvas>
         </div>
-    </div>
-    <div class="row">
+
         <div class=" stats" id="most_clicked">
             <p class = stat_label>Most clicked link: </p>
         </div>

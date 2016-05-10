@@ -2,6 +2,8 @@
 
     $(document).ready(function () {
 
+        $('.tracking').show();
+
         receiptsLoader();
         linksLoader();
         mostClicked();
@@ -55,7 +57,7 @@
     }
 
     function mostClicked() {
-        
+
         var link = '{{ stats['links']['mostClicked']['link'] }}';
         var html = '<p class="link">' + link + '</p> <span class="link_value"> {{ stats['links']['mostClicked']['value'] }} %</span>';
 
@@ -63,7 +65,7 @@
     }
 
     function leastClicked() {
-        
+
         var link = '{{ stats['links']['leastClicked']['link'] }}';
         var html = '<p class="link">' + link + '</p> <span class="link_value"> {{ stats['links']['leastClicked']['value'] }} % </span>';
 

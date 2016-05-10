@@ -85,9 +85,15 @@ parameters:
                     sent: ~
                     _actions:
                         type: actions
+                        label: Action
                         actions:
+                            show: ~
+                            edit: ~
+                            delete: ~
                             send:
                                 template: LibrinfoEmailBundle:CRUD:list__action_send.html.twig
+                            duplicate:
+                                template: LibrinfoEmailBundle:CRUD:list__action_duplicate.html.twig
                     _options:
                         fieldsOrder:
                             - field_to

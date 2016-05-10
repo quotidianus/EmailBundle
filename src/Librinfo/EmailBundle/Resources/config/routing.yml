@@ -13,7 +13,7 @@ librinfo_email_upload_remove:
     path:     librinfo/email/ajax/upload/remove/{fileName}/{fileSize}/{tempId}
     defaults: { _controller: LibrinfoEmailBundle:Ajax:removeUpload }
     
-# loads uploaded files to display in edit view
+# load uploaded files to display in edit view
 librinfo_email_attachments_load:
     path:     librinfo/email/ajax/upload/load/{emailId}
     defaults: { _controller: LibrinfoEmailBundle:Ajax:loadAttachments }

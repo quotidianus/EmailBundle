@@ -1,0 +1,72 @@
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        receiptsLoader();
+        linksLoader();
+        mostClicked();
+        leastClicked();
+    });
+
+    function receiptsLoader() {
+
+        var receiptsOptions = {
+            start: 'top',
+            diameter: 40,
+            height: 100,
+            width: 100,
+            lineWidth: 18,
+            fontSize: '30px',
+            fontFamily: 'Courier',
+            fontColor: 'rgba(73, 125, 164, 1)',
+            lineColor: 'rgba(73, 125, 164, 1)',
+            remainingLineColor: 'rgba(73, 125, 164, 0.1)'
+        };
+
+        var loader = $('#receipts_loader');
+
+        loader.ClassyLoader(receiptsOptions);
+
+        loader.setPercent( {{ stats['receipts'] }} );
+        loader.draw();
+    }
+
+    function linksLoader() {
+
+        var linksOptions = {
+            start: 'top',
+            diameter: 40,
+            height: 100,
+            width: 100,
+            lineWidth: 18,
+            fontSize: '30px',
+            fontFamily: 'Courier',
+            fontColor: 'rgba(73, 125, 164, 1)',
+            lineColor: 'rgba(73, 125, 164, 0.8)',
+            remainingLineColor: 'rgba(73, 125, 164, 0.1)'
+        };
+
+        var loader = $('#links_loader');
+
+        loader.ClassyLoader(linksOptions);
+
+        loader.setPercent( {{ stats['links']['average'] }} );
+        loader.draw();
+    }
+
+    function mostClicked() {
+        
+        var link = '{{ stats['links']['mostClicked']['link'] }}';
+        var html = '<p class="link">' + link + '</p> <span class="link_value"> {{ stats['links']['mostClicked']['value'] }} %</span>';
+
+        $('#most_clicked').append(html);
+    }
+
+    function leastClicked() {
+        
+        var link = '{{ stats['links']['leastClicked']['link'] }}';
+        var html = '<p class="link">' + link + '</p> <span class="link_value"> {{ stats['links']['leastClicked']['value'] }} % </span>';
+
+        $('#least_clicked').append(html);
+    }
+</script>

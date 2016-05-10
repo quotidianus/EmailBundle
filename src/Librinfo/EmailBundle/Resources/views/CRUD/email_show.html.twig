@@ -3,13 +3,20 @@
 
 {% block show %}
     {{ parent() }}
-  <p class="test_stat"> {{ dump(stats) }} </p>
+    
 {% endblock %}    
 
 {% block stylesheets %}
-  {{ parent() }}
+    {{ parent() }}
+    <link href="{{ asset('bundles/librinfoemail/css/stats.css') }}" type="text/css" rel="stylesheet" />
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/librinfoemail/js/jquery.classyloader.min.js') }}"></script>
+    {{dump(stats['links']['mostClicked'])}}
+    {% if stats is defined %}
+        {% include 'LibrinfoEmailBundle:script:stats_script.js.twig' %}
+    {% endif %}
+
 {% endblock %}

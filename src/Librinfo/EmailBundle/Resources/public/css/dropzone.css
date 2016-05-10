@@ -386,3 +386,14 @@
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
     border-bottom: 6px solid #be2626; }
+
+.dz-preview, .dz-file-preview{
+
+    z-index: 0
+}
+
+.dropzone-btn{
+
+    margin: 5px 3px 0px 0px;
+    display: inline-block;
+}

@@ -48,7 +48,8 @@ class EmailStats
                 $mostClicked = $stat;
 
         return array(
-            array_search($mostClicked, $linkStats) => $mostClicked
+            'link' => array_search($mostClicked, $linkStats),
+            'value' => $mostClicked
                 )
         ;
     }
@@ -62,7 +63,8 @@ class EmailStats
                 $leastClicked = $stat;
 
         return array(
-            array_search($leastClicked, $linkStats) => $leastClicked
+            'link' => array_search($leastClicked, $linkStats),
+            'value' => $leastClicked
                 )
         ;
     }
@@ -75,7 +77,7 @@ class EmailStats
         {
             $results[$key] = number_format(self::getPercentage(count($recipients), $value), 0);
         }
-        dump($results);
+
         return $results;
     }
 

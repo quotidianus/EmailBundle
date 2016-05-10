@@ -1,25 +1,33 @@
 parameters:
     librinfo:
+        configuration:
+            templates:
+                show:
+                    stats: LibrinfoEmailBundle:CRUD:show_field_stats.html.twig
 ######  Email ##########
         Librinfo\EmailBundle\Entity\Email:
             Sonata\AdminBundle\Show\ShowMapper:
-                _copy: Sonata\AdminBundle\Form\FormMapper
-                remove: [ content ]
                 add:
                     form_group_general:
                         '':
+                            field_to: ~
+                            field_cc: ~
+                            field_bcc: ~
+                            
                             textContent:
                                 type: textarea
                                 label: Content
-                    form_group_tracking:
-                        'tracking':
-                            links:
-                                type: chartist
-                            receipts:
-                                type: chartist
-                    _options:
-                        forceTabs: form_group_general
-                        tabsOrder: ['form_group_general', 'form_group_tracking']
+                        form_group_attachments:
+                            attachments: ~
+                        form_group_tracking:
+                            stats:
+                                type: stats
+                            _options:
+                                groupsOrder:
+                                - form_group_tracking
+                                - ''
+                                - form_group_attachments
+                                - from_group_misc
             Sonata\AdminBundle\Form\FormMapper:
                 add:
                     form_group_general:
@@ -70,18 +78,18 @@ parameters:
             Sonata\AdminBundle\Datagrid\ListMapper:
                 remove: [createdAt]
                 add:
+                    chartist: ~
+                        
                     field_to: ~
                     field_subject: ~
                     sent: ~
-                    _action:
+                    _actions:
                         type: actions
-                        _options:
-                            actions:
-                                send:
-                                    template: LibrinfoEmailBundle:CRUD:list__action_send.html.twig
+                        actions:
+                            send:
+                                template: LibrinfoEmailBundle:CRUD:list__action_send.html.twig
                     _options:
                         fieldsOrder:
-                            - field_from
                             - field_to
                             - field_subject
                     _export_format:

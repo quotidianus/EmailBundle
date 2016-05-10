@@ -46,26 +46,4 @@ class EmailAdminConcrete extends EmailAdmin
         $email->setTextContent($textContent);
     }
 
-    protected function configureListFields(ListMapper $listMapper)
-    {
-        $listMapper
-                ->add('field_to')
-                ->add('field_subject')
-                ->add('sent')
-                ->add('_action', 'actions', array(
-                    'actions' => array(
-                        'show' => array(),
-                        'edit' => array(),
-                        'delete' => array(),
-                        'send' => array(
-                            'template' => 'LibrinfoEmailBundle:CRUD:list__action_send.html.twig'
-                        ),
-                        'duplicate' => array(
-                            'template' => 'LibrinfoEmailBundle:CRUD:list__action_duplicate.html.twig'
-                        )
-                    )
-                ))
-        ;
-    }
-
 }

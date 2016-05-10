@@ -151,18 +151,22 @@ class CRUDController extends SonataCRUDController
 
     protected function preShow(Request $request, $object)
     {
+        $twigArray = array(
+            'action' => 'show',
+            'object' => $object,
+            'elements' => $this->admin->getShow()
+                )
+        ;
+
         if ($object->getTracking())
         {
             $statHelper = $this->get('librinfo.email.stats');
 
             $this->admin->setSubject($object);
+
+            $twigArray['stats'] = $statHelper->getStats($object);
         }
-        return $this->render($this->admin->getTemplate('show'), array(
-                    'action' => 'show',
-                    'object' => $object,
-                    'elements' => $this->admin->getShow(),
-                    'stats' => $statHelper->getStats($object)
-                        ), null);
+        return $this->render($this->admin->getTemplate('show'), $twigArray, null);
     }
 
     /*     * ***************************************************************************************************************************** */

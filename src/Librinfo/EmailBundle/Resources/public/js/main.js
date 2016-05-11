@@ -58,7 +58,7 @@ function setupDropzone() {
 
     Dropzone.autoDiscover = false;
 
-    var template = '<div class="table table-striped" class="files" id="previews"> <div id="template" class="file-row"> <!-- This is used as the file preview template --> <div> <span class="preview"><img data-dz-thumbnail /></span> </div> <div> <p class="name" data-dz-name></p> <strong class="error text-danger" data-dz-errormessage></strong> </div> <div> <button data-dz-remove class="btn btn-danger delete"> <i class="glyphicon glyphicon-trash"></i> </button> <button class="btn btn-info inline"> <i class="glyphicon glyphicon-arrow-up"></i> </button> </div> <div> <p class="size" data-dz-size></p> <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"> <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div> </div> </div> </div> </div>';
+    var template = '<div class="table table-striped" class="files" id="previews"> <div id="template" class="file-row"> <!-- This is used as the file preview template --> <div> <span class="preview"><img data-dz-thumbnail /></span> </div> <div> <p class="name" data-dz-name></p> <strong class="error text-danger" data-dz-errormessage></strong> </div> <div> <button data-dz-remove class="btn btn-danger delete"> <i class="glyphicon glyphicon-trash"></i> </button> <button class="btn btn-info inline"> <i class="glyphicon glyphicon-arrow-up"></i> </button> </div> <div> <p class="size" data-dz-size></p> <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"> <div class="progress-bar progress-bar-info" style="width:0%;" data-dz-uploadprogress></div> </div> </div> </div> </div>';
 
     var options = {
         url: "http://" + window.location.host + "/librinfo/email/ajax/upload",
@@ -71,7 +71,6 @@ function setupDropzone() {
     //init dropzone
     var dropzone = new Dropzone(".dropzone", options);
 
-    var action = getAction();
     var tempId = '';
 
     tempId = generateUUID();
@@ -101,6 +100,11 @@ function setupDropzone() {
 //        dropzone.processQueue();
 //    });
 
+    dropzone.on("queuecomplete", function (progress) {
+
+        updateProgressBar(0);
+    });
+
     dropzone.on("removedfile", function (file) {
 
         var tempId = $('input[name="temp_id"]').attr("value");
@@ -113,9 +117,12 @@ function setupDropzone() {
 
     dropzone.on("addedfile", function (file) {
 
+        updateProgressBar(1);
+        
         if (getAction() == 'edit') {
 
             $('input[name="temp_id"]').attr("value", file.tempId);
+            retrieveAttachments(dropzone);
         }
 
         $('button.inline').attr("file_name", file.name);
@@ -124,8 +131,6 @@ function setupDropzone() {
 
     inline(dropzone);
 
-    if (getAction() == 'edit')
-        retrieveAttachments(dropzone);
 }
 
 function inline(dropzone) {
@@ -176,4 +181,17 @@ function tinyMceInsert(data) {
 
     tinymce.activeEditor.execCommand('mceInsertContent', false, data);
     tinymce.activeEditor.execCommand('mceEndUndoLevel', false, data);
+}
+
+function updateProgressBar(e) {
+
+    if (e === 1) {
+        $('.progress').addClass("progress-striped");
+        $('.progress-bar').removeClass("progress-bar-success");
+        $('.progress-bar').addClass("progress-bar-info");
+    } else {
+        $('.progress-bar').removeClass("progress-bar-info");
+        $('.progress-bar').addClass("progress-bar-success");
+        $('.progress').removeClass("progress-striped");
+    }
 }

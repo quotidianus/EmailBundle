@@ -2,11 +2,15 @@
     display: none;
 }
 
+.link_row{
+    
+    padding-bottom: 20px;
+}
 
 .stats{
 
     display: inline-block;
-    padding: 30px;
+    padding: 40px;
 }
 
 .stat_label{
@@ -25,5 +29,5 @@
     
     color: #6994B4;
     font-weight: bold;
-    font-size: 2rem;
+    font-size: 1.7rem;
 }

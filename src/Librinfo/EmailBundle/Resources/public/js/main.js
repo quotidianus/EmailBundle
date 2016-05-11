@@ -58,13 +58,22 @@ function setupDropzone() {
 
     Dropzone.autoDiscover = false;
 
-    var template = '<div class="table table-striped" class="files" id="previews"> <div id="template" class="file-row"> <!-- This is used as the file preview template --> <div> <span class="preview"><img data-dz-thumbnail /></span> </div> <div> <p class="name" data-dz-name></p> <strong class="error text-danger" data-dz-errormessage></strong> </div> <div> <button data-dz-remove class="btn btn-danger delete"> <i class="glyphicon glyphicon-trash"></i> </button> <button class="btn btn-info inline"> <i class="glyphicon glyphicon-arrow-up"></i> </button> </div> <div> <p class="size" data-dz-size></p> <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"> <div class="progress-bar progress-bar-info" style="width:0%;" data-dz-uploadprogress></div> </div> </div> </div> </div>';
+    var template = '<div class="table table-striped" class="files" id="previews">' +
+            '<div id="template" class="file-row">' +
+            '<div> <span class="preview"><img data-dz-thumbnail /></span></div>' +
+            '<div> <p class="name" data-dz-name></p> <strong class="error text-danger" data-dz-errormessage></strong> </div>' +
+            '<div> <button data-dz-remove class="btn btn-danger delete"> <i class="glyphicon glyphicon-trash"></i> </button>' +
+            '<button class="btn btn-info inline"> <i class="glyphicon glyphicon-arrow-up"></i></button> </div>' +
+            '<div> <p class="size" data-dz-size></p> ' +
+            '<div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">' +
+            '<div class="progress-bar progress-bar-info" style="width:0%;" data-dz-uploadprogress></div> </div> </div> </div> </div>';
 
     var options = {
         url: "http://" + window.location.host + "/librinfo/email/ajax/upload",
         paramName: "file",
         uploadMultiple: false,
         maxFiles: 5,
+        maxFileSize: 5,
         previewTemplate: template,
         clickable: ".add_files"
     };
@@ -117,17 +126,24 @@ function setupDropzone() {
 
     dropzone.on("addedfile", function (file) {
 
+        if (file.size > 5 * 1024 * 1024) {
+
+            dropzone.cancelUpload(file);
+            dropzone.emit("error", file, "Max file size(5mb) exceeded");
+        }
         updateProgressBar(1);
-        
+
         if (getAction() == 'edit') {
 
             $('input[name="temp_id"]').attr("value", file.tempId);
-            retrieveAttachments(dropzone);
         }
 
         $('button.inline').attr("file_name", file.name);
         $('button.inline').attr("file_size", file.size);
     });
+
+    if (getAction() == 'edit')
+        retrieveAttachments(dropzone);
 
     inline(dropzone);
 

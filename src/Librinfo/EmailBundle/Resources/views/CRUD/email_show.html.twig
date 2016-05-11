@@ -3,7 +3,9 @@
 
 {% block show %}
     {{ parent() }}
-    
+    {% if admin.id(object) is not null %}
+        <a class="btn btn-info" href="{{ admin.generateObjectUrl('duplicate', object) }}"><i class="fa fa-files-o"></i> {{ 'Duplicate'|trans({}, 'SonataAdminBundle') }}</a>
+    {% endif %}
 {% endblock %}    
 
 {% block stylesheets %}

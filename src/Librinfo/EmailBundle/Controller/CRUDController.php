@@ -37,12 +37,13 @@ class CRUDController extends SonataCRUDController
         $addresses = explode(';', $this->email->getFieldTo());
         $this->isNewsLetter = count($addresses) > 1;
 
-//        if($this->email->getSent()){
-//            
-//            $this->addFlash('sonata_flash_error', "Message " . $id . " déjà envoyé");
-//            
-//            return new RedirectResponse($this->admin->generateUrl('list', $this->admin->getFilterParameters()));
-//        }
+        if ($this->email->getSent())
+        {
+
+            $this->addFlash('sonata_flash_error', "Message " . $id . " déjà envoyé");
+
+            return new RedirectResponse($this->admin->generateUrl('list', $this->admin->getFilterParameters()));
+        }
 
         if ($this->isNewsLetter)
         {
@@ -225,27 +226,18 @@ class CRUDController extends SonataCRUDController
 
             // persist if the form was valid and if in preview mode the preview was approved
             if ($isFormValid && (!$this->isInPreviewMode($request) || $this->isPreviewApproved($request)))
-            {
+            { 
                 $this->admin->checkAccess('create', $object);
-
+              
                 try {
                     $object = $this->admin->create($object);
-                    /**                     * *********************************************************************************** */
-                    if ($object->getIsTest())
-                    {
-                        $this->email = $object;
-                        $this->directSend($object->getTestAdress());
-                    }
+                 
+                    $object->setIsTest(true);
+                    
+                    $this->handleTest($object);
 
-                    if ($object->getIsTemplate())
-                    {
-                        $template = new \Librinfo\EmailBundle\Entity\EmailTemplate();
-                        $template->setContent($object->getContent());
-                        $template->setName($object->getNewTemplateName());
-                        $this->manager->persist($template);
-                        $this->manager->flush();
-                    }
-                    /**                     * *********************************************************************************** */
+                    $this->handleTemplate($object);
+                    
                     if ($this->isXmlHttpRequest())
                     {
                         return $this->renderJson(array(
@@ -348,20 +340,9 @@ class CRUDController extends SonataCRUDController
                 try {
                     $object = $this->admin->update($object);
                     /*                     * ********************************************************************************************** */
-                    if ($object->getIsTest())
-                    {
-                        $this->email = $object;
-                        $this->directSend($object->getTestAdress());
-                    }
+                    $this->handleTest($object);
 
-                    if ($object->getIsTemplate())
-                    {
-                        $template = new \Librinfo\EmailBundle\Entity\EmailTemplate();
-                        $template->setContent($object->getContent());
-                        $template->setName($object->getNewTemplateName());
-                        $this->manager->persist($template);
-                        $this->manager->flush();
-                    }
+                    $this->handleTemplate($object);
                     /*                     * **************************************************************************************** */
                     if ($this->isXmlHttpRequest())
                     {
@@ -433,6 +414,29 @@ class CRUDController extends SonataCRUDController
         {
             $attachment->setEmail($object);
             $this->manager->persist($attachment);
+        }
+    }
+
+    protected function handleTest($email)
+    {
+
+        if ($email->getIsTest() && $email->getTestAddress())
+        {
+            $this->email = $email;
+            $this->directSend($email->getTestAddress());
+        }
+    }
+
+    protected function handleTemplate($email)
+    {
+
+        if ($email->getIsTemplate() && $email->getNewTemplateName())
+        {
+            $template = new \Librinfo\EmailBundle\Entity\EmailTemplate();
+            $template->setContent($email->getContent());
+            $template->setName($email->getNewTemplateName());
+            $this->manager->persist($template);
+            $this->manager->flush();
         }
     }
 

@@ -72,7 +72,7 @@ class Email extends Spoolable
     /**
      * @var string
      */
-    private $testAdress;
+    private $testAddress;
     
     /**
      * @var bool
@@ -366,14 +366,14 @@ class Email extends Spoolable
         $this->isTest = $isTest;
     }
 
-    public function getTestAdress()
+    public function getTestAddress()
     {
-        return $this->testAdress;
+        return $this->testAddress;
     }
     
-    public function setTestAdress($testAdress = NULL)
+    public function setTestAddress($testAddress = NULL)
     {
-        $this->testAdress = $testAdress;
+        $this->testAddress = $testAddress;
     }
     
     public function getTemplate()

@@ -8,8 +8,8 @@ parameters:
         Librinfo\EmailBundle\Entity\Email:
             Sonata\AdminBundle\Show\ShowMapper:
                 add:
-                    form_group_general:
-                        '':
+                   default:
+                        form_group_general:
                             field_to: ~
                             field_cc: ~
                             field_bcc: ~
@@ -22,12 +22,12 @@ parameters:
                         form_group_tracking:
                             stats:
                                 type: stats
-                            _options:
-                                groupsOrder:
-                                - form_group_tracking
-                                - ''
-                                - form_group_attachments
-                                - from_group_misc
+                        _options:
+                            groupsOrder:
+                            - form_group_general
+                            - form_group_tracking
+                            - form_group_attachments
+                            - from_group_misc
             Sonata\AdminBundle\Form\FormMapper:
                 add:
                     form_group_general:
@@ -38,10 +38,13 @@ parameters:
                                 type: text
                             field_subject:
                                 type: text
+                                required: false
                             field_cc:
                                 type: text
+                                required: false
                             field_bcc:
                                 type: text
+                                required: false
                             template:
                                 attr:
                                     class: template_select
@@ -66,7 +69,7 @@ parameters:
                                 required: false
                                 attr:
                                     class: is_test
-                            testAdress:
+                            testAddress:
                                 type: text
                                 required: false
                             tracking:
@@ -74,7 +77,6 @@ parameters:
                                 required: false
                     _options:
                         tabsOrder: [ form_group_general, form_group_specifics ]
-                        groupsOrder: ['', attachments]
             Sonata\AdminBundle\Datagrid\ListMapper:
                 remove: [createdAt]
                 add:
@@ -116,28 +118,6 @@ parameters:
                         fieldsOrder:
                             - field_to
                             - field_subject
-
-###### EmailAttachment  ############
-        Librinfo\EmailBundle\Entity\EmailAttachment:
-            Sonata\AdminBundle\Show\ShowMapper:
-                _copy: Sonata\AdminBundle\Datagrid\ListMapper
-            Sonata\AdminBundle\Form\FormMapper:
-                add:
-                    form_group_general:
-                        '':
-                            file:
-                                type: file
-                                required: false
-                                data_class: null
-            Sonata\AdminBundle\Datagrid\ListMapper:
-                add:
-                    name: ~
-                    mimeType: ~
-                    size: ~
-            Sonata\AdminBundle\Datagrid\DatagridMapper:
-                add:
-                    name: ~
-                    mimeType: ~
                     
 ########## EmailTemplate ##########
         Librinfo\EmailBundle\Entity\EmailTemplate:
@@ -161,49 +141,3 @@ parameters:
                 add:
                     name: ~
                     content: ~
-
-########## EmailReceipt ##########
-        Librinfo\EmailBundle\Entity\EmailReceipt:
-            Sonata\AdminBundle\Show\ShowMapper:
-                _copy: Sonata\AdminBundle\Form\FormMapper
-                add:
-                    form_group_general:
-                        '':
-                            email: ~
-            Sonata\AdminBundle\Form\FormMapper:
-                add:
-                    form_group_general:
-                        '':
-                            address: ~
-                            date: ~
-                    _options:
-                            tabsOrder: [form_group_general, form_group_specifics]
-            Sonata\AdminBundle\Datagrid\ListMapper:
-                add:
-                    address: ~
-                    date: ~
-                    email: ~
-                    
-########## EmailLink ##########
-        Librinfo\EmailBundle\Entity\EmailLink:
-            Sonata\AdminBundle\Show\ShowMapper:
-                _copy: Sonata\AdminBundle\Form\FormMapper
-                add:
-                    form_group_general:
-                        '':
-                            email: ~
-            Sonata\AdminBundle\Form\FormMapper:
-                add:
-                    form_group_general:
-                        '':
-                            destination: ~
-                            address: ~
-                            date: ~
-                    _options:
-                            tabsOrder: [form_group_general, form_group_specifics]
-            Sonata\AdminBundle\Datagrid\ListMapper:
-                add:
-                    destination: ~
-                    address: ~
-                    date: ~
-                    email: ~

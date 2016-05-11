@@ -35,7 +35,9 @@ class EmailStats
 
     protected function linkSuccessRate($linkStats)
     {
-
+         if(!$linkStats)
+            return 0;
+        
         return number_format(self::getAverage($linkStats), 0);
     }
 
@@ -56,6 +58,13 @@ class EmailStats
 
     protected function leastClicked($linkStats)
     {
+        if(!$linkStats)
+            return array(
+            'link' => '',
+            'value' => 0
+                )
+        ;
+        
         $leastClicked = 100;
 
         foreach ($linkStats as $stat)
@@ -125,7 +134,9 @@ class EmailStats
 
     protected function getAverage($values)
     {
-
+        if(!$values)
+            return 0;
+        
         return array_sum($values) / count($values);
     }
 

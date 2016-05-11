@@ -59,7 +59,12 @@
     function mostClicked() {
 
         var link = '{{ stats['links']['mostClicked']['link'] }}';
-        var html = '<p class="link">' + link + '</p> <span class="link_value"> {{ stats['links']['mostClicked']['value'] }} %</span>';
+
+        if (link) {
+            html = '<p class="link">' + link + '</p> <span class="link_value"> {{ stats['links']['mostClicked']['value'] }} % </span>';
+        } else {
+            html = '<p class="link">No links clicked</p>';
+        }
 
         $('#most_clicked').append(html);
     }
@@ -67,8 +72,12 @@
     function leastClicked() {
 
         var link = '{{ stats['links']['leastClicked']['link'] }}';
-        var html = '<p class="link">' + link + '</p> <span class="link_value"> {{ stats['links']['leastClicked']['value'] }} % </span>';
 
+        if (link) {
+            html = '<p class="link">' + link + '</p> <span class="link_value"> {{ stats['links']['leastClicked']['value'] }} % </span>';
+        } else {
+            html = '<p class="link">No links clicked</p>';
+        }
         $('#least_clicked').append(html);
     }
 </script>

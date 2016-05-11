@@ -1,5 +1,5 @@
-{% if admin.hasRoute('send') %}
-    <a href="{{ admin.generateObjectUrl('send', object) }}" class="btn btn-sm btn-default delete_link" title="{{ 'Send'|trans({}, 'SonataAdminBundle') }}">
+{% if admin.hasRoute('send') and not object.sent %}
+    <a href="{{ admin.generateObjectUrl('send', object) }}" class="btn btn-sm btn-default" title="{{ 'Send'|trans({}, 'SonataAdminBundle') }}">
         <i class="fa fa-paper-plane"></i>
         {{ 'action_send'|trans({}, 'SonataAdminBundle') }}
     </a>

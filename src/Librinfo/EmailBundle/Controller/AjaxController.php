@@ -10,6 +10,11 @@ use Librinfo\EmailBundle\Entity\EmailAttachment;
 class AjaxController extends Controller
 {
 
+    /**
+     * 
+     * @param type $templateId
+     * @return Response The template content that will be inserted into the main content
+     */
     public function getEmailTemplateAction($templateId)
     {
         $repo = $this->getDoctrine()->getRepository('LibrinfoEmailBundle:EmailTemplate');
@@ -18,10 +23,17 @@ class AjaxController extends Controller
         return new Response($template->getContent(), 200);
     }
 
+    /**
+     * Upload of attachments
+     * 
+     * @param Request $request
+     * @return Response
+     */
     public function uploadAction(Request $request)
     {
         $manager = $this->getDoctrine()->getManager();
 
+        //tempId used to link an attachment to an email that has yet to be persisted
         $tempId = $request->get('temp_id');
         $file = $request->files->get('file');
 
@@ -39,6 +51,14 @@ class AjaxController extends Controller
         return new Response("Ok", 200);
     }
 
+    /**
+     * Removal of uploaded attachments
+     * 
+     * @param type $fileName
+     * @param type $fileSize
+     * @param type $tempId
+     * @return Response
+     */
     public function removeUploadAction($fileName, $fileSize, $tempId)
     {
 
@@ -57,6 +77,13 @@ class AjaxController extends Controller
         return new Response($fileName . " removed successfully", 200);
     }
 
+    /**
+     * 
+     * @param type $fileName
+     * @param type $fileSize
+     * @param type $tempId
+     * @return Response img tag that will be embedded into the main content
+     */
     public function addToContentAction($fileName, $fileSize, $tempId)
     {
 
@@ -76,6 +103,12 @@ class AjaxController extends Controller
         return new Response($fileName . " is not an image", 300);
     }
 
+    /**
+     * Retrieves the attachments of an email for edit aciton
+     * 
+     * @param type $emailId
+     * @return Response attachments converted to json array
+     */
     public function loadAttachmentsAction($emailId)
     {
         $repo = $this->getDoctrine()->getRepository('LibrinfoEmailBundle:EmailAttachment');
@@ -85,9 +118,14 @@ class AjaxController extends Controller
         return new Response($this->attachmentsToJson($attachments), 200);
     }
 
+    /**
+     * Converts attachment collection to json array
+     * 
+     * @param type $attachments
+     * @return type
+     */
     private function attachmentsToJson($attachments)
     {
-
         $jsonAttachments = '[';
         $keySet = array_keys($attachments);
         $lastKey = end($keySet);
@@ -111,6 +149,12 @@ class AjaxController extends Controller
         return $jsonAttachments . "]";
     }
 
+    /**
+     * Checks if the file is an image with its mimetype
+     * 
+     * @param type $attachment
+     * @return boolean
+     */
     private function isImage($attachment)
     {
         if ($attachment && preg_match('!^image\/!', $attachment->getMimeType()) === 1)
@@ -120,6 +164,12 @@ class AjaxController extends Controller
         return false;
     }
 
+    /**
+     * Generates the img tag from attachment file
+     * 
+     * @param type $attachment
+     * @return string
+     */
     private function generateImgTag($attachment)
     {
         $alt = explode('.', $attachment->getName())[0];

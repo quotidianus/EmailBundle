@@ -6,7 +6,12 @@ use Librinfo\EmailBundle\Entity\Email;
 
 class EmailCloning
 {
-
+    /**
+     * Clone Email excluding id for duplicate action
+     * 
+     * @param Email $email
+     * @return Email
+     */
     public function cloneEmail(Email $email)
     {
         $newEmail = new Email();

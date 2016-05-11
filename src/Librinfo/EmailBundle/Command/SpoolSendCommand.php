@@ -35,7 +35,9 @@ EOF
     }
 
     /**
-     * {@inheritdoc}
+     * 
+     * @param InputInterface $input
+     * @param OutputInterface $output
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -53,6 +55,13 @@ EOF
         }
     }
 
+    /**
+     * 
+     * @param type $name
+     * @param type $input
+     * @param type $output
+     * @throws \InvalidArgumentException
+     */
     private function processMailer($name, $input, $output)
     {
         if (!$this->getContainer()->has(sprintf('swiftmailer.mailer.%s', $name)))
@@ -67,6 +76,8 @@ EOF
             if ($transport instanceof \Swift_Transport_SpoolTransport)
             {
                 $spool = $transport->getSpool();
+                
+                //add command options
                 if ($spool instanceof \Swift_ConfigurableSpool)
                 {
                     $spool->setMessageLimit($input->getOption('message-limit'));

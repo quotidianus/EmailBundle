@@ -1,8 +1,15 @@
 $(document).ready(function () {
+    
+    var form = $('.sonata-ba-form form');
+    var confirmExit = form.serialize();
+    console.log(confirmExit);
 
     templateSelect();
     checkIsTest();
     setupDropzone();
+    
+    //make form not dirty 
+    $('.sonata-ba-form form').confirmExit();
 });
 
 //handles retrieving and insertion of template into main content
@@ -43,7 +50,7 @@ function getEmailId() {
 
 //handles checking and disabling of isTest checkbox
 function checkIsTest() {
-
+    
     var action = getAction();
     var checkbox = $("input.is_test");
 

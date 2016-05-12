@@ -6,6 +6,35 @@ parameters:
                     stats: LibrinfoEmailBundle:CRUD:show_field_stats.html.twig
 ######  Email ##########
         Librinfo\EmailBundle\Entity\Email:
+            Sonata\AdminBundle\Datagrid\ListMapper:
+                remove: [createdAt]
+                add:
+                    field_to: ~
+                    field_subject: ~
+                    sent: ~
+                    _actions:
+                        type: actions
+                        label: Action
+                        actions:
+                            show: ~
+                            edit: ~
+                            delete: ~
+                            duplicate:
+                                template: LibrinfoEmailBundle:CRUD:list__action_duplicate.html.twig
+                                route: duplicate
+                            send:
+                                template: LibrinfoEmailBundle:CRUD:list__action_send.html.twig
+                    
+                    _options:
+                        fieldsOrder:
+                            - field_to
+                            - field_subject
+                            - sent
+                    _export_format:
+                        csv: [ field_from, field_to, field_subject, field_cc, field_bcc, textContent, createdAt, updatedAt]
+                        xls: csv
+                        json: csv
+                        xml: csv
             Sonata\AdminBundle\Show\ShowMapper:
                 add:
                    default:
@@ -77,35 +106,6 @@ parameters:
                                 required: false
                     _options:
                         tabsOrder: [ form_group_general, form_group_specifics ]
-            Sonata\AdminBundle\Datagrid\ListMapper:
-                remove: [createdAt]
-                add:
-                    chartist: ~
-                        
-                    field_to: ~
-                    field_subject: ~
-                    sent: ~
-                    _actions:
-                        type: actions
-                        label: Action
-                        actions:
-                            show: ~
-                            edit: ~
-                            delete: ~
-                            send:
-                                template: LibrinfoEmailBundle:CRUD:list__action_send.html.twig
-                            duplicate:
-                                template: LibrinfoEmailBundle:CRUD:list__action_duplicate.html.twig
-                    _options:
-                        fieldsOrder:
-                            - field_to
-                            - field_subject
-                            - sent
-                    _export_format:
-                        csv: [ field_from, field_to, field_subject, field_cc, field_bcc, textContent, createdAt, updatedAt]
-                        xls: csv
-                        json: csv
-                        xml: csv
             Sonata\AdminBundle\Datagrid\DatagridMapper:
                 add:
                     field_from: ~

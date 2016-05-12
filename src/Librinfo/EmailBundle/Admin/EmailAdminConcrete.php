@@ -3,19 +3,11 @@
 namespace Librinfo\EmailBundle\Admin;
 
 use Librinfo\CoreBundle\Admin\Traits\HandlesRelationsAdmin;
-use Sonata\AdminBundle\Route\RouteCollection;
 use Html2Text\Html2Text;
 
 class EmailAdminConcrete extends EmailAdmin
 {
-
     use HandlesRelationsAdmin;
-
-    protected function configureRoutes(RouteCollection $collection)
-    {
-        $collection->add('send', $this->getRouterIdParameter() . '/send');
-        $collection->add('duplicate', $this->getRouterIdParameter() . '/duplicate');
-    }
 
     public function prePersist($email)
     {

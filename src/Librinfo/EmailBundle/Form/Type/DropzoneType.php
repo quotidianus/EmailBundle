@@ -5,6 +5,9 @@ namespace Librinfo\EmailBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * File upload form type
+ */
 class DropzoneType extends AbstractType
 {
 

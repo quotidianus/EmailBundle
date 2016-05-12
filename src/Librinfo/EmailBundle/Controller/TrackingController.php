@@ -11,8 +11,19 @@ use Librinfo\EmailBundle\Entity\EmailLink;
 class TrackingController extends Controller
 {
 
+    /**
+     *
+     * @var EntityManager $manager
+     */
     private $manager;
 
+    /**
+     * Keep track of email openings
+     * 
+     * @param String $emailId
+     * @param String $recipient
+     * @return Response
+     */
     public function trackOpensAction($emailId, $recipient)
     {
         $this->trackOpens($emailId, $recipient);
@@ -20,11 +31,20 @@ class TrackingController extends Controller
         return new Response("ok", 200);
     }
 
+    /**
+     * Keep track of followed email links
+     * 
+     * @param String $emailId
+     * @param String $recipient
+     * @param String $destination
+     * @return RedirectResponse
+     */
     public function trackLinksAction($emailId, $recipient, $destination)
     {
 
         $dest = base64_decode($destination);
 
+        //if the email has no delivery confirmation the link click is one
         $this->trackOpens($emailId, $recipient);
 
         $this->trackLinks($emailId, $recipient, $dest);
@@ -32,6 +52,11 @@ class TrackingController extends Controller
         return new RedirectResponse($dest, 302);
     }
 
+    /**
+     * 
+     * @param String $emailId
+     * @param String $recipient
+     */
     public function trackOpens($emailId, $recipient)
     {
         $count = 0;
@@ -61,6 +86,12 @@ class TrackingController extends Controller
             $this->addReceipt($email, $recipient);
     }
 
+    /**
+     * 
+     * @param String $emailId
+     * @param String $recipient
+     * @param String $destination
+     */
     private function trackLinks($emailId, $recipient, $destination)
     {
         $count = 0;
@@ -92,6 +123,11 @@ class TrackingController extends Controller
             $this->addLink($email, $recipient, $destination);
     }
 
+    /**
+     * Creates and persists the EmailReceipt entity
+     * @param Email $email
+     * @param String $recipient
+     */
     private function addReceipt($email, $recipient)
     {
         $newReceipt = new EmailReceipt();
@@ -105,6 +141,12 @@ class TrackingController extends Controller
         $this->manager->flush();
     }
 
+    /**
+     * Creates and persists the EmailLink entity
+     * @param type $email
+     * @param type $recipient
+     * @param type $destination
+     */
     private function addLink($email, $recipient, $destination)
     {
         $newLink = new EmailLink();
@@ -121,10 +163,7 @@ class TrackingController extends Controller
     private function initManager()
     {
         if (!$this->manager)
-        {
-
             $this->manager = $this->getDoctrine()->getManager();
-        }
     }
 
 }

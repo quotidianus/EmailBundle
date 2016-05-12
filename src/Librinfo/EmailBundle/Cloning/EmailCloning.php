@@ -6,6 +6,7 @@ use Librinfo\EmailBundle\Entity\Email;
 
 class EmailCloning
 {
+
     /**
      * Clone Email excluding id for duplicate action
      * 

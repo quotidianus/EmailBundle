@@ -7,6 +7,14 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 class Tracking extends ContainerAware
 {
 
+    /**
+     * Adds tracking to an Email
+     * 
+     * @param String $content
+     * @param String $address
+     * @param String $emailId
+     * @return string email content updated with tracking info
+     */
     public function addTracking($content, $address, $emailId)
     {
         $updatedContent = $this->processLinks($content, $address, $emailId) . $this->getTracker($address, $emailId);
@@ -14,6 +22,14 @@ class Tracking extends ContainerAware
         return $updatedContent;
     }
 
+    /**
+     * Parse links in the content and redirect them to track clicks
+     * 
+     * @param type $content
+     * @param type $address
+     * @param type $emailId
+     * @return type
+     */
     private function processLinks($content, $address, $emailId)
     {
         $links = array();
@@ -32,6 +48,13 @@ class Tracking extends ContainerAware
         return $content;
     }
 
+    /**
+     * Add 1*1 img to Email content track openings
+     * 
+     * @param type $address
+     * @param type $emailId
+     * @return type
+     */
     private function getTracker($address, $emailId)
     {
         return '<img src="http:localhost:8000/app_dev.php/tracking/' .

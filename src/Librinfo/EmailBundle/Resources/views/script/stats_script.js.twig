@@ -1,3 +1,8 @@
+
+{# Manages display of stats with classyloader plugin
+
+The script is put in a twig file to pass controller data to the js plugin
+#}
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -10,6 +15,7 @@
         leastClicked();
     });
 
+    //initializes classyloader for read receipts stats
     function receiptsLoader() {
 
         var receiptsOptions = {
@@ -33,6 +39,7 @@
         loader.draw();
     }
 
+    //inititalizes classyloader for link clicks stats
     function linksLoader() {
 
         var linksOptions = {
@@ -56,6 +63,7 @@
         loader.draw();
     }
 
+    //Inserts most clinked link stats in the view
     function mostClicked() {
 
         var link = '{{ stats['links']['mostClicked']['link'] }}';
@@ -69,6 +77,7 @@
         $('#most_clicked').append(html);
     }
 
+    //Inserts least clinked link stats in the view
     function leastClicked() {
 
         var link = '{{ stats['links']['leastClicked']['link'] }}';

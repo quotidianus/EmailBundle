@@ -14,14 +14,16 @@ function templateSelect() {
     });
 }
 
+//retrieves template content and inserts it into tinymce editor
 function getTemplate(templateId) {
-    //ajax call to retrieve the template content
+    
     $.get("http://" + window.location.host + "/librinfo/email/ajax/getTemplate/" + templateId, function (data) {
-        //insertion of the content into the tinyMce editor
+        
         tinyMceInsert(data);
     });
 }
 
+// Returns the current action (show/list/edit) from url
 function getAction() {
 
     var url = window.location.href;
@@ -29,6 +31,7 @@ function getAction() {
     return url.split("/").pop();
 }
 
+//Get current email id from url
 function getEmailId() {
 
     var splitUrl = window.location.href.split("/");
@@ -77,7 +80,7 @@ function setupDropzone() {
         previewTemplate: template,
         clickable: ".add_files"
     };
-    //init dropzone
+    //init dropzone plugin
     var dropzone = new Dropzone(".dropzone", options);
 
     var tempId = '';
@@ -93,12 +96,14 @@ function setupDropzone() {
         formData.append("temp_id", tempId);
     });
 
+    //event listener for th button that clears the upload queue
     $('.clear').click(function (e) {
 
         e.preventDefault();
         dropzone.removeAllFiles(true);
     });
 
+    //prevent submitting of the form when add files button is clicked
     $('.add_files').click(function (e) {
 
         e.preventDefault();
@@ -114,6 +119,7 @@ function setupDropzone() {
         updateProgressBar(0);
     });
 
+    //handles removal of already uploaded files
     dropzone.on("removedfile", function (file) {
 
         var tempId = $('input[name="temp_id"]').attr("value");
@@ -124,24 +130,30 @@ function setupDropzone() {
         });
     });
 
+    
     dropzone.on("addedfile", function (file) {
 
+        //file size validation
         if (file.size > 5 * 1024 * 1024) {
 
             dropzone.cancelUpload(file);
             dropzone.emit("error", file, "Max file size(5mb) exceeded");
         }
+        
         updateProgressBar(1);
-
+        
+        //replace generated tempId with existing files tempId
         if (getAction() == 'edit') {
 
             $('input[name="temp_id"]').attr("value", file.tempId);
         }
 
+        //add file info to html tag for ajax call
         $('button.inline').attr("file_name", file.name);
         $('button.inline').attr("file_size", file.size);
     });
 
+    //retrieve existing attachments in edit action
     if (getAction() == 'edit')
         retrieveAttachments(dropzone);
 
@@ -149,6 +161,7 @@ function setupDropzone() {
 
 }
 
+//retrieves img tag generated from file and inserts it into tinymce editor
 function inline(dropzone) {
 
     var tempId = $('input[name="temp_id"]').attr("value");

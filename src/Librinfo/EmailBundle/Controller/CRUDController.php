@@ -10,12 +10,41 @@ use Symfony\Component\HttpFoundation\Response;
 class CRUDController extends SonataCRUDController
 {
 
+    /**
+     *
+     * @var SwiftMailer $mailer
+     */
     private $mailer;
+
+    /**
+     *
+     * @var EntityManager $manager
+     */
     private $manager;
+
+    /**
+     *
+     * @var Email $email
+     */
     private $email;
+
+    /**
+     *
+     * @var Array $attachments
+     */
     private $attachments;
+
+    /**
+     *
+     * @var Boolean $isNewsLetter Wheter the email has one or more recipients
+     */
     private $isNewsLetter;
 
+    /**
+     * Clones the email excluding the id and passes it to the create action wich returns the response
+     * 
+     * @return Response
+     */
     public function duplicateAction()
     {
         $id = $this->getRequest()->get($this->admin->getIdParameter());
@@ -28,6 +57,11 @@ class CRUDController extends SonataCRUDController
         return $this->createAction($object);
     }
 
+    /**
+     * Sends the email and redirects to list view keeping filter parameters
+     * 
+     * @return RedirectResponse
+     */
     public function sendAction()
     {
         $this->manager = $this->getDoctrine()->getManager();
@@ -37,9 +71,9 @@ class CRUDController extends SonataCRUDController
         $addresses = explode(';', $this->email->getFieldTo());
         $this->isNewsLetter = count($addresses) > 1;
 
+        //prevent resending of an email
         if ($this->email->getSent())
         {
-
             $this->addFlash('sonata_flash_error', "Message " . $id . " déjà envoyé");
 
             return new RedirectResponse($this->admin->generateUrl('list', $this->admin->getFilterParameters()));
@@ -58,6 +92,10 @@ class CRUDController extends SonataCRUDController
         return new RedirectResponse($this->admin->generateUrl('list', $this->admin->getFilterParameters()));
     }
 
+    /**
+     * sends the mail directly
+     * @param String $address
+     */
     private function directSend($address)
     {
         $this->setDirectMailer();
@@ -73,6 +111,10 @@ class CRUDController extends SonataCRUDController
         $this->updateEmailEntity($message, false);
     }
 
+    /**
+     * Spools the email
+     * @param Array $addresses
+     */
     private function newsLetterSend($addresses)
     {
         $this->setSpoolMailer();
@@ -84,17 +126,22 @@ class CRUDController extends SonataCRUDController
         $this->mailer->send($message);
     }
 
-    public function setDirectMailer()
+    private function setDirectMailer()
     {
         $this->mailer = $this->get('swiftmailer.mailer.direct_mailer');
     }
 
-    public function setSpoolMailer()
+    private function setSpoolMailer()
     {
         $this->mailer = $this->get('swiftmailer.mailer.spool_mailer');
     }
 
-    public function setupSwiftMessage($to)
+    /**
+     * 
+     * @param String $to
+     * @return SwiftMessage
+     */
+    private function setupSwiftMessage($to)
     {
         $content = $this->email->getContent();
 
@@ -119,6 +166,10 @@ class CRUDController extends SonataCRUDController
         return $message;
     }
 
+    /**
+     * Adds attachlents to the SwiftMessage
+     * @param SwiftMessage $message
+     */
     private function addAttachments($message)
     {
         if (count($this->attachments) > 0)
@@ -137,10 +188,16 @@ class CRUDController extends SonataCRUDController
         }
     }
 
+    /**
+     * 
+     * @param SwiftMessage $message
+     * @param Boolean $isNewsLetter
+     */
     private function updateEmailEntity($message, $isNewsLetter)
     {
         if ($isNewsLetter)
         {
+            //set the id of the swift message so it can be retrieve from spoll fulshQueue()
             $this->email->setMessageId($message->getId());
         } else if (!$this->email->getIsTest())
         {
@@ -150,6 +207,13 @@ class CRUDController extends SonataCRUDController
         $this->manager->flush();
     }
 
+    /**
+     * Adds tracking data to show view
+     * 
+     * @param Request $request
+     * @param Email $object
+     * @return Response
+     */
     protected function preShow(Request $request, $object)
     {
         $twigArray = array(
@@ -170,10 +234,12 @@ class CRUDController extends SonataCRUDController
         return $this->render($this->admin->getTemplate('show'), $twigArray, null);
     }
 
-    /*     * ***************************************************************************************************************************** */
-    /*     * ***************               OVERRIDED  CRUD  ACTIONS                         ******************************************** */
-    /*     * ***************************************************************************************************************************** */
-
+    /**
+     * Overrides SonataAdminBundle CRUDController
+     * 
+     * @param Email $object
+     * @return Response
+     */
     public function createAction($object = Null)
     {
         $request = $this->getRequest();
@@ -226,18 +292,19 @@ class CRUDController extends SonataCRUDController
 
             // persist if the form was valid and if in preview mode the preview was approved
             if ($isFormValid && (!$this->isInPreviewMode($request) || $this->isPreviewApproved($request)))
-            { 
+            {
                 $this->admin->checkAccess('create', $object);
-              
+
                 try {
                     $object = $this->admin->create($object);
-                 
+
+                    //set email isTest to true as the checkbox is disabled in create action
                     $object->setIsTest(true);
-                    
+
                     $this->handleTest($object);
 
                     $this->handleTemplate($object);
-                    
+
                     if ($this->isXmlHttpRequest())
                     {
                         return $this->renderJson(array(
@@ -292,6 +359,13 @@ class CRUDController extends SonataCRUDController
                         ), null);
     }
 
+    /**
+     * Overrides SonataAdminBundle CRUDController
+     * 
+     * @param type $id
+     * @return type
+     * @throws type
+     */
     public function editAction($id = null)
     {
         $request = $this->getRequest();
@@ -405,6 +479,12 @@ class CRUDController extends SonataCRUDController
                         ), null);
     }
 
+    /**
+     * Binds the uploaded attachments to the email on creation
+     * 
+     * @param Email $object
+     * @param String $tempId
+     */
     private function handleAttachments($object, $tempId)
     {
         $repo = $this->manager->getRepository("LibrinfoEmailBundle:EmailAttachment");
@@ -417,6 +497,11 @@ class CRUDController extends SonataCRUDController
         }
     }
 
+    /**
+     * Handles sending of the test Email
+     * 
+     * @param Email $email
+     */
     protected function handleTest($email)
     {
 
@@ -427,6 +512,11 @@ class CRUDController extends SonataCRUDController
         }
     }
 
+    /**
+     * Handle creation of the template from email content
+     * 
+     * @param Email $email
+     */
     protected function handleTemplate($email)
     {
 

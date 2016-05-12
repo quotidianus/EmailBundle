@@ -18,11 +18,16 @@ class Replacements extends ContainerAware implements \Swift_Plugins_Decorator_Re
         $this->manager = $manager;
     }
 
+    /**
+     * Returns Contact info if LibrinfoCRMBundle is installed
+     * 
+     * @param type $address
+     * @return type
+     */
     public function getReplacementsFor($address)
     {
         if (class_exists('Librinfo\CRMBundle\LibrinfoCRMBundle'))
         {
-
             $contact = $this->manager->getRepository("LibrinfoCRMBundle:Contact")->findOneBy(array("email" => $address));
 
             if ($contact)

@@ -2,14 +2,15 @@
 
 namespace Librinfo\EmailBundle\Stats;
 
-/**
- * Description of StatCalculator
- *
- * @author romain
- */
 class EmailStats
 {
 
+    /**
+     * Returns an array with all the stats concerning $email
+     * 
+     * @param Email $email
+     * @return Array
+     */
     public function getStats($email)
     {
         $stats = array();
@@ -27,20 +28,39 @@ class EmailStats
         return $stats;
     }
 
+    /**
+     * Returns the percentage of read receipts from the number of recepients
+     * 
+     * @param Array $recipients
+     * @param Array $receipts
+     * @return int
+     */
     protected function successRate($recipients, $receipts)
     {
 
         return number_format(self::getPercentage(count($recipients), count($receipts)), 0);
     }
 
+    /**
+     * Returns average percentage of total email links clicked
+     * 
+     * @param Array $linkStats
+     * @return int
+     */
     protected function linkSuccessRate($linkStats)
     {
-         if(!$linkStats)
+        if (!$linkStats)
             return 0;
-        
+
         return number_format(self::getAverage($linkStats), 0);
     }
 
+    /**
+     * Returns the url of the most clicked link with its average rate
+     * 
+     * @param type $linkStats
+     * @return type
+     */
     protected function mostClicked($linkStats)
     {
         $mostClicked = 0;
@@ -56,15 +76,21 @@ class EmailStats
         ;
     }
 
+    /**
+     * Returns the url of the least clicked link with its average rate
+     * 
+     * @param type $linkStats
+     * @return type
+     */
     protected function leastClicked($linkStats)
     {
-        if(!$linkStats)
+        if (!$linkStats)
             return array(
-            'link' => '',
-            'value' => 0
-                )
-        ;
-        
+                'link' => '',
+                'value' => 0
+                    )
+            ;
+
         $leastClicked = 100;
 
         foreach ($linkStats as $stat)
@@ -78,6 +104,14 @@ class EmailStats
         ;
     }
 
+    /**
+     * Returns an array with individual success rates of all links in the email
+     * 
+     * @param String $content
+     * @param Array $links
+     * @param Array $recipients
+     * @return Array
+     */
     protected function getLinkStats($content, $links, $recipients)
     {
         $results = array();
@@ -90,6 +124,13 @@ class EmailStats
         return $results;
     }
 
+    /**
+     * Returns an array with individual click count of all links in the email
+     * 
+     * @param String $content
+     * @param Array $links
+     * @return int
+     */
     protected function getClickCount($content, $links)
     {
         $clicks = array();
@@ -123,6 +164,12 @@ class EmailStats
         return $clicks;
     }
 
+    /**
+     * 
+     * @param Float $total
+     * @param int $number
+     * @return int
+     */
     protected function getPercentage($total, $number = 0)
     {
 
@@ -132,33 +179,17 @@ class EmailStats
         return ( $number / $total ) * 100;
     }
 
+    /**
+     * 
+     * @param Array $values
+     * @return int
+     */
     protected function getAverage($values)
     {
-        if(!$values)
+        if (!$values)
             return 0;
-        
+
         return array_sum($values) / count($values);
-    }
-
-    protected function getClickStats($recipients, $links)
-    {
-        $results = array();
-
-        foreach ($recipients as $recipient)
-        {
-            $count = 0;
-
-            foreach ($links as $link)
-            {
-                if ($recipient == $link->getAddress())
-                    $count ++;
-            }
-
-            if ($count > 0)
-                $results[$link->getDestination()] = self::getPercentage(count($links), $count);
-        }
-
-        return $results;
     }
 
 }

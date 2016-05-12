@@ -12,7 +12,7 @@ class AjaxController extends Controller
 
     /**
      * 
-     * @param type $templateId
+     * @param String $templateId
      * @return Response The template content that will be inserted into the main content
      */
     public function getEmailTemplateAction($templateId)
@@ -54,9 +54,9 @@ class AjaxController extends Controller
     /**
      * Removal of uploaded attachments
      * 
-     * @param type $fileName
-     * @param type $fileSize
-     * @param type $tempId
+     * @param String $fileName
+     * @param String $fileSize
+     * @param String $tempId
      * @return Response
      */
     public function removeUploadAction($fileName, $fileSize, $tempId)
@@ -79,9 +79,9 @@ class AjaxController extends Controller
 
     /**
      * 
-     * @param type $fileName
-     * @param type $fileSize
-     * @param type $tempId
+     * @param String $fileName
+     * @param String $fileSize
+     * @param String $tempId
      * @return Response img tag that will be embedded into the main content
      */
     public function addToContentAction($fileName, $fileSize, $tempId)
@@ -106,7 +106,7 @@ class AjaxController extends Controller
     /**
      * Retrieves the attachments of an email for edit aciton
      * 
-     * @param type $emailId
+     * @param String $emailId
      * @return Response attachments converted to json array
      */
     public function loadAttachmentsAction($emailId)
@@ -121,8 +121,8 @@ class AjaxController extends Controller
     /**
      * Converts attachment collection to json array
      * 
-     * @param type $attachments
-     * @return type
+     * @param Array $attachments
+     * @return String
      */
     private function attachmentsToJson($attachments)
     {
@@ -152,7 +152,7 @@ class AjaxController extends Controller
     /**
      * Checks if the file is an image with its mimetype
      * 
-     * @param type $attachment
+     * @param EmailAttachment $attachment
      * @return boolean
      */
     private function isImage($attachment)
@@ -167,7 +167,7 @@ class AjaxController extends Controller
     /**
      * Generates the img tag from attachment file
      * 
-     * @param type $attachment
+     * @param EmailAttachment $attachment
      * @return string
      */
     private function generateImgTag($attachment)

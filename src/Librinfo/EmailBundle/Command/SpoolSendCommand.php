@@ -57,9 +57,9 @@ EOF
 
     /**
      * 
-     * @param type $name
-     * @param type $input
-     * @param type $output
+     * @param String $name
+     * @param InputInterface $input
+     * @param OutputInterface $output
      * @throws \InvalidArgumentException
      */
     private function processMailer($name, $input, $output)
@@ -76,7 +76,7 @@ EOF
             if ($transport instanceof \Swift_Transport_SpoolTransport)
             {
                 $spool = $transport->getSpool();
-                
+
                 //add command options
                 if ($spool instanceof \Swift_ConfigurableSpool)
                 {

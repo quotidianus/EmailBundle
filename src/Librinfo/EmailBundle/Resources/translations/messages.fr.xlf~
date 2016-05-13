@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+
+            <!-- Email -->
+            <trans-unit id="entity_email">
+                <source>Email</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="emaillist">
+                <source>Email List</source>
+                <target>Liste Emails</target>
+            </trans-unit>
+            <trans-unit id="field_from">
+                <source>Field From</source>
+                <target>Expéditeur</target>
+            </trans-unit>
+            <trans-unit id="field_to">
+                <source>Field To</source>
+                <target>Destinataires</target>
+            </trans-unit>
+            <trans-unit id="field_cc">
+                <source>Field Cc</source>
+                <target>Cc</target>
+            </trans-unit>
+            <trans-unit id="field_bcc">
+                <source>Field Bcc</source>
+                <target>Bcc</target>
+            </trans-unit>
+            <trans-unit id="field_subject">
+                <source>Field Subject</source>
+                <target>Objet</target>
+            </trans-unit>
+            <trans-unit id="content">
+                <source>Content</source>
+                <target>Contenu</target>
+            </trans-unit>
+            <trans-unit id="textContent">
+                <source>Text Content</source>
+                <target>Contenu texte</target>
+            </trans-unit>
+            <trans-unit id="sent">
+                <source>Sent</source>
+                <target>Envoyé</target>
+            </trans-unit>
+            <trans-unit id="tracking">
+                <source>Tracking</source>
+                <target>Suivi</target>
+            </trans-unit>
+            <trans-unit id="attachments">
+                <source>Attachments</source>
+                <target>Pièces jointes</target>
+            </trans-unit>
+            <trans-unit id="template">
+                <source>Template</source>
+                <target>Modèle</target>
+            </trans-unit>
+            <trans-unit id="isTemplate">
+                <source>Is Template</source>
+                <target>Enregistrer comme modèle</target>
+            </trans-unit>
+            <trans-unit id="isTest">
+                <source>Is Test</source>
+                <target>Envoi de Test</target>
+            </trans-unit>
+            <trans-unit id="testAddress">
+                <source>Test Address</source>
+                <target>Addresse de test</target>
+            </trans-unit>
+            <trans-unit id="newTemplateName">
+                <source>New Template Name</source>
+                <target>Nom du modèle</target>
+            </trans-unit>
+
+
+            <!-- FORMS -->
+            <trans-unit id="form_group_options">
+                <source>form_group_options</source>
+                <target>Options</target>
+            </trans-unit>
+            <trans-unit id="form_group_position">
+                <source>form_group_position</source>
+                <target>Fonction</target>
+            </trans-unit>
+            <trans-unit id="form_group_sales">
+                <source>form_group_sales</source>
+                <target>Ventes</target>
+            </trans-unit>
+            <trans-unit id="form_group_ticketing">
+                <source>form_group_ticketing</source>
+                <target>Billetterie</target>
+            </trans-unit>
+            <trans-unit id="form_group_phones">
+                <source>form_group_phones</source>
+                <target>Numéros de téléphone</target>
+            </trans-unit>
+            <trans-unit id="form_group_members">
+                <source>form_group_members</source>
+                <target>Membres</target>
+            </trans-unit>
+
+            <!--traits-->
+            <trans-unit id="traceable.updatedat">
+                <source>Updated At</source>
+                <target>Modifié le</target>
+            </trans-unit>
+            <trans-unit id="traceable.createdat">
+                <source>Created At</source>
+                <target>Créé le</target>
+            </trans-unit>
+            <trans-unit id="traceable.updateby">
+                <source>Updated By</source>
+                <target>Modifié par</target>
+            </trans-unit>
+            <trans-unit id="traceable.createdby">
+                <source>Created By</source>
+                <target>Créé par</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

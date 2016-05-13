@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="d39ec66f08507e26fe86aa5325d070df" resname="Add files">
+        <source>Add files</source>
+        <target>Ajouter des fichiers</target>
+      </trans-unit>
+      <trans-unit id="94966d90747b97d1f0f206c98a8b1ac3" resname="Send">
+        <source>Send</source>
+        <target>Envoyer</target>
+      </trans-unit>
+      <trans-unit id="ed75712b0eb1913c28a3872731ffd48d" resname="Duplicate">
+        <source>Duplicate</source>
+        <target>Dupliquer</target>
+      </trans-unit>
+      <trans-unit id="84df0bd0964c3f893b3d480df062118e" resname="action_send">
+        <source>action_send</source>
+        <target>Envoyer</target>
+      </trans-unit>
+      <trans-unit id="9ab25a80060948c67c7520e84b10d1c0" resname="action_duplicate">
+        <source>action_duplicate</source>
+        <target>Dupliquer</target>
+      </trans-unit>
+      <trans-unit id="3613be9453e43602cb1b25ef55f7d9f0" resname="Read receipts">
+        <source>Read receipts</source>
+        <target>Accusé de réceptions</target>
+      </trans-unit>
+      <trans-unit id="cea3adfefec90435deb99c395174da5c" resname="Links clicked (avg/recipient)">
+        <source>Links clicked</source>
+        <target>Liens suivis</target>
+      </trans-unit>
+      <trans-unit id="646e631aaa1bb37e45b4bbf97d17f4c2" resname="Most clicked link:">
+        <source>Most clicked link:</source>
+        <target>Lien le plus suivi:</target>
+      </trans-unit>
+      <trans-unit id="0daa1d21cc624741edd5e2d61e762357" resname="Least clicked link:">
+        <source>Least clicked link:</source>
+        <target>Lien le moins suivi:</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

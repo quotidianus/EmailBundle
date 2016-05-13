@@ -1,11 +1,14 @@
 $(document).ready(function () {
-    
+
     var form = $('.sonata-ba-form form');
 
-    templateSelect();
-    checkIsTest();
-    setupDropzone();
-    
+    if (getAction() == 'create' || getAction() == 'edit') {
+
+        templateSelect();
+        checkIsTest();
+        setupDropzone();
+    }
+
     //reset confirmexit plugin
     $('.sonata-ba-form form').confirmExit();
 });
@@ -21,9 +24,9 @@ function templateSelect() {
 
 //retrieves template content and inserts it into tinymce editor
 function getTemplate(templateId) {
-    
+
     $.get("http://" + window.location.host + "/librinfo/email/ajax/getTemplate/" + templateId, function (data) {
-        
+
         tinyMceInsert(data);
     });
 }
@@ -48,7 +51,7 @@ function getEmailId() {
 
 //handles checking and disabling of isTest checkbox
 function checkIsTest() {
-    
+
     var action = getAction();
     var checkbox = $("input.is_test");
 
@@ -91,7 +94,7 @@ function setupDropzone() {
         dictFileTooBig: dropzoneMessages.fileTooBig,
         dictResponseError: dropzoneMessages.responseError,
         dictMaxFilesExceeded: dropzoneMessages.maxFilesExceeded
-        
+
     };
     //init dropzone plugin
     var dropzone = new Dropzone(".dropzone", options);
@@ -136,7 +139,7 @@ function setupDropzone() {
         });
     });
 
-    
+
     dropzone.on("addedfile", function (file) {
 
         //file size validation
@@ -145,9 +148,9 @@ function setupDropzone() {
             dropzone.cancelUpload(file);
             dropzone.emit("error", file, "Max file size(5mb) exceeded");
         }
-        
+
         updateProgressBar(1);
-        
+
         //replace generated tempId with existing files tempId
         if (getAction() == 'edit') {
 
@@ -229,4 +232,88 @@ function updateProgressBar(e) {
         $('.progress-bar').addClass("progress-bar-success");
         $('.progress').removeClass("progress-striped");
     }
+}
+
+function displayStats(stats) {
+
+    //stats = JSON.parse(stats);
+    receiptsLoader(stats);
+    linksLoader(stats);
+    mostClicked(stats);
+    leastClicked(stats);
+}
+
+//initializes classyloader for read receipts stats
+function receiptsLoader(stats) {
+
+    var receiptsOptions = {
+        start: 'top',
+        diameter: 40,
+        height: 100,
+        width: 100,
+        lineWidth: 18,
+        fontSize: '30px',
+        fontFamily: 'Courier',
+        fontColor: 'rgba(73, 125, 164, 1)',
+        lineColor: 'rgba(73, 125, 164, 1)',
+        remainingLineColor: 'rgba(73, 125, 164, 0.1)'
+    };
+
+    var loader = $('#receipts_loader');
+
+    loader.ClassyLoader(receiptsOptions);
+
+    loader.setPercent(stats.receipts);
+    loader.draw();
+}
+
+//inititalizes classyloader for link clicks stats
+function linksLoader(stats) {
+
+    var linksOptions = {
+        start: 'top',
+        diameter: 40,
+        height: 100,
+        width: 100,
+        lineWidth: 18,
+        fontSize: '30px',
+        fontFamily: 'Courier',
+        fontColor: 'rgba(73, 125, 164, 1)',
+        lineColor: 'rgba(73, 125, 164, 0.8)',
+        remainingLineColor: 'rgba(73, 125, 164, 0.1)'
+    };
+
+    var loader = $('#links_loader');
+
+    loader.ClassyLoader(linksOptions);
+
+    loader.setPercent(stats.links.average);
+    loader.draw();
+}
+
+//Inserts most clinked link stats in the view
+function mostClicked(stats) {
+
+    var link = stats.links.mostClicked.link;
+
+    if (link) {
+        html = '<p class="link">' + link + '</p> <span class="link_value">' + stats.links.mostClicked.value + ' % </span>';
+    } else {
+        html = '<p class="link">No links clicked</p>';
+    }
+
+    $('#most_clicked').append(html);
+}
+
+//Inserts least clinked link stats in the view
+function leastClicked(stats) {
+
+    var link = stats.links.leastClicked.link;
+
+    if (link) {
+        html = '<p class="link">' + link + '</p> <span class="link_value">' + stats.links.leastClicked.value + ' % </span>';
+    } else {
+        html = '<p class="link">No links clicked</p>';
+    }
+    $('#least_clicked').append(html);
 }

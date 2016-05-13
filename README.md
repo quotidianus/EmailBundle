@@ -87,6 +87,7 @@ Just notice that the ```prefix``` value is ```/``` instead of ```/admin``` as ad
 
 Add the custom form field template to your conifg.yml
 
+```
 # app/config/config.yml
 twig:
     debug:            "%kernel.debug%"

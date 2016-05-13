@@ -4,7 +4,7 @@
 ## About
 
  The Libre Informatique *EmailBundle* leverages Swiftmailer and the Libre Informatique *CoreBundle* to provide seemless email and newsletter functionalities.
- Features include database spooling, configurable spool flush command, email openings and link clicks tracking along with stats display, inline attachments, test send, duplication, ... 
+ Features include database spooling, configurable spool flush command, email openings and link clicks tracking along with stats display, inline attachments, templating, duplication, ... 
 
 ## Installation
 
@@ -25,16 +25,14 @@ public function registerBundles()
     );
 }
 ```
-Don't forget to *install the assets* as file upload and other features rely heavily on javascript
 
 ## Configuration
 
 First, make sure to configure the bundles LibrinfoEmailBundle depends on properly.
 
-The Sonata bundles
-------------------
+### The Sonata bundles
 
-Do not forget to configure the SonataAdminBundle. e.g.:
+Configure the SonataAdminBundle. e.g.:
 
 ```php
     // app/AppKernel.php
@@ -56,7 +54,6 @@ Do not forget to configure the SonataAdminBundle. e.g.:
     }
     // ...
 ```
-
 ```
 # app/config/routing.yml
 admin:
@@ -85,7 +82,9 @@ https://sonata-project.org/bundles/admin/2-3/doc/reference/installation.html
 
 Just notice that the ```prefix``` value is ```/``` instead of ```/admin``` as advised by the Sonata Project... By the way, it means that this access is universal, and not a specific "backend" interface. That's a specificity of a software package that intends to be focused on professional workflows.
 
-Add the custom form field template to your conifg.yml
+Don't forget to publish assets as some features of the bundle such as file upload rely heavily on javascript.
+
+Add the custom form field template to your config.yml:
 
 ```
 # app/config/config.yml
@@ -96,7 +95,9 @@ twig:
         resources:
             - 'LibrinfoEmailBundle:form:fields.html.twig'
 ```
-You have to configure two mailers as follows in order to use the database spooling feature
+### Spooling
+
+You have to configure two mailers as follows in order to use the database spooling feature (one for direct sned, the other for spool send)
 
 ```
 # app/config/config.yml
@@ -116,5 +117,16 @@ swiftmailer:
             password:  "%mailer_password%"
             spool: { type: db }
 ```
+To flush the queue execute the command :
+```$ app/console librinfo:spool:send```
 
+### Tracking
 
+If you want to use the tracking functionalities, you need to add an access control rule to your security.yml that will allow anonymous users to access routes with the prefix '/tracking' like so:
+
+```
+# app/config/security.yml
+access_control:
+        # ...
+        - { path: ^/tracking, role: IS_AUTHENTICATED_ANONYMOUSLY } # allow access to tracking controller for anonymous users
+```

@@ -5,7 +5,6 @@
 
  The Libre Informatique *EmailBundle* leverages Swiftmailer and the Libre Informatique *CoreBundle* to provide seemless email and newsletter functionalities.
  Features include database spooling, configurable spool flush command, email openings and link clicks tracking along with stats display, inline attachments, templating, duplication, ... 
-
 ## Installation
 
 ``` $ composer require libre-informatique/email-bundle ```
@@ -119,6 +118,8 @@ swiftmailer:
 ```
 To flush the queue execute the command :
 ```$ app/console librinfo:spool:send```
+
+Don't hesitate executing the command with --help as it has more options than the swiftmailer:spool:send
 
 ### Tracking
 

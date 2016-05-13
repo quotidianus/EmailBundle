@@ -46,7 +46,6 @@ parameters:
                             textContent:
                                 type: textarea
                                 label: Content
-                        form_group_attachments:
                             attachments: ~
                         form_group_tracking:
                             stats:
@@ -55,7 +54,6 @@ parameters:
                             groupsOrder:
                             - form_group_general
                             - form_group_tracking
-                            - form_group_attachments
                             - from_group_misc
             Sonata\AdminBundle\Form\FormMapper:
                 add:
@@ -82,11 +80,10 @@ parameters:
                                 attr:
                                     class: tinymce
                                     data-theme: advanced
-                        form_group_attachments:
                             attachments:
                                 type: dropzone
                                 required: false
-                        form_group_template:
+                        form_group_options:
                             isTemplate:
                                 type: checkbox
                                 required: false
@@ -108,12 +105,14 @@ parameters:
                         tabsOrder: [ form_group_general, form_group_specifics ]
             Sonata\AdminBundle\Datagrid\DatagridMapper:
                 add:
-                    field_from: ~
                     field_to: ~
                     field_subject: ~
                     content: ~
-                    textContent: ~
                     sent: ~
+                    createdAt: ~
+                    updatedAt: ~
+                    createdBy: ~
+                    updatedBy: ~
                     _options:
                         fieldsOrder:
                             - field_to

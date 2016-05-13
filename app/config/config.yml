@@ -5,7 +5,7 @@ imports:
     - { resource: sonata.yml }
 
 parameters:
-    locale: en
+    locale: fr
     # TODO : this should be configured in BaseEntities bundle :
     #doctrine.orm.metadata.yml.class: Librinfo\BaseEntitiesBundle\Doctrine\ORM\Driver\SearchableYamlDriver
 

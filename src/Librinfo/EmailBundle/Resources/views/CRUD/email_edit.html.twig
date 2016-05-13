@@ -12,9 +12,9 @@
     {{ parent() }}
     {% if admin.id(object) is not null %}
         {% if not object.sent %}
-            <a class="btn btn-info" href="{{ admin.generateObjectUrl('send', object) }}"><i class="fa fa-paper-plane"></i> {{ 'Send'|trans({}, 'SonataAdminBundle') }}</a>
+            <a class="btn btn-info" href="{{ admin.generateObjectUrl('send', object) }}"><i class="fa fa-paper-plane"></i> {{ 'Send'|trans({}, 'LibrinfoEmailBundle') }}</a>
         {% endif %}
-        <a class="btn btn-info" href="{{ admin.generateObjectUrl('duplicate', object) }}"><i class="fa fa-files-o"></i> {{ 'Duplicate'|trans({}, 'SonataAdminBundle') }}</a>
+        <a class="btn btn-info" href="{{ admin.generateObjectUrl('duplicate', object) }}"><i class="fa fa-files-o"></i> {{ 'Duplicate'|trans({}, 'LibrinfoEmailBundle') }}</a>
     {% endif %}
 {% endblock %}
 
@@ -23,5 +23,18 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
+    <script>
+    var dropzoneMessages = {
+        
+        'defaultMessage': '{{ 'dropzone.defaultMessage'|trans({}, 'LibrinfoEmailBundle') }}',
+        'fallbackMessage': '{{ 'dropzpone.fallbackMessage'|trans({}, 'LibrinfoEmailBundle') }}',
+        'fallbackText': '{{ 'dropzone.fallbackText'|trans({}, 'LibrinfoEmailBundle') }}',
+        'invalidFileType': '{{ 'dropzone.invalidFileType'|trans({}, 'LibrinfoEmailBundle') }}',
+        'fileTooBig': '{{ 'dropzone.fileTooBig'|trans({}, 'LibrinfoEmailBundle') }}',
+        'responseError': '{{ 'dropzone.responseError'|trans({}, 'LibrinfoEmailBundle') }}',
+        'maxFilesExceeded': '{{ 'dropzone.maxFilesExceeded'|trans({}, 'LibrinfoEmailBundle') }}'
+        
+    };
+</script>
     <script type="text/javascript" src="{{ asset('bundles/librinfoemail/js/main.js') }}"></script>
 {% endblock %}

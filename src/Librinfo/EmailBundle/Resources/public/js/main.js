@@ -1,14 +1,12 @@
 $(document).ready(function () {
     
     var form = $('.sonata-ba-form form');
-    var confirmExit = form.serialize();
-    console.log(confirmExit);
 
     templateSelect();
     checkIsTest();
     setupDropzone();
     
-    //make form not dirty 
+    //reset confirmexit plugin
     $('.sonata-ba-form form').confirmExit();
 });
 
@@ -85,7 +83,15 @@ function setupDropzone() {
         maxFiles: 5,
         maxFileSize: 5,
         previewTemplate: template,
-        clickable: ".add_files"
+        clickable: ".add_files",
+        dictDefaultMessage: dropzoneMessages.defaultMessage,
+        dictFallbackMessage: dropzoneMessages.fallbackMessage,
+        dictFallbackText: dropzoneMessages.fallbackText,
+        dictInvalidFileType: dropzoneMessages.invalidFileType,
+        dictFileTooBig: dropzoneMessages.fileTooBig,
+        dictResponseError: dropzoneMessages.responseError,
+        dictMaxFilesExceeded: dropzoneMessages.maxFilesExceeded
+        
     };
     //init dropzone plugin
     var dropzone = new Dropzone(".dropzone", options);
@@ -101,13 +107,6 @@ function setupDropzone() {
     dropzone.on("sending", function (file, xhr, formData) {
         //add the id to the ajax call formData
         formData.append("temp_id", tempId);
-    });
-
-    //event listener for th button that clears the upload queue
-    $('.clear').click(function (e) {
-
-        e.preventDefault();
-        dropzone.removeAllFiles(true);
     });
 
     //prevent submitting of the form when add files button is clicked

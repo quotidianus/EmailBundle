@@ -5,19 +5,19 @@
     <div class="tracking">
         <div class="row">
             <div class="stats">
-                <p class="stat_label">Read receipts</p>
+                <p class="stat_label">{{ 'Read receipts'|trans({}, 'LibrinfoEmailBundle') }}</p>
                 <canvas id="receipts_loader"></canvas>
             </div>
             <div class="stats">
-                <p class="stat_label">Links clicked (avg/recipient)</p>
+                <p class="stat_label">{{ 'Links clicked'|trans({}, 'LibrinfoEmailBundle') }}</p>
                 <canvas id="links_loader"></canvas>
             </div>
         </div>  
         <div class="row link_row" id="most_clicked">
-            <p class="stat_label">Most clicked link: </p>
+            <p class="stat_label">{{ 'Most clicked link:'|trans({}, 'LibrinfoEmailBundle') }} </p>
         </div>
         <div class="row link_row" id="least_clicked">
-            <p class="stat_label">Least clicked link: </p>
+            <p class="stat_label">{{ 'Least clicked link:'|trans({}, 'LibrinfoEmailBundle') }}</p>
         </div>
     </div>
 {% endblock %}

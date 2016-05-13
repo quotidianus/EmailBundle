@@ -1,7 +1,20 @@
 {
-    "name": "libre-informatique/libio-project",
+    "name": "libre-informatique/Email-Bundle",
     "license": "GPL-3.0",
-    "type": "project",
+    "type": "symfony-bundle",
+    "description": "Email Bundle for Symfony",
+    "keywords": ["email", "spool", "e-venement", "sonata", "symfony"],
+    "homepage": "https://github.com/libre-informatique/SymfonyLibrinfoCRMBundle",
+    "authors": [
+        {
+           "name": "Romain SANCHEZ",
+           "email": "romain.sanchez@libre-informatique.fr"
+        },
+        {
+            "name": "Libre Informatique",
+            "homepage": "http://www.libre-informatique.fr/"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "": "src/"
@@ -13,11 +26,6 @@
         "libre-informatique/core-bundle": "dev-master",
         "stfalcon/tinymce-bundle": "dev-master",
         "html2text/html2text": "^4.0"
-    },
-    "require-dev": {
-        "sensio/generator-bundle": "~2.3",
-        "symfony/phpunit-bridge": "2.7.x@beta",
-        "doctrine/doctrine-fixtures-bundle": "^2.3"
     },
     "scripts": {
         "post-install-cmd": [

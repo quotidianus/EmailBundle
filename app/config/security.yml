@@ -6,13 +6,6 @@ security:
         Symfony\Component\Security\Core\User\User: plaintext
 
     providers:
-        chain_provider:
-            chain:
-                providers: [in_memory, fos_userbundle]
-        in_memory:
-            memory:
-                users:
-                    spool:  { password: spool, roles: [ 'ROLE_USER', 'ROLE_SUPER_ADMIN' ] }
         fos_userbundle:
             id: fos_user.user_provider.username_email
 
@@ -32,7 +25,7 @@ security:
     access_control:
         - { path: ^/(css|images|js), role: IS_AUTHENTICATED_ANONYMOUSLY } # allow assets for anonymous users
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY } # allow login for anonymous users
-        - { path: ^/tracking, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/tracking, role: IS_AUTHENTICATED_ANONYMOUSLY }#allow access to tracking controller for anonymous users
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY } # allow resetting password for anonymous users
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY } # filter entire application
 

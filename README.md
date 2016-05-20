@@ -1,6 +1,5 @@
 # SymfonyLibrinfoEmailBundle
 
-
 ## About
 
  The Libre Informatique *EmailBundle* leverages Swiftmailer and the Libre Informatique *CoreBundle* to provide seemless email and newsletter functionalities.
@@ -131,3 +130,5 @@ access_control:
         # ...
         - { path: ^/tracking, role: IS_AUTHENTICATED_ANONYMOUSLY } # allow access to tracking controller for anonymous users
 ```
+
+That's it !

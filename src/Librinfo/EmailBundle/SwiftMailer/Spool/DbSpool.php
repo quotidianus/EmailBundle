@@ -27,6 +27,11 @@ class DbSpool extends \Swift_ConfigurableSpool
      * @var EntityRepository
      */
     private $repository;
+    
+    /**
+     *
+     * @var integer
+     */
     private $pauseTime;
 
     /**

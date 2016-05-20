@@ -12,7 +12,7 @@
     {{ parent() }}
     {% if admin.id(object) is not null %}
         {% if not object.sent %}
-            <a class="btn btn-info" href="{{ admin.generateObjectUrl('send', object) }}"><i class="fa fa-paper-plane"></i> {{ 'Send'|trans({}, 'LibrinfoEmailBundle') }}</a>
+            <a class="btn btn-info" href="{{ admin.generateObjectUrl('send', object) }}" type="submit"><i class="fa fa-paper-plane"></i> {{ 'Send'|trans({}, 'LibrinfoEmailBundle') }}</a>
         {% endif %}
         <a class="btn btn-info" href="{{ admin.generateObjectUrl('duplicate', object) }}"><i class="fa fa-files-o"></i> {{ 'Duplicate'|trans({}, 'LibrinfoEmailBundle') }}</a>
     {% endif %}

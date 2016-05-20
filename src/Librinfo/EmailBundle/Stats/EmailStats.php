@@ -173,7 +173,7 @@ class EmailStats
     protected function getPercentage($total, $number = 0)
     {
 
-        if ($number === 0)
+        if ($number === 0 || $total === 0)
             return 0;
 
         return ( $number / $total ) * 100;

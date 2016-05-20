@@ -98,6 +98,14 @@
                 <source>Stats</source>
                 <target>Statistiques</target>
             </trans-unit>
+            <trans-unit id="7b1255f8ddf45f1h40d4e551baee5562" resname="EmailTemplate">
+                <source>EmailTemplate</source>
+                <target>Modèles</target>
+            </trans-unit>
+            <trans-unit id="r78d55f8ddf45f1h40d4e551bafg8562" resname="Name">
+                <source>Name</source>
+                <target>Nom</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -106,6 +106,34 @@
                 <source>Name</source>
                 <target>Nom</target>
             </trans-unit>
+            <trans-unit id="show_tab_emails">
+                <source>show_tab_emails</source>
+                <target>Emails</target>
+            </trans-unit>
+            <trans-unit id="librinfo.label.email_to">
+                <source>librinfo.label.email_to</source>
+                <target>À</target>
+            </trans-unit>
+            <trans-unit id="librinfo.label.email_cc">
+                <source>librinfo.label.email_cc</source>
+                <target>Cc</target>
+            </trans-unit>
+            <trans-unit id="librinfo.label.email_bcc">
+                <source>librinfo.label.email_bcc</source>
+                <target>Bcc</target>
+            </trans-unit>
+            <trans-unit id="librinfo.msg.no_emails_available">
+                <source>librinfo.msg.no_emails_available</source>
+                <target>Aucun email</target>
+            </trans-unit>
+            <trans-unit id="librinfo.msg.sending_email">
+                <source>librinfo.msg.sending_email</source>
+                <target>Envoi en cours...</target>
+            </trans-unit>
+            <trans-unit id="librinfo.error.send_email_error">
+                <source>librinfo.error.send_email_error</source>
+                <target>Erreur lors de l'envoi de l'email</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

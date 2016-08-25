@@ -3,6 +3,9 @@
 namespace Librinfo\EmailBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as SonataCRUDController;
+use Swift_Mailer;
+use Swift_Message;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,7 +15,7 @@ class CRUDController extends SonataCRUDController
 
     /**
      *
-     * @var SwiftMailer $mailer
+     * @var Swift_Mailer $mailer
      */
     private $mailer;
 
@@ -42,7 +45,7 @@ class CRUDController extends SonataCRUDController
 
     /**
      * Clones the email excluding the id and passes it to the create action wich returns the response
-     * 
+     *
      * @return Response
      */
     public function duplicateAction()
@@ -59,7 +62,7 @@ class CRUDController extends SonataCRUDController
 
     /**
      * Sends the email and redirects to list view keeping filter parameters
-     * 
+     *
      * @return RedirectResponse
      */
     public function sendAction()
@@ -69,7 +72,10 @@ class CRUDController extends SonataCRUDController
         $this->email = $this->admin->getObject($id);
         $this->attachments = $this->email->getAttachments();
         $addresses = explode(';', $this->email->getFieldTo());
-        $this->isNewsLetter = count($addresses) > 1;
+
+        // TODO: change this. An email with multiple recipients is not necessarily a newsletter
+        //$this->isNewsLetter = count($addresses) > 1;
+        $this->isNewsLetter = false;
 
         //prevent resending of an email
         if ($this->email->getSent())
@@ -84,31 +90,99 @@ class CRUDController extends SonataCRUDController
             $this->newsLetterSend($addresses);
         } else
         {
-            $this->directSend($this->email->getFieldTo());
+            $to = explode(';', $this->email->getFieldTo());
+            $cc = explode(';', $this->email->getFieldCc());
+            $bcc = explode(';', $this->email->getFieldBcc());
+            $failedRecipients = [];
+            $nbSent = $this->directSend($to, $cc, $bcc, $failedRecipients);
         }
 
+        // TODO: handle $nbSent and $failedRecipients
+        
         $this->addFlash('sonata_flash_success', "Message " . $id . " envoyé");
 
         return new RedirectResponse($this->admin->generateUrl('list', $this->admin->getFilterParameters()));
     }
 
     /**
-     * sends the mail directly
-     * @param String $address
+     * Send an email directly (ajax call)
+     *
+     * @param Request $request
+     * @return JsonResponse
+     * @throws AccessDeniedException, NotFoundHttpException
      */
-    private function directSend($address)
+    public function sendAjaxAction(Request $request)
+    {
+        $id = $request->get('id');
+        $this->email = $this->admin->getObject($id);
+
+        if (!$this->email) {
+            throw $this->createNotFoundException(sprintf('unable to find the email with id : %s', $id));
+        }
+
+        // TODO: set the admin class accessMapping send property, then uncomment this:
+        //$this->admin->checkAccess('send', $email);
+
+        $this->attachments = $this->email->getAttachments();
+
+        //prevent resending of an email
+        if ($this->email->getSent())
+        {
+            $this->addFlash('sonata_flash_error', "Message " . $id . " déjà envoyé");
+
+            return new JsonResponse(array(
+                'status' => 'NOK',
+                'sent' => true,
+                'error' => 'librinfo.error.email_already_sent',
+            ));
+        }
+
+        $to = explode(';', $this->email->getFieldTo());
+        $cc = explode(';', $this->email->getFieldCc());
+        $bcc = explode(';', $this->email->getFieldBcc());
+        $failedRecipients = [];
+
+        try {
+            $nbSent = $this->directSend($to, $cc, $bcc, $failedRecipients);
+        } catch (\Exception $exc) {
+            return new JsonResponse(array(
+                'status' => 'NOK',
+                'sent' => false,
+                'error' => $exc->getMessage(),
+            ));
+        }
+
+        return new JsonResponse(array(
+            'status' => 'OK',
+            'sent' => true,
+            'error' => '',
+            'failed_recipients' => implode(';', $failedRecipients),
+        ));
+    }
+
+    /**
+     * Sends the mail directly
+     * @param array $to                The To addresses
+     * @param array $cc                The Cc addresses (optional)
+     * @param array $bcc               The Bcc addresses (optional)
+     * @param array $failedRecipients  An array of failures by-reference (optional)
+     *
+     * @return int The number of successful recipients. Can be 0 which indicates failure
+     */
+    private function directSend($to, $cc = [], $bcc = [], &$failedRecipients = null)
     {
         $this->setDirectMailer();
 
-        $message = $this->setupSwiftMessage($address);
+        $message = $this->setupSwiftMessage($to, $cc, $bcc);
 
         $replacements = $this->container->get('librinfo.email.replacements');
         $decorator = new \Swift_Plugins_DecoratorPlugin($replacements);
         $this->mailer->registerPlugin($decorator);
 
-        $this->mailer->send($message);
-
+        $sent = $this->mailer->send($message, $failedRecipients);
         $this->updateEmailEntity($message, false);
+
+        return $sent;
     }
 
     /**
@@ -137,11 +211,12 @@ class CRUDController extends SonataCRUDController
     }
 
     /**
-     * 
-     * @param String $to
-     * @return SwiftMessage
+     * @param array $to   The To addresses
+     * @param array $cc   The Cc addresses (optional)
+     * @param array $bcc  The Bcc addresses (optional)
+     * @return Swift_Message
      */
-    private function setupSwiftMessage($to)
+    private function setupSwiftMessage($to, $cc = [], $bcc = [])
     {
         $content = $this->email->getContent();
 
@@ -157,6 +232,8 @@ class CRUDController extends SonataCRUDController
                 ->setSubject($this->email->getFieldSubject())
                 ->setFrom($this->email->getFieldFrom())
                 ->setTo($to)
+                ->setCc($cc)
+                ->setBcc($bcc)
                 ->setBody($content, 'text/html')
                 ->addPart($this->email->getTextContent(), 'text/plain')
         ;
@@ -167,8 +244,8 @@ class CRUDController extends SonataCRUDController
     }
 
     /**
-     * Adds attachlents to the SwiftMessage
-     * @param SwiftMessage $message
+     * Adds attachlents to the Swift_Message
+     * @param Swift_Message $message
      */
     private function addAttachments($message)
     {
@@ -189,8 +266,8 @@ class CRUDController extends SonataCRUDController
     }
 
     /**
-     * 
-     * @param SwiftMessage $message
+     *
+     * @param Swift_Message $message
      * @param Boolean $isNewsLetter
      */
     private function updateEmailEntity($message, $isNewsLetter)
@@ -209,7 +286,7 @@ class CRUDController extends SonataCRUDController
 
     /**
      * Adds tracking data to show view
-     * 
+     *
      * @param Request $request
      * @param Email $object
      * @return Response
@@ -236,7 +313,7 @@ class CRUDController extends SonataCRUDController
 
     /**
      * Overrides SonataAdminBundle CRUDController
-     * 
+     *
      * @param Email $object
      * @return Response
      */
@@ -361,7 +438,7 @@ class CRUDController extends SonataCRUDController
 
     /**
      * Overrides SonataAdminBundle CRUDController
-     * 
+     *
      * @param type $id
      * @return type
      * @throws type
@@ -481,7 +558,7 @@ class CRUDController extends SonataCRUDController
 
     /**
      * Binds the uploaded attachments to the email on creation
-     * 
+     *
      * @param Email $object
      * @param String $tempId
      */
@@ -499,7 +576,7 @@ class CRUDController extends SonataCRUDController
 
     /**
      * Handles sending of the test Email
-     * 
+     *
      * @param Email $email
      */
     protected function handleTest($email)
@@ -514,7 +591,7 @@ class CRUDController extends SonataCRUDController
 
     /**
      * Handle creation of the template from email content
-     * 
+     *
      * @param Email $email
      */
     protected function handleTemplate($email)
@@ -529,10 +606,10 @@ class CRUDController extends SonataCRUDController
             $this->manager->flush();
         }
     }
-    
+
      public function listAction()
     {
-         
+
         $request = $this->getRequest();
 
         $this->admin->checkAccess('list');
@@ -552,7 +629,7 @@ class CRUDController extends SonataCRUDController
         // set the theme for the current Admin Form
         $this->get('twig')->getExtension('form')->renderer->setTheme($formView, $this->admin->getFilterTheme());
 
-       
+
         return $this->render($this->admin->getTemplate('list'), array(
             'action'     => 'list',
             'form'       => $formView,

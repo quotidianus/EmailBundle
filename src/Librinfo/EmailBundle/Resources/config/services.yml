@@ -2,22 +2,34 @@ services:
     swiftmailer.mailer.spool_mailer.spool.db:
         class: Librinfo\EmailBundle\SwiftMailer\Spool\DbSpool
         arguments: [ @doctrine.orm.entity_manager, %kernel.environment% ]
-        
+
     librinfo.email.replacements:
         class: Librinfo\EmailBundle\SwiftMailer\DecoratorPlugin\Replacements
         arguments: [ @doctrine.orm.entity_manager ]
-        
+
     librinfo.email.tracking:
         class: Librinfo\EmailBundle\SwiftMailer\Tracking
-        
+
     librinfo.email.cloning:
         class: Librinfo\EmailBundle\Cloning\EmailCloning
-    
+
     librinfo.email.stats:
         class: Librinfo\EmailBundle\Stats\EmailStats
-     
-    ###Form types###    
+
+### FORM TYPES ###
+
     librinfo.email.formtype.dropzone:
         class: Librinfo\EmailBundle\Form\Type\DropzoneType
         tags:
             - { name: form.type, alias: dropzone }
+
+### SONATA BLOCKS ###
+
+    librinfo.email.block.emails_list:
+        class: Librinfo\EmailBundle\Block\EmailsListBlock
+        arguments:
+            - librinfo.email.block.emails_list
+            - '@templating'
+        calls:
+            - [setManager, [@doctrine.orm.entity_manager]]
+        tags: [{ name: sonata.block }]

@@ -63,32 +63,32 @@ class Email extends Spoolable
      * @var Collection
      */
     private $attachments;
-    
+
     /**
      * @var bool
      */
     private $isTest;
-    
+
     /**
      * @var string
      */
     private $testAddress;
-    
+
     /**
      * @var bool
      */
     private $isTemplate;
-    
+
     /**
      * @var string
      */
     private $newTemplateName;
-    
+
     /**
      * @var EmailTemplate
      */
     private $template;
-    
+
     /**
      * @var bool
      */
@@ -98,13 +98,28 @@ class Email extends Spoolable
      * @var \Doctrine\Common\Collections\Collection
      */
     private $receipts;
-    
+
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $links;
-    
-    
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $organisms;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $positions;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $contacts;
+
+
     /**
      * constructor
      */
@@ -115,6 +130,9 @@ class Email extends Spoolable
         $this->attachments = new ArrayCollection();
         $this->receipts = new ArrayCollection();
         $this->links = new ArrayCollection();
+        $this->organisms = new ArrayCollection();
+        $this->contacts = new ArrayCollection();
+        $this->positions = new ArrayCollection();
     }
 
 
@@ -346,7 +364,7 @@ class Email extends Spoolable
     {
         return $this->attachments;
     }
-    
+
     /**
      * Set attachments
      *  Used for duplicating purposes
@@ -355,7 +373,7 @@ class Email extends Spoolable
     {
         $this->attachments = $attachments;
     }
-    
+
      public function getIsTest()
     {
         return $this->isTest;
@@ -370,12 +388,12 @@ class Email extends Spoolable
     {
         return $this->testAddress;
     }
-    
+
     public function setTestAddress($testAddress = NULL)
     {
         $this->testAddress = $testAddress;
     }
-    
+
     public function getTemplate()
     {
         return $this->template;
@@ -385,7 +403,7 @@ class Email extends Spoolable
     {
         $this->template = $template;
     }
-    
+
      public function getIsTemplate()
     {
         return $this->isTemplate;
@@ -395,7 +413,7 @@ class Email extends Spoolable
     {
         $this->isTemplate = $isTemplate;
     }
-    
+
     public function getNewTemplateName()
     {
         return $this->newTemplateName;
@@ -405,7 +423,7 @@ class Email extends Spoolable
     {
         $this->newTemplateName = $newTemplateName;
     }
-    
+
     /**
      * Set tracking
      *
@@ -465,7 +483,7 @@ class Email extends Spoolable
     {
         return $this->receipts;
     }
-    
+
     /**
      * Add link
      *
@@ -500,5 +518,110 @@ class Email extends Spoolable
     public function getLinks()
     {
         return $this->links;
+    }
+
+    /**
+     * Add organism
+     *
+     * @param object $organism
+     *
+     * @return Email
+     */
+    public function addOrganism($organism)
+    {
+        $this->organisms[] = $organism;
+        return $this;
+    }
+
+    /**
+     * Remove organism
+     *
+     * @param object $organism
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeOrganism($organism)
+    {
+        return $this->organisms->removeElement($organism);
+    }
+
+    /**
+     * Get organisms
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrganisms()
+    {
+        return $this->organisms;
+    }
+
+    /**
+     * Add position
+     *
+     * @param object $position
+     *
+     * @return Email
+     */
+    public function addPosition($position)
+    {
+        $this->positions[] = $position;
+        return $this;
+    }
+
+    /**
+     * Remove position
+     *
+     * @param object $position
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removePosition($position)
+    {
+        return $this->positions->removeElement($position);
+    }
+
+    /**
+     * Get positions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPositions()
+    {
+        return $this->positions;
+    }
+
+    /**
+     * Add contact
+     *
+     * @param object $contact
+     *
+     * @return Email
+     */
+    public function addContact($contact)
+    {
+        $this->contacts[] = $contact;
+        return $this;
+    }
+
+    /**
+     * Remove contact
+     *
+     * @param object $contact
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeContact($contact)
+    {
+        return $this->contacts->removeElement($contact);
+    }
+
+    /**
+     * Get contacts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getContacts()
+    {
+        return $this->contacts;
     }
 }

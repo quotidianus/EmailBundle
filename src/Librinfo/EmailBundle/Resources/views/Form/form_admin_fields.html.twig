@@ -1,0 +1,11 @@
+{% extends 'SonataAdminBundle:Form:form_admin_fields.html.twig' %}
+
+{% block form_widget_simple %}
+    {{ parent() }}
+
+    {% if form.vars.name == 'field_from' %}
+        {% include('LibrinfoEmailBundle:CRUD:form_field_field_from.html.twig') %}
+    {% endif %}
+{% endblock form_widget_simple %}
+
+

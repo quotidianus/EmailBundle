@@ -64,20 +64,21 @@ class EmailsListBlock extends TextBlockService
         if (!$targetEntity || !is_object($targetEntity))
             return [];
 
-        if (!method_exists($targetEntity, 'getEmailRecipients'))
-            throw new \Exception(sprintf('Class %s does not provide a "getEmailRecipients" method.', get_class($targetEntity)));
-
-        $recipients = $targetEntity->getEmailRecipients();
-
         $repo = $this->manager->getRepository('Librinfo\EmailBundle\Entity\Email');
         $qb = $repo->createQueryBuilder('e')
-            ->where('e.field_to IN (:recipients)')
-            ->orWhere('e.field_cc IN (:recipients)')
-            ->orWhere('e.field_bcc IN (:recipients)')
             ->orderBy('e.updatedAt', 'desc')
             ->setMaxResults($maxResults)
-            ->setParameter('recipients', $recipients)
         ;
+
+        if (get_class($targetEntity) == 'Librinfo\CRMBundle\Entity\Organism')
+            $qb->leftJoin ('e.organisms', 'org')
+                ->leftJoin ('e.positions', 'pos')
+                ->where('org.id = :targetid')
+                ->orWhere($qb->expr()->andX(
+                    $qb->expr()->eq('pos.organism', ':targetid'),
+                    $qb->expr()->isNotNull('pos.id')))
+                ->setParameter('targetid', $targetEntity->getId())
+            ;
         return $qb->getQuery()->getResult();
     }
 

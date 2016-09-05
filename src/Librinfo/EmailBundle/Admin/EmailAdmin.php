@@ -14,6 +14,8 @@ class EmailAdmin extends CoreAdmin
 
     protected function configureRoutes(RouteCollection $collection)
     {
+        $collection->add('send');
+        $collection->add('duplicate');
         $collection->add('sendAjax');
     }
 
@@ -123,9 +125,32 @@ class EmailAdmin extends CoreAdmin
                     $object->setFieldFrom($user->getEmail());
             }
 
-            $recipients = $this->getRequest()->get('recipients');
-            $fieldTo = is_array($recipients) ? implode(', ', $recipients) : $recipients;
-            $object->setFieldTo($fieldTo);
+            $recipients = $this->getRequest()->get('recipients', []);
+            if (!is_array($recipients))
+                $recipients = [];
+
+            if ($this->bundleExists('LibrinfoCRMBundle')) {
+                $fields = ['organism', 'position', 'contact'];
+                foreach ($fields as $field) {
+                    $ids = $this->getRequest()->get($field . 's');
+                    if (!$ids)
+                        continue;
+                    $Field = ucfirst($field);
+                    $entities = $this->getModelManager()->createQuery('LibrinfoCRMBundle:' . $Field, 'o')
+                        ->where('o.id IN (:ids)')
+                        ->setParameter('ids', $ids)
+                        ->getQuery()
+                        ->getResult();
+                    $adder = 'add' . $Field;
+                    foreach ($entities as $entity){
+                        $object->$adder($entity);
+                        if ($entity->getEmail())
+                            $recipients[] = $entity->getEmail();
+                    }
+                }
+            }
+
+            $object->setFieldTo(implode(', ', array_unique($recipients)));
         }
 
         return $object;

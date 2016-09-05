@@ -51,25 +51,40 @@ class CRMBundleListener implements LoggerAwareInterface, EventSubscriber
             return;
         $this->logger->debug("[CRMBundleListener] Entering CRMBundleListener for « loadClassMetadata » event");
 
-        // mapping with Organism entity (many-to-many inverse side)
+        // mapping with Organism entity (many-to-many owning side)
         $metadata->mapManyToMany([
             'targetEntity' => 'Librinfo\CRMBundle\Entity\Organism',
             'fieldName'    => 'organisms',
-            'mappedBy'     => 'emailMessages',
+            'inversedBy'   => 'emailMessages',
+            'joinTable'    => [
+                'name'               => 'librinfo_email_email__organism',
+                'joinColumns'        => ['email_id' => ['referencedColumnName' => 'id']],
+                'inverseJoinColumns' => ['organism_id'    => ['referencedColumnName' => 'id']],
+            ]
         ]);
 
-        // mapping with Position entity (many-to-many inverse side)
+        // mapping with Position entity (many-to-many owning side)
         $metadata->mapManyToMany([
             'targetEntity' => 'Librinfo\CRMBundle\Entity\Position',
             'fieldName'    => 'positions',
-            'mappedBy'     => 'emailMessages',
+            'inversedBy'   => 'emailMessages',
+            'joinTable'    => [
+                'name'               => 'librinfo_email_email__position',
+                'joinColumns'        => ['email_id' => ['referencedColumnName' => 'id']],
+                'inverseJoinColumns' => ['position_id'    => ['referencedColumnName' => 'id']],
+            ]
         ]);
 
-        // mapping with Contact entity (many-to-many inverse side)
+        // mapping with Contact entity (many-to-many owning side)
         $metadata->mapManyToMany([
             'targetEntity' => 'Librinfo\CRMBundle\Entity\Contact',
             'fieldName'    => 'contacts',
-            'mappedBy'     => 'emailMessages',
+            'inversedBy'   => 'emailMessages',
+            'joinTable'    => [
+                'name'               => 'librinfo_email_email__contact',
+                'joinColumns'        => ['email_id' => ['referencedColumnName' => 'id']],
+                'inverseJoinColumns' => ['contact_id'    => ['referencedColumnName' => 'id']],
+            ]
         ]);
 
         $this->logger->debug("[CRMBundleListener] Added CRM mapping metadata to Entity", ['class' => $metadata->getName()]);

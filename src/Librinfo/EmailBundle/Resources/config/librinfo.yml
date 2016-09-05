@@ -24,7 +24,7 @@ parameters:
                                 route: duplicate
                             send:
                                 template: LibrinfoEmailBundle:CRUD:list__action_send.html.twig
-                    
+
                     _options:
                         fieldsOrder:
                             - field_to
@@ -42,7 +42,7 @@ parameters:
                             field_to: ~
                             field_cc: ~
                             field_bcc: ~
-                            
+
                             textContent:
                                 type: textarea
                                 label: Content
@@ -63,6 +63,23 @@ parameters:
                                 type: text
                             field_to:
                                 type: text
+                            organisms:
+                                type: sonata_type_model_autocomplete
+                                property: name
+                                multiple: true
+                                required: false
+                            positions:
+                                type: sonata_type_model_autocomplete
+                                property: [contact.name, organism.name]
+                                multiple: true
+                                required: false
+                            contacts:
+                                type: sonata_type_model_autocomplete
+                                property: [firstname, name]
+                                multiple: true
+                                required: false
+                                _options:
+                                    admin_code: crm.contact
                             field_subject:
                                 type: text
                                 required: false
@@ -83,6 +100,19 @@ parameters:
                             attachments:
                                 type: dropzone
                                 required: false
+                            _options:
+                                fieldsOrder:
+                                    - field_from
+                                    - field_to
+                                    - field_cc
+                                    - field_bcc
+                                    - organisms
+                                    - positions
+                                    - contacts
+                                    - field_subject
+                                    - template
+                                    - content
+                                    - attachments
                         form_group_options:
                             isTemplate:
                                 type: checkbox
@@ -117,7 +147,7 @@ parameters:
                         fieldsOrder:
                             - field_to
                             - field_subject
-                    
+
 ########## EmailTemplate ##########
         Librinfo\EmailBundle\Entity\EmailTemplate:
             Sonata\AdminBundle\Show\ShowMapper:

@@ -68,6 +68,8 @@ parameters:
                                 property: name
                                 multiple: true
                                 required: false
+                                _options:
+                                    admin_code: crm.organism
                             positions:
                                 type: sonata_type_model_autocomplete
                                 property: [contact.name, organism.name]

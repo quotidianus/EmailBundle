@@ -156,4 +156,26 @@ class EmailAdmin extends CoreAdmin
         return $object;
     }
 
+    public function getPersistentParameters()
+    {
+        $parentParams = parent::getPersistentParameters();
+
+        if (!$this->getRequest()) {
+            return $parentParams;
+        }
+
+        $params = [];
+
+        if ($this->bundleExists('LibrinfoCRMBundle')) {
+            $from_admin = $this->getRequest()->get('from_admin');
+            if ($from_admin)
+                $params['from_admin'] = $from_admin;
+            $from_id = $this->getRequest()->get('from_id');
+            if ($from_id)
+                $params['from_id'] = $from_id;
+        }
+
+        return array_merge($parentParams, $params);
+    }
+
 }

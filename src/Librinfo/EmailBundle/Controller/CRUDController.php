@@ -648,19 +648,14 @@ class CRUDController extends SonataCRUDController
     protected function redirectTo($object)
     {
         $request = $this->getRequest();
-        $bundles = $this->get('kernel')->getBundles();
-
         $url = false;
-
-        if (array_key_exists('LibrinfoCRMBundle', $bundles)) {
-            $from_admin = $request->get('from_admin'); // admin code
-            $from_id = $request->get('from_id'); // contact or organism id
-            if ($from_admin !== null && $from_id !== null) { // redirect to the Organism or Contact show page
-                $admin = $this->get($from_admin);
-                $from_object = $admin->getObject($from_id);
-                if ($admin->isGranted('SHOW', $from_object))
-                    $url = $admin->generateObjectUrl('show', $from_object);
-            }
+        $from_admin = $request->get('from_admin'); // admin code
+        $from_id = $request->get('from_id');
+        if ($from_admin !== null && $from_id !== null) {
+            $admin = $this->get($from_admin);
+            $from_object = $admin->getObject($from_id);
+            if ($admin->isGranted('SHOW', $from_object))
+                $url = $admin->generateObjectUrl('show', $from_object);
         }
 
         if ($url)

@@ -127,26 +127,20 @@ class EmailAdmin extends CoreAdmin
 
             $recipients = $this->getRequest()->get('recipients', []);
             if (!is_array($recipients))
-                $recipients = [];
+                $recipients = [$recipients];
 
-            if ($this->bundleExists('LibrinfoCRMBundle')) {
-                $fields = ['organism', 'position', 'contact'];
-                foreach ($fields as $field) {
-                    $ids = $this->getRequest()->get($field . 's');
-                    if (!$ids)
-                        continue;
-                    $Field = ucfirst($field);
-                    $entities = $this->getModelManager()->createQuery('LibrinfoCRMBundle:' . $Field, 'o')
-                        ->where('o.id IN (:ids)')
-                        ->setParameter('ids', $ids)
-                        ->getQuery()
-                        ->getResult();
-                    $adder = 'add' . $Field;
-                    foreach ($entities as $entity){
-                        $object->$adder($entity);
-                        if ($entity->getEmail())
-                            $recipients[] = $entity->getEmail();
-                    }
+            $recipient_class = $this->getRequest()->get('recipient_class');
+            $recipient_ids = $this->getRequest()->get('recipient_ids');
+            if ($recipient_ids && $recipient_class && in_array($recipient_class, $object->getExternallyLinkedClasses())) {
+                $ids = is_array($recipient_ids) ? $recipient_ids : [$recipient_ids];
+                $entities = $this->getModelManager()->findBy($recipient_class, ['id' => $ids]);
+                dump($entities);
+                $rc = new \ReflectionClass($recipient_class);
+                $adder = 'add' . $rc->getShortName();
+                foreach ($entities as $entity){
+                    $object->$adder($entity);
+                    if ($entity->getEmail())
+                        $recipients[] = $entity->getEmail();
                 }
             }
 
@@ -166,14 +160,10 @@ class EmailAdmin extends CoreAdmin
 
         $params = [];
 
-        if ($this->bundleExists('LibrinfoCRMBundle')) {
-            $from_admin = $this->getRequest()->get('from_admin');
-            if ($from_admin)
-                $params['from_admin'] = $from_admin;
-            $from_id = $this->getRequest()->get('from_id');
-            if ($from_id)
-                $params['from_id'] = $from_id;
-        }
+        if ($from_admin = $this->getRequest()->get('from_admin'))
+            $params['from_admin'] = $from_admin;
+        if ($from_id = $this->getRequest()->get('from_id'))
+            $params['from_id'] = $from_id;
 
         return array_merge($parentParams, $params);
     }

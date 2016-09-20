@@ -43,7 +43,6 @@ class AppKernel extends Kernel
             new Librinfo\UIBundle\LibrinfoUIBundle(),
             new Librinfo\BaseEntitiesBundle\LibrinfoBaseEntitiesBundle(),
             new Librinfo\SecurityBundle\LibrinfoSecurityBundle(),
-            new Librinfo\CRMBundle\LibrinfoCRMBundle(),
             new Librinfo\UserBundle\LibrinfoUserBundle(),
             new Librinfo\DoctrinePgsqlBundle\LibrinfoDoctrinePgsqlBundle(),
             new Librinfo\EmailBundle\LibrinfoEmailBundle(),

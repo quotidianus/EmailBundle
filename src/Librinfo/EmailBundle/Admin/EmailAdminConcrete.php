@@ -24,9 +24,6 @@ class EmailAdminConcrete extends EmailAdmin
     {
         $this->configFormHandlesRelations($mapper);
 
-        if (!$this->bundleExists('LibrinfoCRMBundle'))
-            $mapper->remove('organisms');
-
         $builder = $mapper->getFormBuilder();
         $factory = $builder->getFormFactory();
         $request = $this->getRequest();

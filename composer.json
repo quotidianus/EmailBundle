@@ -4,7 +4,7 @@
     "type": "symfony-bundle",
     "description": "Email Bundle for Symfony",
     "keywords": ["email", "spool", "e-venement", "sonata", "symfony"],
-    "homepage": "https://github.com/libre-informatique/SymfonyLibrinfoCRMBundle",
+    "homepage": "https://github.com/libre-informatique/SymfonyLibrinfoEmailBundle",
     "authors": [
         {
            "name": "Romain SANCHEZ",

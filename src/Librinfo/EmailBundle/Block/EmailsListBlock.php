@@ -3,6 +3,7 @@
 namespace Librinfo\EmailBundle\Block;
 
 use Doctrine\ORM\EntityManager;
+use Librinfo\EmailBundle\Entity\Email;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\TextBlockService;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -31,7 +32,6 @@ class EmailsListBlock extends TextBlockService
         $targetEntity = $settings['target_entity'];
         $maxResults = $settings['max_results'];
         $emails = $this->getEmails($targetEntity, $maxResults);
-
 
         return $this->renderResponse($blockContext->getTemplate(), array(
             'block' => $blockContext->getBlock(),
@@ -63,6 +63,11 @@ class EmailsListBlock extends TextBlockService
     {
         if (!$targetEntity || !is_object($targetEntity))
             return [];
+        $rc = new \ReflectionClass($targetEntity);
+        $email = new Email;
+        if (!in_array($rc->getName(), $email->getExternallyLinkedClasses()))
+            return [];
+        $targets = strtolower($rc->getShortName()) . 's'; // ex. contacts
 
         $repo = $this->manager->getRepository('Librinfo\EmailBundle\Entity\Email');
         $qb = $repo->createQueryBuilder('e')
@@ -70,13 +75,19 @@ class EmailsListBlock extends TextBlockService
             ->setMaxResults($maxResults)
         ;
 
-        if (get_class($targetEntity) == 'Librinfo\CRMBundle\Entity\Organism')
+        // TODO: remove this
+        if (false && get_class($targetEntity) == 'Librinfo\CRMBundle\Entity\Organism')
             $qb->leftJoin ('e.organisms', 'org')
                 ->leftJoin ('e.positions', 'pos')
                 ->where('org.id = :targetid')
                 ->orWhere($qb->expr()->andX(
                     $qb->expr()->eq('pos.organism', ':targetid'),
                     $qb->expr()->isNotNull('pos.id')))
+                ->setParameter('targetid', $targetEntity->getId())
+            ;
+        else
+            $qb->leftJoin('e.'.$targets , 't')
+                ->where('t.id = :targetid')
                 ->setParameter('targetid', $targetEntity->getId())
             ;
         return $qb->getQuery()->getResult();

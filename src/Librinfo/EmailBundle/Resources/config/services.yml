@@ -36,10 +36,9 @@ services:
 
 ### DOCTRINE MAPPING ###
 
-    librinfo.email.listener.crm_bundle:
-        class: Librinfo\EmailBundle\EventListener\CRMBundleListener
+    librinfo.email.listener.recipients:
+        class: Librinfo\EmailBundle\EventListener\RecipientsListener
         tags:
             - { name: doctrine.event_subscriber }
         calls:
             - [setLogger,[@logger]]
-            - [setBundles, [%kernel.bundles%]]

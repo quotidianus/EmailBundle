@@ -11,7 +11,7 @@
         <testsuite name="Project Test Suite">
             <directory>../src/Librinfo/UIBundle/Tests</directory>
             <directory>../src/Librinfo/UserBundle/Tests</directory>
-            <directory>../src/Librinfo/CRMBundle/Tests</directory>
+            <directory>../src/Librinfo/EmailBundle/Tests</directory>
             <directory>../src/Librinfo/SecurityBundle/Tests</directory>
         </testsuite>
     </testsuites>

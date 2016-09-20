@@ -2,6 +2,7 @@
 
 namespace Librinfo\EmailBundle\Entity;
 
+use AppBundle\Entity\Traits\HasEmailRecipients;
 use Librinfo\DoctrineBundle\Entity\Traits\BaseEntity;
 use Librinfo\DoctrineBundle\Entity\Traits\Searchable;
 use Librinfo\DoctrineBundle\Entity\Traits\Loggable;
@@ -15,6 +16,7 @@ class Email extends Spoolable
 {
 
     use BaseEntity;
+    use HasEmailRecipients;
     use Searchable;
     use Loggable;
     use Traceable;
@@ -100,27 +102,6 @@ class Email extends Spoolable
     private $receipts;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $links;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $organisms;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $positions;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $contacts;
-
-
-    /**
      * constructor
      */
     public function __construct() {
@@ -130,9 +111,8 @@ class Email extends Spoolable
         $this->attachments = new ArrayCollection();
         $this->receipts = new ArrayCollection();
         $this->links = new ArrayCollection();
-        $this->organisms = new ArrayCollection();
-        $this->contacts = new ArrayCollection();
-        $this->positions = new ArrayCollection();
+
+        $this->initExternallyLinkedClasses();
     }
 
 
@@ -518,110 +498,5 @@ class Email extends Spoolable
     public function getLinks()
     {
         return $this->links;
-    }
-
-    /**
-     * Add organism
-     *
-     * @param object $organism
-     *
-     * @return Email
-     */
-    public function addOrganism($organism)
-    {
-        $this->organisms[] = $organism;
-        return $this;
-    }
-
-    /**
-     * Remove organism
-     *
-     * @param object $organism
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeOrganism($organism)
-    {
-        return $this->organisms->removeElement($organism);
-    }
-
-    /**
-     * Get organisms
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getOrganisms()
-    {
-        return $this->organisms;
-    }
-
-    /**
-     * Add position
-     *
-     * @param object $position
-     *
-     * @return Email
-     */
-    public function addPosition($position)
-    {
-        $this->positions[] = $position;
-        return $this;
-    }
-
-    /**
-     * Remove position
-     *
-     * @param object $position
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removePosition($position)
-    {
-        return $this->positions->removeElement($position);
-    }
-
-    /**
-     * Get positions
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPositions()
-    {
-        return $this->positions;
-    }
-
-    /**
-     * Add contact
-     *
-     * @param object $contact
-     *
-     * @return Email
-     */
-    public function addContact($contact)
-    {
-        $this->contacts[] = $contact;
-        return $this;
-    }
-
-    /**
-     * Remove contact
-     *
-     * @param object $contact
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeContact($contact)
-    {
-        return $this->contacts->removeElement($contact);
-    }
-
-    /**
-     * Get contacts
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getContacts()
-    {
-        return $this->contacts;
     }
 }

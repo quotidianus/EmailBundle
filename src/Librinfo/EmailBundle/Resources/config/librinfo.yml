@@ -63,25 +63,6 @@ parameters:
                                 type: text
                             field_to:
                                 type: text
-                            organisms:
-                                type: sonata_type_model_autocomplete
-                                property: name
-                                multiple: true
-                                required: false
-                                _options:
-                                    admin_code: crm.organism
-                            positions:
-                                type: sonata_type_model_autocomplete
-                                property: [contact.name, organism.name]
-                                multiple: true
-                                required: false
-                            contacts:
-                                type: sonata_type_model_autocomplete
-                                property: [firstname, name]
-                                multiple: true
-                                required: false
-                                _options:
-                                    admin_code: crm.contact
                             field_subject:
                                 type: text
                                 required: false
@@ -108,9 +89,6 @@ parameters:
                                     - field_to
                                     - field_cc
                                     - field_bcc
-                                    - organisms
-                                    - positions
-                                    - contacts
                                     - field_subject
                                     - template
                                     - content
@@ -151,6 +129,7 @@ parameters:
                             - field_subject
 
 ########## EmailTemplate ##########
+
         Librinfo\EmailBundle\Entity\EmailTemplate:
             Sonata\AdminBundle\Show\ShowMapper:
                 _copy: Sonata\AdminBundle\Form\FormMapper
@@ -172,3 +151,14 @@ parameters:
                 add:
                     name: ~
                     content: ~
+
+######  HasEmailMessages ##########
+
+        AppBundle\Entity\Traits\HasEmailMessages:
+            Sonata\AdminBundle\Show\ShowMapper:
+                add:
+                    show_tab_emails:
+                        '':
+                            email_history:
+                                template: LibrinfoEmailBundle:CRUD:show_field_emails_list.html.twig
+                                mapped: false

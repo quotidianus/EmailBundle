@@ -1,5 +1,0 @@
-librinfo.security:
-    # Defining custom Roles hierarchy (as a tree)
-    security.role_hierarchy.roles:
-        ROLE_CRM_CONTACT_VIEWER:
-            - ROLE_TEST_GLOBAL

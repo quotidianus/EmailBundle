@@ -67,29 +67,23 @@ class EmailsListBlock extends TextBlockService
         $email = new Email;
         if (!in_array($rc->getName(), $email->getExternallyLinkedClasses()))
             return [];
-        $targets = strtolower($rc->getShortName()) . 's'; // ex. contacts
 
-        $repo = $this->manager->getRepository('Librinfo\EmailBundle\Entity\Email');
-        $qb = $repo->createQueryBuilder('e')
-            ->orderBy('e.updatedAt', 'desc')
-            ->setMaxResults($maxResults)
-        ;
-
-        // TODO: remove this
-        if (false && get_class($targetEntity) == 'Librinfo\CRMBundle\Entity\Organism')
-            $qb->leftJoin ('e.organisms', 'org')
-                ->leftJoin ('e.positions', 'pos')
-                ->where('org.id = :targetid')
-                ->orWhere($qb->expr()->andX(
-                    $qb->expr()->eq('pos.organism', ':targetid'),
-                    $qb->expr()->isNotNull('pos.id')))
-                ->setParameter('targetid', $targetEntity->getId())
-            ;
-        else
-            $qb->leftJoin('e.'.$targets , 't')
+        $repo = $this->manager->getRepository($rc->getName());
+        if (method_exists($repo, 'getEmailMessagesQueryBuilder')) {
+            $qb = $repo->getEmailMessagesQueryBuilder($targetEntity->getId());
+        }
+        else {
+            $repo = $this->manager->getRepository(Email::class);
+            $targets = strtolower($rc->getShortName()) . 's'; // ex. contacts
+            $qb = $repo->createQueryBuilder('e')
+                ->leftJoin('e.'.$targets, 't')
                 ->where('t.id = :targetid')
                 ->setParameter('targetid', $targetEntity->getId())
             ;
+        }
+        $qb->orderBy('e.updatedAt', 'desc')
+            ->setMaxResults($maxResults);
+
         return $qb->getQuery()->getResult();
     }
 

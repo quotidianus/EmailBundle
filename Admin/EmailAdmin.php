@@ -134,7 +134,6 @@ class EmailAdmin extends CoreAdmin
             if ($recipient_ids && $recipient_class && in_array($recipient_class, $object->getExternallyLinkedClasses())) {
                 $ids = is_array($recipient_ids) ? $recipient_ids : [$recipient_ids];
                 $entities = $this->getModelManager()->findBy($recipient_class, ['id' => $ids]);
-                dump($entities);
                 $rc = new \ReflectionClass($recipient_class);
                 $adder = 'add' . $rc->getShortName();
                 foreach ($entities as $entity){

@@ -5,6 +5,7 @@ namespace Librinfo\EmailBundle\EventListener;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\Common\Inflector\Inflector;
 use Librinfo\EmailBundle\Entity\Email;
 use Monolog\Logger;
 use Psr\Log\LoggerAwareInterface;
@@ -51,15 +52,15 @@ class RecipientsListener implements LoggerAwareInterface, EventSubscriber
             {
                 // mapping with recipientClass entity (many-to-many owning side)
                 $rc = new \ReflectionClass($recipientsClass);
-                $entity = strtolower($rc->getShortName());  // TODO: camelcase to underscores ?
+                $entity = lcfirst($rc->getShortName());
                 $metadata->mapManyToMany([
                     'targetEntity' => $recipientsClass,
-                    'fieldName'    => $entity . 's',  // ex. "organisms"
+                    'fieldName'    => Inflector::pluralize($entity),  // ex. "myContacts"
                     'inversedBy'   => 'emailMessages',
                     'joinTable'    => [
-                        'name'               => 'librinfo_email_email__' . $entity,  // ex. "librinfo_email_email__organism"
+                        'name'               => 'librinfo_email_email__' . Inflector::tableize($entity),  // ex. "librinfo_email_email__my_contact"
                         'joinColumns'        => ['email_id' => ['referencedColumnName' => 'id']],
-                        'inverseJoinColumns' => [$entity . '_id'    => ['referencedColumnName' => 'id']],  // ex. organism_id
+                        'inverseJoinColumns' => [Inflector::tableize($entity) . '_id'    => ['referencedColumnName' => 'id']],  // ex. my_contact_id
                     ]
                 ]);
             }
@@ -77,10 +78,11 @@ class RecipientsListener implements LoggerAwareInterface, EventSubscriber
 
             // mapping with Emails (many-to-many inverse side)
             $reflectionClass = $metadata->getReflectionClass();
+            $entity = lcfirst($reflectionClass->getShortName());
             $metadata->mapManyToMany([
                 'targetEntity' => Email::class,
                 'fieldName'    => 'emailMessages',
-                'mappedBy'     => strtolower($reflectionClass->getShortName()) . 's'  // ex. "organisms"
+                'mappedBy'     => Inflector::pluralize($entity),  // ex. "myContacts"
             ]);
 
             $this->logger->debug("[RecipientsListener] Added Email mapping metadata to Entity", ['class' => $metadata->getName()]);

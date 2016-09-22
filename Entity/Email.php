@@ -2,7 +2,7 @@
 
 namespace Librinfo\EmailBundle\Entity;
 
-use AppBundle\Entity\Traits\HasEmailRecipients;
+use AppBundle\Entity\Extension\EmailExtension;
 use Librinfo\DoctrineBundle\Entity\Traits\BaseEntity;
 use Librinfo\DoctrineBundle\Entity\Traits\Searchable;
 use Librinfo\DoctrineBundle\Entity\Traits\Loggable;
@@ -16,7 +16,7 @@ class Email extends Spoolable
 {
 
     use BaseEntity;
-    use HasEmailRecipients;
+    use EmailExtension;
     use Searchable;
     use Loggable;
     use Traceable;

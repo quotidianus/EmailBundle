@@ -114,7 +114,7 @@ class Email extends Spoolable
         $this->receipts = new ArrayCollection();
         $this->links = new ArrayCollection();
 
-        $this->initExternallyLinkedClasses();
+        $this->initOuterExtendedClasses();
     }
 
 

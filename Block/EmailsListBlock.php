@@ -64,8 +64,7 @@ class EmailsListBlock extends TextBlockService
         if (!$targetEntity || !is_object($targetEntity))
             return [];
         $rc = new \ReflectionClass($targetEntity);
-        $email = new Email;
-        if (!in_array($rc->getName(), $email->getExternallyLinkedClasses()))
+        if (!$rc->hasProperty('emailMessages'))
             return [];
 
         $repo = $this->manager->getRepository($rc->getName());

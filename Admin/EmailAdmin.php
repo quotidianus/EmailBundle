@@ -131,7 +131,7 @@ class EmailAdmin extends CoreAdmin
 
             $recipient_class = $this->getRequest()->get('recipient_class');
             $recipient_ids = $this->getRequest()->get('recipient_ids');
-            if ($recipient_ids && $recipient_class && in_array($recipient_class, $object->getExternallyLinkedClasses())) {
+            if ($recipient_ids && $recipient_class) {
                 $ids = is_array($recipient_ids) ? $recipient_ids : [$recipient_ids];
                 $entities = $this->getModelManager()->findBy($recipient_class, ['id' => $ids]);
                 $rc = new \ReflectionClass($recipient_class);

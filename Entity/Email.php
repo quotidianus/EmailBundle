@@ -3,6 +3,7 @@
 namespace Librinfo\EmailBundle\Entity;
 
 use AppBundle\Entity\Extension\EmailExtension;
+use Librinfo\OuterExtensionBundle\Entity\Traits\OuterExtensible;
 use Librinfo\DoctrineBundle\Entity\Traits\BaseEntity;
 use Librinfo\DoctrineBundle\Entity\Traits\Searchable;
 use Librinfo\DoctrineBundle\Entity\Traits\Loggable;
@@ -16,6 +17,7 @@ class Email extends Spoolable
 {
 
     use BaseEntity;
+    use OuterExtensible;
     use EmailExtension;
     use Searchable;
     use Loggable;

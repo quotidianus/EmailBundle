@@ -33,12 +33,3 @@ services:
         calls:
             - [setManager, [@doctrine.orm.entity_manager]]
         tags: [{ name: sonata.block }]
-
-### DOCTRINE MAPPING ###
-
-    librinfo.email.listener.recipients:
-        class: Librinfo\EmailBundle\EventListener\RecipientsListener
-        tags:
-            - { name: doctrine.event_subscriber }
-        calls:
-            - [setLogger,[@logger]]

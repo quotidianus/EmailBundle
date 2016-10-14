@@ -317,7 +317,7 @@ class Email extends Spoolable
      *
      * @return Email
      */
-    public function addAttachment(\Librinfo\EmailBundle\Entity\EmailAttachment $attachment)
+    public function addAttachment($attachment)
     {
         $this->attachments[] = $attachment;
 
@@ -331,7 +331,7 @@ class Email extends Spoolable
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeAttachment(\Librinfo\EmailBundle\Entity\EmailAttachment $attachment)
+    public function removeAttachment($attachment)
     {
 
         return $this->attachments->removeElement($attachment);

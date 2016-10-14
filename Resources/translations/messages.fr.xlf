@@ -110,6 +110,10 @@
                 <source>show_tab_emails</source>
                 <target>Emails</target>
             </trans-unit>
+            <trans-unit id="form_group_attachments">
+                <source>form_group_attachments</source>
+                <target>Pièces jointes</target>
+            </trans-unit>
             <trans-unit id="librinfo.label.email_to">
                 <source>librinfo.label.email_to</source>
                 <target>À</target>

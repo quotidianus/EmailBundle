@@ -32,7 +32,7 @@ Librinfo\EmailBundle\Entity\Email:
             nullable: true
     oneToMany:
         attachments:
-            targetEntity: EmailAttachment
+            targetEntity: \Librinfo\MediaBundle\Entity\File
             mappedBy: email
             cascade: [persist, remove]
             orphanRemoval:  true

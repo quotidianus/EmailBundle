@@ -2,7 +2,7 @@
 
 namespace Librinfo\EmailBundle\Controller;
 
-use Sonata\AdminBundle\Controller\CRUDController as SonataCRUDController;
+use Librinfo\MediaBundle\Controller\CRUDController as BaseCRUDController;
 use Swift_Mailer;
 use Swift_Message;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CRUDController extends SonataCRUDController
+class CRUDController extends BaseCRUDController
 {
 
     /**
@@ -18,12 +18,6 @@ class CRUDController extends SonataCRUDController
      * @var Swift_Mailer $mailer
      */
     private $mailer;
-
-    /**
-     *
-     * @var EntityManager $manager
-     */
-    private $manager;
 
     /**
      *
@@ -343,7 +337,7 @@ class CRUDController extends SonataCRUDController
 
         $object = $object ? $object : $this->admin->getNewInstance();
 
-        $this->handleAttachments($object, $tempId);
+        $this->handleFiles($object, $tempId);
 
         $preResponse = $this->preCreate($request, $object);
         if ($preResponse !== null)
@@ -454,7 +448,7 @@ class CRUDController extends SonataCRUDController
         $id = $request->get($this->admin->getIdParameter());
         $object = $this->admin->getObject($id);
 
-        $this->handleAttachments($object, $tempId);
+        $this->handleFiles($object, $tempId);
 
         if (!$object)
         {
@@ -557,24 +551,6 @@ class CRUDController extends SonataCRUDController
     }
 
     /**
-     * Binds the uploaded attachments to the email on creation
-     *
-     * @param Email $object
-     * @param String $tempId
-     */
-    private function handleAttachments($object, $tempId)
-    {
-        $repo = $this->manager->getRepository("LibrinfoEmailBundle:EmailAttachment");
-        $attachments = $repo->findBy(array("tempId" => $tempId));
-
-        foreach ($attachments as $attachment)
-        {
-            $attachment->setEmail($object);
-            $this->manager->persist($attachment);
-        }
-    }
-
-    /**
      * Handles sending of the test Email
      *
      * @param Email $email
@@ -607,9 +583,8 @@ class CRUDController extends SonataCRUDController
         }
     }
 
-     public function listAction()
+    public function listAction()
     {
-
         $request = $this->getRequest();
 
         $this->admin->checkAccess('list');

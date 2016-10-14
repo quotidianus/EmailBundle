@@ -1,8 +1,0 @@
-{#view to init tinyMce in content textarea of the email create/edit form#}
-
-{% extends 'SonataAdminBundle:CRUD:base_edit.html.twig' %}
-
-{% block form %}
-    {{ parent() }}
-    {{ tinymce_init() }}
-{% endblock %}

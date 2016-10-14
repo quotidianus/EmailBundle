@@ -1,11 +1,5 @@
 
-{% extends 'SonataAdminBundle:CRUD:base_edit.html.twig' %}
-
-{% block form %}
-    {{ parent() }}
-    {# init tinyMce in content textarea of the email create/edit form #}
-    {{ tinymce_init({'theme': { 'advanced': {'paste_data_images' : true, 'height': 280 }}}) }}
-{% endblock %}
+{% extends 'LibrinfoMediaBundle:CRUD:edit.html.twig' %}
 
 {# add the send button to update form #}
 {% block sonata_form_actions %}
@@ -18,23 +12,12 @@
     {% endif %}
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-{% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script>
-    var dropzoneMessages = {
-        
-        'defaultMessage': '{{ 'dropzone.defaultMessage'|trans({}, 'LibrinfoEmailBundle') }}',
-        'fallbackMessage': '{{ 'dropzpone.fallbackMessage'|trans({}, 'LibrinfoEmailBundle') }}',
-        'fallbackText': '{{ 'dropzone.fallbackText'|trans({}, 'LibrinfoEmailBundle') }}',
-        'invalidFileType': '{{ 'dropzone.invalidFileType'|trans({}, 'LibrinfoEmailBundle') }}',
-        'fileTooBig': '{{ 'dropzone.fileTooBig'|trans({}, 'LibrinfoEmailBundle') }}',
-        'responseError': '{{ 'dropzone.responseError'|trans({}, 'LibrinfoEmailBundle') }}',
-        'maxFilesExceeded': '{{ 'dropzone.maxFilesExceeded'|trans({}, 'LibrinfoEmailBundle') }}'
-        
-    };
-    </script>
+    {{ tinymce_init({'theme': { 'advanced': {'paste_data_images' : true, 'height': 280 }}}) }}
     <script type="text/javascript" src="{{ asset('bundles/librinfoemail/js/main.js') }}"></script>
+{% endblock %}
+
+{% block dropzone_template %}
+    {% include 'LibrinfoEmailBundle:dropzone:dropzone_template.mustache.twig' %}
 {% endblock %}

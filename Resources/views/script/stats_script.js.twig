@@ -1,8 +1,6 @@
 
-{# Manages display of stats with classyloader plugin
-
-The script is put in a twig file to pass controller data to the js plugin
-#}
+<script type="text/javascript" src="{{ asset('bundles/librinfoemail/js/jquery.classyloader.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/librinfoemail/js/stats.js') }}"></script>
 <script type="text/javascript">
 
     var stats = "{{ stats | json_encode() }}";

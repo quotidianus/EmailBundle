@@ -39,7 +39,6 @@
                 <target>Lien le moins suivi:</target>
             </trans-unit>
             
-            
             <!--dropzone-->
             <trans-unit id="371463377e6e804294372450e1618d11" resname="dropzone.defaultMessage">
                 <source>Drop files here</source>

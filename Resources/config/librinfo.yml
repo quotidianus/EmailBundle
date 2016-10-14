@@ -46,13 +46,16 @@ parameters:
                             textContent:
                                 type: textarea
                                 label: Content
-                            attachments: ~
+                        form_group_attachments:
+                            attachments:
+                                template: LibrinfoMediaBundle:CRUD:show_images.html.twig
                         form_group_tracking:
                             stats:
                                 type: stats
                         _options:
                             groupsOrder:
                             - form_group_general
+                            - form_group_attachments
                             - form_group_tracking
                             - from_group_misc
             Sonata\AdminBundle\Form\FormMapper:

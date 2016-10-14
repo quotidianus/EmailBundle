@@ -1,0 +1,26 @@
+<script id="dropzone-template" type="x-tmpl-mustache">
+    <div class="table table-striped" class="files" id="previews">
+        <div id="template" class="file-row">
+            <div> 
+                <span class="preview"><img data-dz-thumbnail></span>
+            </div>
+            <div> 
+                <p class="name" data-dz-name></p>
+                <strong class="error text-danger" data-dz-errormessage></strong>
+            </div>
+            <div> 
+                <button data-dz-remove class="btn btn-danger delete">
+                    <i class="glyphicon glyphicon-trash"></i>
+                </button> 
+                <button class="btn btn-info inline">
+                    <i class="glyphicon glyphicon-arrow-up"></i>
+                </button>
+            </div>
+            <div> 
+                <p class="size" data-dz-size></p>
+                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+                <div class="progress-bar progress-bar-info" style="width:0%;" data-dz-uploadprogress></div>
+            </div>
+        </div>
+    </div>
+<script>

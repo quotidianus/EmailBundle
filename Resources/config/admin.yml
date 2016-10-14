@@ -7,12 +7,6 @@ services:
         calls:
             - [ setTemplate, [edit, LibrinfoEmailBundle:CRUD:email_edit.html.twig]]
             - [ setTemplate, [show, LibrinfoEmailBundle:CRUD:email_show.html.twig]]
-
-    email.email_attachment:
-        class: Librinfo\EmailBundle\Admin\EmailAttachmentAdminConcrete
-        arguments: [~, Librinfo\EmailBundle\Entity\EmailAttachment, SonataAdminBundle:CRUD]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: EmailAttachment }
             
     email.email_template:
         class: Librinfo\EmailBundle\Admin\EmailTemplateAdminConcrete

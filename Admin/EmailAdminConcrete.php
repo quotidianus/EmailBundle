@@ -12,14 +12,6 @@ class EmailAdminConcrete extends EmailAdmin
 {
     use HandlesRelationsAdmin { configureFormFields as configFormHandlesRelations; }
 
-    public function getFormTheme()
-    {
-        return array_merge(
-            parent::getFormTheme(),
-            ['LibrinfoEmailBundle:Form:form_admin_fields.html.twig']
-        );
-    }
-
     protected function configureFormFields(FormMapper $mapper)
     {
         $this->configFormHandlesRelations($mapper);

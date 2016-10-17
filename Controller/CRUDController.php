@@ -168,7 +168,7 @@ class CRUDController extends BaseCRUDController
 
         $message = $this->setupSwiftMessage($to, $cc, $bcc);
 
-        $replacements = $this->container->get('librinfo.email.replacements');
+        $replacements = $this->container->get('librinfo_email.replacements');
         $decorator = new \Swift_Plugins_DecoratorPlugin($replacements);
         $this->mailer->registerPlugin($decorator);
 
@@ -216,7 +216,7 @@ class CRUDController extends BaseCRUDController
         if (!$this->isNewsLetter && $this->email->getTracking())
         {
 
-            $tracker = $this->container->get('librinfo.email.tracking');
+            $tracker = $this->container->get('librinfo_email.tracking');
 
             $content = $tracker->addTracking($content, $to, $this->email->getId());
         }
@@ -267,7 +267,7 @@ class CRUDController extends BaseCRUDController
     {
         if ($isNewsLetter)
         {
-            //set the id of the swift message so it can be retrieve from spoll fulshQueue()
+            //set the id of the swift message so it can be retrieve from spool fulshQueue()
             $this->email->setMessageId($message->getId());
         } else if (!$this->email->getIsTest())
         {
@@ -295,7 +295,7 @@ class CRUDController extends BaseCRUDController
 
         if ($object->getTracking())
         {
-            $statHelper = $this->get('librinfo.email.stats');
+            $statHelper = $this->get('librinfo_email.stats');
 
             $this->admin->setSubject($object);
 

@@ -84,7 +84,7 @@ parameters:
                                     class: tinymce
                                     data-theme: advanced
                             attachments:
-                                type: dropzone
+                                type: Librinfo\MediaBundle\Form\Type\DropzoneType
                                 required: false
                             _options:
                                 fieldsOrder:

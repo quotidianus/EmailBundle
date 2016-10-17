@@ -1,6 +1,6 @@
 <?php
 
-namespace Librinfo\EmailBundle\SwiftMailer;
+namespace Librinfo\EmailBundle\Services;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 

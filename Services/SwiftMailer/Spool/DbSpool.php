@@ -1,11 +1,11 @@
 <?php
 
-namespace Librinfo\EmailBundle\SwiftMailer\Spool;
+namespace Librinfo\EmailBundle\Services\SwiftMailer\Spool;
 
 use Doctrine\ORM\EntityManager;
-use Librinfo\EmailBundle\SwiftMailer\Spool\SpoolStatus;
-use Librinfo\EmailBundle\SwiftMailer\DecoratorPlugin\Replacements;
-use Librinfo\EmailBundle\SwiftMailer\Tracking;
+use Librinfo\EmailBundle\Services\SwiftMailer\Spool\SpoolStatus;
+use Librinfo\EmailBundle\Services\SwiftMailer\DecoratorPlugin\Replacements;
+use Librinfo\EmailBundle\Services\Tracking;
 
 /**
  * Class DbSpool

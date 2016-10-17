@@ -1,6 +1,6 @@
 <?php
 
-namespace Librinfo\EmailBundle\Stats;
+namespace Librinfo\EmailBundle\Services;
 
 class EmailStats
 {

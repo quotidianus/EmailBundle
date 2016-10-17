@@ -1,20 +1,23 @@
 services:
     swiftmailer.mailer.spool_mailer.spool.db:
-        class: Librinfo\EmailBundle\SwiftMailer\Spool\DbSpool
+        class: Librinfo\EmailBundle\Services\SwiftMailer\Spool\DbSpool
         arguments: [ @doctrine.orm.entity_manager, %kernel.environment% ]
 
-    librinfo.email.replacements:
-        class: Librinfo\EmailBundle\SwiftMailer\DecoratorPlugin\Replacements
+    librinfo_email.replacements:
+        class: Librinfo\EmailBundle\Services\SwiftMailer\DecoratorPlugin\Replacements
         arguments: [ @doctrine.orm.entity_manager ]
 
-    librinfo.email.tracking:
-        class: Librinfo\EmailBundle\SwiftMailer\Tracking
+    librinfo_email.tracking:
+        class: Librinfo\EmailBundle\Services\SwiftMailer\Tracking
 
-    librinfo.email.cloning:
-        class: Librinfo\EmailBundle\Cloning\EmailCloning
+    librinfo_email.cloning:
+        class: Librinfo\EmailBundle\Services\EmailCloning
 
-    librinfo.email.stats:
-        class: Librinfo\EmailBundle\Stats\EmailStats
+    librinfo_email.stats:
+        class: Librinfo\EmailBundle\Services\EmailStats
+        
+    librinfo_email.inline_attachments:
+        class: Librinfo\EmailBundle\Services\InlineAttachments
 
 ### FORM TYPES ###
 

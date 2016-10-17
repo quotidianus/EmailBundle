@@ -1,6 +1,6 @@
 <?php
 
-namespace Librinfo\EmailBundle\SwiftMailer\DecoratorPlugin;
+namespace Librinfo\EmailBundle\Services\SwiftMailer\DecoratorPlugin;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Doctrine\ORM\EntityManager;

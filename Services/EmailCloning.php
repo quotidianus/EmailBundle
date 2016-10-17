@@ -1,6 +1,6 @@
 <?php
 
-namespace Librinfo\EmailBundle\Cloning;
+namespace Librinfo\EmailBundle\Services;
 
 use Librinfo\EmailBundle\Entity\Email;
 

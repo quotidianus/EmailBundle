@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CRUDController extends BaseCRUDController
 {
-
     /**
      *
      * @var Swift_Mailer $mailer
@@ -47,7 +46,7 @@ class CRUDController extends BaseCRUDController
         $id = $this->getRequest()->get($this->admin->getIdParameter());
         $email = $this->admin->getObject($id);
 
-        $cloner = $this->container->get('librinfo.email.cloning');
+        $cloner = $this->container->get('librinfo_email.cloning');
 
         $object = $cloner->cloneEmail($email);
 
@@ -66,7 +65,7 @@ class CRUDController extends BaseCRUDController
         $this->email = $this->admin->getObject($id);
         $this->attachments = $this->email->getAttachments();
         $addresses = explode(';', $this->email->getFieldTo());
-
+        
         // TODO: change this. An email with multiple recipients is not necessarily a newsletter
         //$this->isNewsLetter = count($addresses) > 1;
         $this->isNewsLetter = false;

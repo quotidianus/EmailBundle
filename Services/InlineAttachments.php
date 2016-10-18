@@ -6,11 +6,11 @@ class InlineAttachments {
 
     /**
      * Turns inline attachments into links to attachments
-     * 
+     *
      * @param Email $email
      * @return Array
      */
-    public function handle($email) 
+    public function handle($email)
     {
         $post_treated_content = $this->content;
         preg_match_all('!<img\s(.*)src="data:(image/\w+);base64,(.*)"(.*)/>!U', $post_treated_content, $imgs, PREG_SET_ORDER);
@@ -29,4 +29,4 @@ class InlineAttachments {
             );
         }
     }
-    
+}

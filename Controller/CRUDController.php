@@ -84,9 +84,14 @@ class CRUDController extends BaseCRUDController
         } else
         {
             $to = explode(';', $this->email->getFieldTo());
-            $cc = explode(';', $this->email->getFieldCc());
-            $bcc = explode(';', $this->email->getFieldBcc());
+            $cc = $this->email->getFieldCc();
+            $bcc = $this->email->getFieldBcc();
             $failedRecipients = [];
+
+            // avoid SwiftRfcComplianceException on cc and bcc
+            $cc = null == $cc ? $cc : explode(';', $this->email->getFieldCc());
+            $bcc = null == $bcc ? $bcc : explode(';', $this->email->getFieldBcc());
+        
             $nbSent = $this->directSend($to, $cc, $bcc, $failedRecipients);
         }
 
@@ -129,11 +134,15 @@ class CRUDController extends BaseCRUDController
                 'error' => 'librinfo.error.email_already_sent',
             ));
         }
-
+        
         $to = explode(';', $this->email->getFieldTo());
-        $cc = explode(';', $this->email->getFieldCc());
-        $bcc = explode(';', $this->email->getFieldBcc());
+        $cc = $this->email->getFieldCc();
+        $bcc = $this->email->getFieldBcc();
         $failedRecipients = [];
+        
+        // avoid SwiftRfcComplianceException on cc and bcc
+        $cc = null == $cc ? $cc : explode(';', $this->email->getFieldCc());
+        $bcc = null == $bcc ? $bcc : explode(';', $this->email->getFieldBcc());
 
         try {
             $nbSent = $this->directSend($to, $cc, $bcc, $failedRecipients);
@@ -162,7 +171,7 @@ class CRUDController extends BaseCRUDController
      *
      * @return int The number of successful recipients. Can be 0 which indicates failure
      */
-    private function directSend($to, $cc = [], $bcc = [], &$failedRecipients = null)
+    private function directSend($to, $cc = null, $bcc = null, &$failedRecipients = null)
     {
         $this->setDirectMailer();
 
@@ -209,27 +218,33 @@ class CRUDController extends BaseCRUDController
      * @param array $bcc  The Bcc addresses (optional)
      * @return Swift_Message
      */
-    private function setupSwiftMessage($to, $cc = [], $bcc = [])
+    private function setupSwiftMessage($to, $cc = null, $bcc = null)
     {
         $content = $this->email->getContent();
-
+        $inlineAttachmentsHandler = $this->container->get('librinfo_email.inline_attachments');
+        
         if (!$this->isNewsLetter && $this->email->getTracking())
         {
-
             $tracker = $this->container->get('librinfo_email.tracking');
-
             $content = $tracker->addTracking($content, $to, $this->email->getId());
         }
 
-        $message = \Swift_Message::newInstance()
-                ->setSubject($this->email->getFieldSubject())
-                ->setFrom($this->email->getFieldFrom())
+        $message = \Swift_Message::newInstance();
+        
+        $content = $inlineAttachmentsHandler->handle($content, $message);
+        
+        $message->setSubject(trim($this->email->getFieldSubject()))
+                ->setFrom(trim($this->email->getFieldFrom()))
                 ->setTo($to)
-                ->setCc($cc)
-                ->setBcc($bcc)
                 ->setBody($content, 'text/html')
                 ->addPart($this->email->getTextContent(), 'text/plain')
         ;
+        
+        if( !empty($cc) )
+            $message->setCc($cc);
+        
+        if( !empty($bcc) )
+            $message->setBcc($bcc);
 
         $this->addAttachments($message);
 
@@ -237,7 +252,7 @@ class CRUDController extends BaseCRUDController
     }
 
     /**
-     * Adds attachlents to the Swift_Message
+     * Adds attachments to the Swift_Message
      * @param Swift_Message $message
      */
     private function addAttachments($message)
@@ -251,7 +266,6 @@ class CRUDController extends BaseCRUDController
                         ->setFilename($file->getName())
                         ->setContentType($file->getMimeType())
                         ->setBody($file->getFile())
-
                 ;
                 $message->attach($attachment);
             }

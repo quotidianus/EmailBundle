@@ -1,35 +1,20 @@
 #insert chosen template in edit form
-librinfo_email_getTemplate:
+librinfo_email.getTemplate:
     path:     librinfo/email/ajax/getTemplate/{templateId}
     defaults: { _controller: LibrinfoEmailBundle:Ajax:getEmailTemplate }
     
-#upload attachments
-librinfo_email_upload:
-    path:     librinfo/email/ajax/upload
-    defaults: { _controller: LibrinfoEmailBundle:Ajax:upload }
-    
-# remove uploaded attachments
-librinfo_email_upload_remove:
-    path:     librinfo/email/ajax/upload/remove/{fileName}/{fileSize}/{tempId}
-    defaults: { _controller: LibrinfoEmailBundle:Ajax:removeUpload }
-    
-# load uploaded files to display in edit view
-librinfo_email_attachments_load:
-    path:     librinfo/email/ajax/upload/load/{emailId}
-    defaults: { _controller: LibrinfoEmailBundle:Ajax:loadAttachments }
-    
 # insert attachments into content
-librinfo_email_insert:
+librinfo_email.insert:
     path:     librinfo/email/ajax/insert/{fileName}/{fileSize}/{tempId}
     defaults: { _controller: LibrinfoEmailBundle:Ajax:addTocontent }
     
 #tracking of email openings
-librinfo_email_trackOpens:
+librinfo_email.track_opens:
     path:     tracking/{emailId}/{recipient}.png
     defaults: { _controller: LibrinfoEmailBundle:Tracking:trackOpens }
     
 #tracking of email internal links clicks
-librinfo_email_trackLinks:
+librinfo_email.track_links:
     path:     tracking/{emailId}/{recipient}/{destination}
     defaults: { _controller: LibrinfoEmailBundle:Tracking:trackLinks }
     

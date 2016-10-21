@@ -67,6 +67,12 @@ class Sender
         $this->spoolMailer = $spoolMailer;
     }
     
+    /**
+     * Sends an email
+     * 
+     * @param type Email $email the email to send
+     * @return int number of successfully sent emails
+     */
     public function send($email)
     {
         $this->email = $email;
@@ -76,9 +82,11 @@ class Sender
         $this->needsSpool = count($addresses) > 1;
         
         if( $this->needsSpool )
-            $this->spoolSend($addresses);
+            $sent = $this->spoolSend($addresses);
         else
-            $this->directSend($addresses);
+            $sent = $this->directSend($addresses);
+        
+        return $sent;
     }
 
     /**

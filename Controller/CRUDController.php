@@ -3,8 +3,6 @@
 namespace Librinfo\EmailBundle\Controller;
 
 use Librinfo\MediaBundle\Controller\CRUDController as BaseCRUDController;
-use Swift_Mailer;
-use Swift_Message;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,17 +41,39 @@ class CRUDController extends BaseCRUDController
         if ($email->getSent())
         {
             $this->addFlash('sonata_flash_error', "Message " . $id . " déjà envoyé");
-
+            
+            if($this->isXmlHttpRequest())
+                return new JsonResponse(array(
+                    'status' => 'NOK',
+                    'sent' => true,
+                    'error' => 'librinfo_email.error.email_already_sent',
+                ));
+                
             return new RedirectResponse($this->admin->generateUrl('list', $this->admin->getFilterParameters()));
         }
 
         $sender = $this->get('librinfo_email.sender');
-      
-        $sender->send($email);
         
-        // TODO: handle $nbSent and $failedRecipients
+        try {
+            $nbSent = $sender->send($email);
+        } catch (\Exception $exc) {
+            
+            if($this->isXmlHttpRequest())
+                return new JsonResponse(array(
+                    'status' => 'NOK',
+                    'sent' => false,
+                    'error' => $exc->getMessage(),
+                ));
+        }
+        $sent = $sender->send($email);
 
         $this->addFlash('sonata_flash_success', "Message " . $id . " envoyé");
+        
+        if($this->isXmlHttpRequest())
+            return new JsonResponse(array(
+                'status' => 'OK',
+                'sent' => true,
+            ));
 
         return new RedirectResponse($this->admin->generateUrl('list', $this->admin->getFilterParameters()));
     }

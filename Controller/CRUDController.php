@@ -360,8 +360,7 @@ class CRUDController extends BaseCRUDController
 
         if ($email->getIsTest() && $email->getTestAddress())
         {
-            $this->email = $email;
-            $this->directSend($email->getTestAddress());
+            $this->get('librinfo_email.sender')->send($email);
         }
     }
 

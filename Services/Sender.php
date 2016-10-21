@@ -57,8 +57,6 @@ class Sender
         $this->inlineAttachmentsHandler = $inlineAttachmentsHandler;
         $this->directMailer = $directMailer;
         $this->spoolMailer = $spoolMailer;
-        dump($directMailer);
-        dump($inlineAttachmentsHandler);
     }
     
     public function send($email)
@@ -74,66 +72,6 @@ class Sender
         else
             $this->directSend($addresses);
     }
-
-    /**
-     * Send an email directly (ajax call)
-     *
-     * @param Request $request
-     * @return JsonResponse
-     * @throws AccessDeniedException, NotFoundHttpException
-     */
-//    public function sendAjaxAction(Request $request)
-//    {
-//        $id = $request->get('id');
-//        $this->email = $this->admin->getObject($id);
-//
-//        if (!$this->email) {
-//            throw $this->createNotFoundException(sprintf('unable to find the email with id : %s', $id));
-//        }
-//
-//        // TODO: set the admin class accessMapping send property, then uncomment this:
-//        //$this->admin->checkAccess('send', $email);
-//
-//        $this->attachments = $this->email->getAttachments();
-//
-//        //prevent resending of an email
-//        if ($this->email->getSent())
-//        {
-//            $this->addFlash('sonata_flash_error', "Message " . $id . " déjà envoyé");
-//
-//            return new JsonResponse(array(
-//                'status' => 'NOK',
-//                'sent' => true,
-//                'error' => 'librinfo.error.email_already_sent',
-//            ));
-//        }
-//        
-//        $to = explode(';', $this->email->getFieldTo());
-//        $cc = $this->email->getFieldCc();
-//        $bcc = $this->email->getFieldBcc();
-//        $failedRecipients = [];
-//        
-//        // avoid SwiftRfcComplianceException on cc and bcc
-//        $cc = null == $cc ? $cc : explode(';', $this->email->getFieldCc());
-//        $bcc = null == $bcc ? $bcc : explode(';', $this->email->getFieldBcc());
-//
-//        try {
-//            $nbSent = $this->directSend($to, $cc, $bcc, $failedRecipients);
-//        } catch (\Exception $exc) {
-//            return new JsonResponse(array(
-//                'status' => 'NOK',
-//                'sent' => false,
-//                'error' => $exc->getMessage(),
-//            ));
-//        }
-//
-//        return new JsonResponse(array(
-//            'status' => 'OK',
-//            'sent' => true,
-//            'error' => '',
-//            'failed_recipients' => implode(';', $failedRecipients),
-//        ));
-//    }
 
     /**
      * Sends the mail directly

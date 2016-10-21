@@ -16,23 +16,23 @@ class DbSpool extends \Swift_ConfigurableSpool
     /**
      * @var EntityManager
      */
-    private $manager;
+    protected $manager;
 
     /**
      * @var string
      */
-    private $environment;
+    protected $environment;
 
     /**
      * @var EntityRepository
      */
-    private $repository;
+    protected $repository;
     
     /**
      *
      * @var integer
      */
-    private $pauseTime;
+    protected $pauseTime;
 
     /**
      * @param EntityManager $manager
@@ -129,8 +129,7 @@ class DbSpool extends \Swift_ConfigurableSpool
 
             foreach ($addresses as $address)
             {
-               
-                $message->setTo($address);
+                $message->setTo(trim($address));
                 $content = $email->getContent();
                 
                 if ($email->getTracking())
@@ -150,6 +149,7 @@ class DbSpool extends \Swift_ConfigurableSpool
                 } catch (\Swift_TransportException $e) {
                     $email->setStatus(SpoolStatus::STATUS_READY);
                     $this->updateEmail($email);
+                    dump($e->getMessage());
                 }
             }
             $email->setStatus(SpoolStatus::STATUS_COMPLETE);

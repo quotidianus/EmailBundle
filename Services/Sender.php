@@ -10,31 +10,31 @@ class Sender
      *
      * @var EntityManager
      */
-    private $manager;
+    protected $manager;
     
     /**
      *
      * @var Librinfo\EmailBundle\Services\Tracking
      */
-    private $tracker;
+    protected $tracker;
     
     /**
      *
      * @var Librinfo\EmailBundle\Services\InlineAttachments
      */
-    private $inlineAttachmentsHandler;
+    protected $inlineAttachmentsHandler;
     
     /**
      *
      * @var Swift_Mailer $directMailer
      */
-    private $directMailer;
+    protected $directMailer;
     
     /**
      *
      * @var Swift_Mailer $spoolMailer
      */
-    private $spoolMailer;
+    protected $spoolMailer;
 
     /**
      *

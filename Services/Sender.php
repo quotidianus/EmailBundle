@@ -13,8 +13,16 @@ class Sender
      */
     private $manager;
     
+    /**
+     *
+     * @var Librinfo\EmailBundle\Services\Tracking
+     */
     private $tracker;
     
+    /**
+     *
+     * @var Librinfo\EmailBundle\Services\InlineAttachments
+     */
     private $inlineAttachmentsHandler;
     
     /**

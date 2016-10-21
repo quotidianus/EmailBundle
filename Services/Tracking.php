@@ -2,6 +2,8 @@
 
 namespace Librinfo\EmailBundle\Services;
 
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
+
 class Tracking
 {
     private $router;
@@ -47,7 +49,7 @@ class Tracking
         {
             $url = $this->router->generate('librinfo_email.track_links', [
                 'emailId'     => $emailId,
-                'recipient'   => $address,
+                'recipient'   => base64_encode($address),
                 'destination' => base64_encode($link[2])
             ]);
             
@@ -78,7 +80,7 @@ class Tracking
     {
         $url = $this->router->generate('librinfo_email.track_opens', [
             'emailId'   => $emailId,
-            'recipient' => $address
+            'recipient' => base64_encode($address)
         ]);
         
         return '<img src="' . $url . '.png" alt="logo" widht="1" height="1"/>';

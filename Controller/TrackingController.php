@@ -43,7 +43,7 @@ class TrackingController extends Controller
     {
 
         $dest = base64_decode($destination);
-
+        $recipient = base64_decode($recipient);
         //if the email has no delivery confirmation the link click is one
         $this->trackOpens($emailId, $recipient);
 
@@ -60,6 +60,8 @@ class TrackingController extends Controller
     public function trackOpens($emailId, $recipient)
     {
         $count = 0;
+        
+        $recipient = base64_decode($recipient);
 
         $this->initManager();
 

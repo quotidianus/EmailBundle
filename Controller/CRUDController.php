@@ -13,30 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 class CRUDController extends BaseCRUDController
 {
     /**
-     *
-     * @var Swift_Mailer $mailer
-     */
-    private $mailer;
-
-    /**
-     *
-     * @var Email $email
-     */
-    private $email;
-
-    /**
-     *
-     * @var Array $attachments
-     */
-    private $attachments;
-
-    /**
-     *
-     * @var Boolean $isNewsLetter Wheter the email has one or more recipients
-     */
-    private $isNewsLetter;
-
-    /**
      * Clones the email excluding the id and passes it to the create action wich returns the response
      *
      * @return Response
@@ -58,237 +34,28 @@ class CRUDController extends BaseCRUDController
      *
      * @return RedirectResponse
      */
-    public function sendAction()
+    public function sendAction(Request $request)
     {
-        $this->manager = $this->getDoctrine()->getManager();
-        $id = $this->getRequest()->get($this->admin->getIdParameter());
-        $this->email = $this->admin->getObject($id);
-        $this->attachments = $this->email->getAttachments();
-        $addresses = explode(';', $this->email->getFieldTo());
+        $id = $request->get('id');
+        $email = $this->admin->getObject($id);
         
-        // TODO: change this. An email with multiple recipients is not necessarily a newsletter
-        //$this->isNewsLetter = count($addresses) > 1;
-        $this->isNewsLetter = false;
-
         //prevent resending of an email
-        if ($this->email->getSent())
+        if ($email->getSent())
         {
             $this->addFlash('sonata_flash_error', "Message " . $id . " déjà envoyé");
 
             return new RedirectResponse($this->admin->generateUrl('list', $this->admin->getFilterParameters()));
         }
 
-        if ($this->isNewsLetter)
-        {
-            $this->newsLetterSend($addresses);
-        } else
-        {
-            $to = explode(';', $this->email->getFieldTo());
-            $cc = $this->email->getFieldCc();
-            $bcc = $this->email->getFieldBcc();
-            $failedRecipients = [];
-
-            // avoid SwiftRfcComplianceException on cc and bcc
-            $cc = null == $cc ? $cc : explode(';', $this->email->getFieldCc());
-            $bcc = null == $bcc ? $bcc : explode(';', $this->email->getFieldBcc());
+        $sender = $this->get('librinfo_email.sender');
+      
+        $sender->send($email);
         
-            $nbSent = $this->directSend($to, $cc, $bcc, $failedRecipients);
-        }
-
         // TODO: handle $nbSent and $failedRecipients
 
         $this->addFlash('sonata_flash_success', "Message " . $id . " envoyé");
 
         return new RedirectResponse($this->admin->generateUrl('list', $this->admin->getFilterParameters()));
-    }
-
-    /**
-     * Send an email directly (ajax call)
-     *
-     * @param Request $request
-     * @return JsonResponse
-     * @throws AccessDeniedException, NotFoundHttpException
-     */
-    public function sendAjaxAction(Request $request)
-    {
-        $id = $request->get('id');
-        $this->email = $this->admin->getObject($id);
-
-        if (!$this->email) {
-            throw $this->createNotFoundException(sprintf('unable to find the email with id : %s', $id));
-        }
-
-        // TODO: set the admin class accessMapping send property, then uncomment this:
-        //$this->admin->checkAccess('send', $email);
-
-        $this->attachments = $this->email->getAttachments();
-
-        //prevent resending of an email
-        if ($this->email->getSent())
-        {
-            $this->addFlash('sonata_flash_error', "Message " . $id . " déjà envoyé");
-
-            return new JsonResponse(array(
-                'status' => 'NOK',
-                'sent' => true,
-                'error' => 'librinfo.error.email_already_sent',
-            ));
-        }
-        
-        $to = explode(';', $this->email->getFieldTo());
-        $cc = $this->email->getFieldCc();
-        $bcc = $this->email->getFieldBcc();
-        $failedRecipients = [];
-        
-        // avoid SwiftRfcComplianceException on cc and bcc
-        $cc = null == $cc ? $cc : explode(';', $this->email->getFieldCc());
-        $bcc = null == $bcc ? $bcc : explode(';', $this->email->getFieldBcc());
-
-        try {
-            $nbSent = $this->directSend($to, $cc, $bcc, $failedRecipients);
-        } catch (\Exception $exc) {
-            return new JsonResponse(array(
-                'status' => 'NOK',
-                'sent' => false,
-                'error' => $exc->getMessage(),
-            ));
-        }
-
-        return new JsonResponse(array(
-            'status' => 'OK',
-            'sent' => true,
-            'error' => '',
-            'failed_recipients' => implode(';', $failedRecipients),
-        ));
-    }
-
-    /**
-     * Sends the mail directly
-     * @param array $to                The To addresses
-     * @param array $cc                The Cc addresses (optional)
-     * @param array $bcc               The Bcc addresses (optional)
-     * @param array $failedRecipients  An array of failures by-reference (optional)
-     *
-     * @return int The number of successful recipients. Can be 0 which indicates failure
-     */
-    private function directSend($to, $cc = null, $bcc = null, &$failedRecipients = null)
-    {
-        $this->setDirectMailer();
-
-        $message = $this->setupSwiftMessage($to, $cc, $bcc);
-
-        $replacements = $this->container->get('librinfo_email.replacements');
-        $decorator = new \Swift_Plugins_DecoratorPlugin($replacements);
-        $this->mailer->registerPlugin($decorator);
-
-        $sent = $this->mailer->send($message, $failedRecipients);
-        $this->updateEmailEntity($message, false);
-
-        return $sent;
-    }
-
-    /**
-     * Spools the email
-     * @param Array $addresses
-     */
-    private function newsLetterSend($addresses)
-    {
-        $this->setSpoolMailer();
-
-        $message = $this->setupSwiftMessage($addresses);
-
-        $this->updateEmailEntity($message, true);
-
-        $this->mailer->send($message);
-    }
-
-    private function setDirectMailer()
-    {
-        $this->mailer = $this->get('swiftmailer.mailer.direct_mailer');
-    }
-
-    private function setSpoolMailer()
-    {
-        $this->mailer = $this->get('swiftmailer.mailer.spool_mailer');
-    }
-
-    /**
-     * @param array $to   The To addresses
-     * @param array $cc   The Cc addresses (optional)
-     * @param array $bcc  The Bcc addresses (optional)
-     * @return Swift_Message
-     */
-    private function setupSwiftMessage($to, $cc = null, $bcc = null)
-    {
-        $content = $this->email->getContent();
-        $inlineAttachmentsHandler = $this->container->get('librinfo_email.inline_attachments');
-        
-        if (!$this->isNewsLetter && $this->email->getTracking())
-        {
-            $tracker = $this->container->get('librinfo_email.tracking');
-            $content = $tracker->addTracking($content, $to, $this->email->getId());
-        }
-
-        $message = \Swift_Message::newInstance();
-        
-        $content = $inlineAttachmentsHandler->handle($content, $message);
-        
-        $message->setSubject(trim($this->email->getFieldSubject()))
-                ->setFrom(trim($this->email->getFieldFrom()))
-                ->setTo($to)
-                ->setBody($content, 'text/html')
-                ->addPart($this->email->getTextContent(), 'text/plain')
-        ;
-        
-        if( !empty($cc) )
-            $message->setCc($cc);
-        
-        if( !empty($bcc) )
-            $message->setBcc($bcc);
-
-        $this->addAttachments($message);
-
-        return $message;
-    }
-
-    /**
-     * Adds attachments to the Swift_Message
-     * @param Swift_Message $message
-     */
-    private function addAttachments($message)
-    {
-        if (count($this->attachments) > 0)
-        {
-            foreach ($this->attachments as $file)
-            {
-
-                $attachment = \Swift_Attachment::newInstance()
-                        ->setFilename($file->getName())
-                        ->setContentType($file->getMimeType())
-                        ->setBody($file->getFile())
-                ;
-                $message->attach($attachment);
-            }
-        }
-    }
-
-    /**
-     *
-     * @param Swift_Message $message
-     * @param Boolean $isNewsLetter
-     */
-    private function updateEmailEntity($message, $isNewsLetter)
-    {
-        if ($isNewsLetter)
-        {
-            //set the id of the swift message so it can be retrieve from spool fulshQueue()
-            $this->email->setMessageId($message->getId());
-        } else if (!$this->email->getIsTest())
-        {
-            $this->email->setSent(true);
-        }
-        $this->manager->persist($this->email);
-        $this->manager->flush();
     }
 
     /**

@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Librinfo\EmailBundle\Services\SwiftMailer\Spool\SpoolStatus;
 use Librinfo\EmailBundle\Services\SwiftMailer\DecoratorPlugin\Replacements;
 use Librinfo\EmailBundle\Services\Tracking;
+use Librinfo\EmailBundle\Services\InlineAttachments;
 
 /**
  * Class DbSpool
@@ -133,17 +134,21 @@ class DbSpool extends \Swift_ConfigurableSpool
 
             foreach ($addresses as $address)
             {
+               
                 $message->setTo($address);
-
+                $content = $email->getContent();
+                
                 if ($email->getTracking())
                 {
                     $tracker = new Tracking();
-
-                    $content = $tracker->addTracking($email->getContent(), $address, $email->getId());
-
-                    $message->setBody($content);
+                    $content = $tracker->addTracking($content, $address, $email->getId());
                 }
+                
+                $attachmentsHandler = new InlineAttachments();
+                $content = $attachmentsHandler->handle($content, $message);
 
+                $message->setBody($content);
+                
                 try {
                     $count += $transport->send($message, $failedRecipients);
                     sleep($this->pauseTime);
@@ -172,7 +177,6 @@ class DbSpool extends \Swift_ConfigurableSpool
 
     public function setPauseTime($pauseTime)
     {
-
         $this->pauseTime = $pauseTime;
     }
 

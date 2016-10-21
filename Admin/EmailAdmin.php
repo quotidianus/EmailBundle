@@ -16,7 +16,6 @@ class EmailAdmin extends CoreAdmin
     {
         $collection->add('send');
         $collection->add('duplicate');
-        $collection->add('sendAjax');
     }
 
     /**

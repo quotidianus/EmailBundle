@@ -26,6 +26,8 @@ class TrackingController extends Controller
      */
     public function trackOpensAction($emailId, $recipient)
     {
+        $recipient = base64_decode($recipient);
+        
         $this->trackOpens($emailId, $recipient);
 
         return new Response("ok", 200);
@@ -41,9 +43,9 @@ class TrackingController extends Controller
      */
     public function trackLinksAction($emailId, $recipient, $destination)
     {
-
         $dest = base64_decode($destination);
         $recipient = base64_decode($recipient);
+     
         //if the email has no delivery confirmation the link click is one
         $this->trackOpens($emailId, $recipient);
 
@@ -60,8 +62,6 @@ class TrackingController extends Controller
     public function trackOpens($emailId, $recipient)
     {
         $count = 0;
-        
-        $recipient = base64_decode($recipient);
 
         $this->initManager();
 

@@ -98,9 +98,9 @@ class Sender
      *
      * @return int The number of successful recipients. Can be 0 which indicates failure
      */
-    protected function directSend($to, &$failedRecipients = null)
+    protected function directSend($to, &$failedRecipients = null, $message = null)
     {
-        $message = $this->setupSwiftMessage($to, $this->email->getFieldCc(), $this->email->getFieldBcc());
+        $message = $this->setupSwiftMessage($to, $message);
 
         $sent = $this->directMailer->send($message, $failedRecipients);
         $this->updateEmailEntity($message);
@@ -130,10 +130,12 @@ class Sender
      * @param array $to   The To address
      * @return Swift_Message
      */
-    protected function setupSwiftMessage($to)
+    protected function setupSwiftMessage($to, $message = null)
     {
-        $content = $this->email->getContent();        
-        $message = \Swift_Message::newInstance();
+        $content = $this->email->getContent();
+
+        if( $message == null )
+            $message = \Swift_Message::newInstance();
         
         //don't modify email content yet if it goes to spool
         if (!$this->needsSpool)

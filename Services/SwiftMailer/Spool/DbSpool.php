@@ -4,7 +4,6 @@ namespace Librinfo\EmailBundle\Services\SwiftMailer\Spool;
 
 use Doctrine\ORM\EntityManager;
 use Librinfo\EmailBundle\Services\SwiftMailer\Spool\SpoolStatus;
-use Librinfo\EmailBundle\Services\SwiftMailer\DecoratorPlugin\Replacements;
 use Librinfo\EmailBundle\Services\Tracking;
 use Librinfo\EmailBundle\Services\InlineAttachments;
 
@@ -125,10 +124,6 @@ class DbSpool extends \Swift_ConfigurableSpool
             $this->updateEmail($email);
 
             $message = unserialize(base64_decode($email->getMessage()));
-
-            $replacements = new Replacements($this->manager);
-            $decorator = new \Swift_Plugins_DecoratorPlugin($replacements);
-            $transport->registerPlugin($decorator);
 
             $addresses = explode(';', $email->getFieldTo());
 

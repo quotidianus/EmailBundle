@@ -3,7 +3,6 @@
 namespace Librinfo\EmailBundle\Services;
 
 use Doctrine\ORM\EntityManager;
-use Librinfo\EmailBundle\Services\SwiftMailer\DecoratorPlugin\Replacements;
 
 class Sender
 {
@@ -91,6 +90,7 @@ class Sender
 
     /**
      * Sends the mail directly
+     * 
      * @param array $to                The To addresses
      * @param array $cc                The Cc addresses (optional)
      * @param array $bcc               The Bcc addresses (optional) 
@@ -102,10 +102,6 @@ class Sender
     {
         $message = $this->setupSwiftMessage($to, $this->email->getFieldCc(), $this->email->getFieldBcc());
 
-        $replacements = new Replacements($this->manager);
-        $decorator = new \Swift_Plugins_DecoratorPlugin($replacements);
-        $this->directMailer->registerPlugin($decorator);
-
         $sent = $this->directMailer->send($message, $failedRecipients);
         $this->updateEmailEntity($message);
 
@@ -114,6 +110,7 @@ class Sender
 
     /**
      * Spools the email
+     * 
      * @param Array $addresses
      */
     protected function spoolSend($addresses)
@@ -128,16 +125,17 @@ class Sender
     }
 
     /**
-     * @param array $to   The To addresse
+     * Creates Swift_Message from Email
+     * 
+     * @param array $to   The To address
      * @return Swift_Message
      */
-    protected function setupSwiftMessage($to, $cc = null, $bcc = null)
+    protected function setupSwiftMessage($to)
     {
-        $content = $this->email->getContent();
-        
-
+        $content = $this->email->getContent();        
         $message = \Swift_Message::newInstance();
         
+        //don't modify email content yet if it goes to spool
         if (!$this->needsSpool)
         {
             $content = $this->inlineAttachmentsHandler->handle($content, $message);
@@ -146,7 +144,6 @@ class Sender
                 $content = $this->tracker->addTracking($content, $to[0], $this->email->getId());
         }
         
-        
         $message->setSubject($this->email->getFieldSubject())
                 ->setFrom(trim($this->email->getFieldFrom()))
                 ->setTo($to)
@@ -154,10 +151,11 @@ class Sender
                 ->addPart($this->email->getTextContent(), 'text/plain')
         ;
         
-        if( !empty($this->cc) )
+        
+        if( !empty($cc = $this->email->getFieldCc()) )
             $message->setCc($cc);
         
-        if( !empty($bcc) )
+        if( !empty($bcc = $this->email->getFieldBcc()) )
             $message->setBcc($bcc);
 
         $this->addAttachments($message);

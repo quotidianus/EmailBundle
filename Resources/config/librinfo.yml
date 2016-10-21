@@ -79,10 +79,7 @@ parameters:
                                 attr:
                                     class: template_select
                             content:
-                                type: textarea
-                                attr:
-                                    class: tinymce
-                                    data-theme: advanced
+                                type: librinfo_tinymce
                             attachments:
                                 type: Librinfo\MediaBundle\Form\Type\DropzoneType
                                 required: false

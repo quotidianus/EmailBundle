@@ -14,8 +14,7 @@ class EmailAdmin extends CoreAdmin
 
     protected function configureRoutes(RouteCollection $collection)
     {
-        $collection->add('send');
-        $collection->add('duplicate');
+        $collection->add('send', $this->getRouterIdParameter().'/send');
     }
 
     /**

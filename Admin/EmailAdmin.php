@@ -9,7 +9,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 class EmailAdmin extends CoreAdmin
-{   
+{
     /**
      * @param DatagridMapper $datagridMapper
      */

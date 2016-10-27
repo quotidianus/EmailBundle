@@ -4,6 +4,7 @@ namespace Librinfo\EmailBundle\Admin;
 
 use Html2Text\Html2Text;
 use Librinfo\CoreBundle\Admin\Traits\HandlesRelationsAdmin;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
@@ -11,6 +12,11 @@ use Symfony\Component\Form\FormEvent;
 class EmailAdminConcrete extends EmailAdmin
 {
     use HandlesRelationsAdmin { configureFormFields as configFormHandlesRelations; }
+    
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('send', $this->getRouterIdParameter().'/send');
+    }
 
     protected function configureFormFields(FormMapper $mapper)
     {

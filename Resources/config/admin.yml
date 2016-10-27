@@ -1,5 +1,5 @@
 services:
-    email.email:
+    librinfo_email.admin.email:
         class: Librinfo\EmailBundle\Admin\EmailAdminConcrete
         arguments: [~, Librinfo\EmailBundle\Entity\Email, LibrinfoEmailBundle:CRUD]
         tags:
@@ -8,7 +8,7 @@ services:
             - [ setTemplate, [edit, LibrinfoEmailBundle:CRUD:email_edit.html.twig]]
             - [ setTemplate, [show, LibrinfoEmailBundle:CRUD:email_show.html.twig]]
             
-    email.email_template:
+    librinfo_email.admin.email_template:
         class: Librinfo\EmailBundle\Admin\EmailTemplateAdminConcrete
         arguments: [~, Librinfo\EmailBundle\Entity\EmailTemplate, SonataAdminBundle:CRUD]
         tags:
@@ -16,13 +16,13 @@ services:
         calls:
             - [ setTemplate, [edit, LibrinfoEmailBundle:CRUD:email_template_edit.html.twig]]
 
-    email.email_receipt:
+    librinfo_email.admin.email_receipt:
         class: Librinfo\EmailBundle\Admin\EmailReceiptAdminConcrete
         arguments: [~, Librinfo\EmailBundle\Entity\EmailReceipt, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: EmailReceipt }
 
-    email.email_link:
+    librinfo_email.admin.email_link:
         class: Librinfo\EmailBundle\Admin\EmailLinkAdminConcrete
         arguments: [~, Librinfo\EmailBundle\Entity\EmailLink, SonataAdminBundle:CRUD]
         tags:

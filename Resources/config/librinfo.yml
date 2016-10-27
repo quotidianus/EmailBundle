@@ -19,12 +19,10 @@ parameters:
                             show: ~
                             edit: ~
                             delete: ~
-                            duplicate:
-                                template: LibrinfoEmailBundle:CRUD:list__action_duplicate.html.twig
-                                route: duplicate
+                            duplicate: 
+                                template: LibrinfoCoreBundle:CRUD:list__action_duplicate.html.twig
                             send:
                                 template: LibrinfoEmailBundle:CRUD:list__action_send.html.twig
-
                     _options:
                         fieldsOrder:
                             - field_to

@@ -60,11 +60,6 @@ class Tracking
                     $link[4] . '</a>', 
                 $content
             );   
-//            $content = str_replace(
-//                    $link[0], '<a ' . $link[1] . 'href="http://cube.office.libre-informatique.fr:8000/app_dev.php/tracking/'
-//                    . $emailId . '/' . $address . '/' . base64_encode($link[2]) . '" '
-//                    . $link[3] . '>' . $link[4] . '</a>', $content
-//            );
         }
         return $content;
     }
@@ -83,12 +78,7 @@ class Tracking
             'recipient' => base64_encode($address)
         ]);
         
-        return '<img src="' . $url . '.png" alt="logo" widht="1" height="1"/>';
-//        return '<img src="http:localhost:8000/app_dev.php/tracking/' .
-//                $emailId . '/' .
-//                $address .
-//                '.png" alt="logo" width="1" height="1"/>'
-//        ;
+        return '<img src="' . $url . '.png" alt="logo" width="1" height="1"/>';
     }
 
 }

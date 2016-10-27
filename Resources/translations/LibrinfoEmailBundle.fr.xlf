@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
     <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
         <body>
-            <trans-unit id="d39ec66f08507e26fe86aa5325d070df" resname="Add files">
-                <source>Add files</source>
-                <target>Ajouter des fichiers</target>
-            </trans-unit>
             <trans-unit id="94966d90747b97d1f0f206c98a8b1ac3" resname="Send">
                 <source>Send</source>
                 <target>Envoyer</target>

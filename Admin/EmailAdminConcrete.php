@@ -15,6 +15,7 @@ class EmailAdminConcrete extends EmailAdmin
     
     protected function configureRoutes(RouteCollection $collection)
     {
+        parent::configureRoutes($collection);
         $collection->add('send', $this->getRouterIdParameter().'/send');
     }
 

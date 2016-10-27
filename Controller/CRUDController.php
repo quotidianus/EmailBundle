@@ -20,9 +20,14 @@ class CRUDController extends BaseCRUDController
         $id = $this->getRequest()->get($this->admin->getIdParameter());
         $email = $this->admin->getObject($id);
 
-        $cloner = $this->container->get('librinfo_email.cloning');
-
-        $object = $cloner->cloneEmail($email);
+        $object = clone $email;
+        
+        foreach($email->getAttachments() as $file)
+        {
+            $new = clone $file;
+            $new->setEmail(null);
+            $object->addAttachment($new);
+        }
 
         return $this->createAction($object);
     }

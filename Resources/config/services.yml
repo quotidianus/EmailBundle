@@ -7,9 +7,6 @@ services:
         class: Librinfo\EmailBundle\Services\Tracking
         arguments: [ @router ]
 
-    librinfo_email.cloning:
-        class: Librinfo\EmailBundle\Services\EmailCloning
-
     librinfo_email.stats:
         class: Librinfo\EmailBundle\Services\EmailStats
         

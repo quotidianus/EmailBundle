@@ -102,6 +102,13 @@ class Email extends Spoolable
      * @var \Doctrine\Common\Collections\Collection
      */
     private $receipts;
+    
+    public function initCollections()
+    {
+        $this->attachments = new ArrayCollection();
+        $this->receipts = new ArrayCollection();
+        $this->links = new ArrayCollection();
+    }
 
     /**
      * constructor
@@ -110,11 +117,15 @@ class Email extends Spoolable
 
         $this->sent = false;
         $this->isTemplate = false;
-        $this->attachments = new ArrayCollection();
-        $this->receipts = new ArrayCollection();
-        $this->links = new ArrayCollection();
-
+        $this->initCollections();
         $this->initOuterExtendedClasses();
+    }
+    
+    // implementation of __clone for duplication
+    public function __clone()
+    {
+        $this->id = null;
+        $this->initCollections();
     }
 
 

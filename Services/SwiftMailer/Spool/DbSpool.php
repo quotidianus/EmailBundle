@@ -3,6 +3,7 @@
 namespace Librinfo\EmailBundle\Services\SwiftMailer\Spool;
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Cmf\Component\Routing\ChainRouter;
 use Librinfo\EmailBundle\Services\SwiftMailer\Spool\SpoolStatus;
 use Librinfo\EmailBundle\Services\Tracking;
 use Librinfo\EmailBundle\Services\InlineAttachments;
@@ -12,6 +13,10 @@ use Librinfo\EmailBundle\Services\InlineAttachments;
  */
 class DbSpool extends \Swift_ConfigurableSpool
 {
+    /**
+     * @var ChainRouter
+     */
+    protected $router;
 
     /**
      * @var EntityManager
@@ -38,8 +43,9 @@ class DbSpool extends \Swift_ConfigurableSpool
      * @param EntityManager $manager
      * @param string $environment
      */
-    public function __construct(EntityManager $manager, $environment)
+    public function __construct(ChainRouter $router, EntityManager $manager, $environment)
     {
+        $this->router = $router;
         $this->manager = $manager;
         $this->environment = $environment;
         $this->repository = $this->manager->getRepository('LibrinfoEmailBundle:Email');
@@ -134,7 +140,7 @@ class DbSpool extends \Swift_ConfigurableSpool
                 
                 if ($email->getTracking())
                 {
-                    $tracker = new Tracking();
+                    $tracker = new Tracking($this->router);
                     $content = $tracker->addTracking($content, $address, $email->getId());
                 }
                 

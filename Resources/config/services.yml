@@ -16,7 +16,7 @@ services:
 ### SwiftMailer database spool ###
     swiftmailer.mailer.spool_mailer.spool.db:
         class: Librinfo\EmailBundle\Services\SwiftMailer\Spool\DbSpool
-        arguments: [ @doctrine.orm.entity_manager, %kernel.environment% ]
+        arguments: [ @router, @doctrine.orm.entity_manager, %kernel.environment% ]
 ### SONATA BLOCKS ###
 
     librinfo.email.block.emails_list:

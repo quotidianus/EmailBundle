@@ -2,16 +2,17 @@
 
 namespace Librinfo\EmailBundle\Services;
 
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Cmf\Component\Routing\ChainRouter;
 
 class Tracking
 {
     private $router;
     
     /**
-     * @param Router
+     * @param ChainRouter
      */
-    public function __construct(Router $router)
+    public function __construct(ChainRouter $router)
     {
         $this->router = $router;
     }
@@ -51,7 +52,9 @@ class Tracking
                 'emailId'     => $emailId,
                 'recipient'   => base64_encode($address),
                 'destination' => base64_encode($link[2])
-            ]);
+            ],
+            UrlGeneratorInterface::ABSOLUTE_URL
+            );
             
             $content = str_replace($link[0], 
                     '<a' . $link[1] .
@@ -76,8 +79,10 @@ class Tracking
         $url = $this->router->generate('librinfo_email.track_opens', [
             'emailId'   => $emailId,
             'recipient' => base64_encode($address)
-        ]);
-        
+        ], 
+        UrlGeneratorInterface::ABSOLUTE_URL
+        );
+
         return '<img src="' . $url . '.png" alt="logo" width="1" height="1"/>';
     }
 

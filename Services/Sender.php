@@ -143,7 +143,11 @@ class Sender
             $content = $this->inlineAttachmentsHandler->handle($content, $message);
             
             if( $this->email->getTracking())
+                try{
                 $content = $this->tracker->addTracking($content, $to[0], $this->email->getId());
+                 }catch(\Exception $e){
+        die($e);
+    }
         }
         
         $message->setSubject($this->email->getFieldSubject())

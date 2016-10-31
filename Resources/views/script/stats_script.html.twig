@@ -3,12 +3,13 @@
 <script type="text/javascript" src="{{ asset('bundles/librinfoemail/js/stats.js') }}"></script>
 <script type="text/javascript">
 
-    var stats = "{{ stats | json_encode() }}";
+    var stats = {{ stats | json_encode() |raw}};
     
     $(document).ready(function () {
-
-        $('.tracking').show();
         
-        displayStats(JSON.parse(stats));
+        if(!(stats == undefined || stats == ''))
+            $('.tracking').show();
+        
+        displayStats(stats);
     });
 </script>

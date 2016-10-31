@@ -30,7 +30,7 @@ class TrackingController extends Controller
         
         $this->trackOpens($emailId, $recipient);
 
-        return new Response("ok", 200);
+        return new Response('', 200);
     }
 
     /**

@@ -12,9 +12,9 @@ function receiptsLoader(stats) {
 
     var receiptsOptions = {
         start: 'top',
-        diameter: 40,
-        height: 100,
-        width: 100,
+        diameter: 50,
+        height: 150,
+        width: 150,
         lineWidth: 18,
         fontSize: '30px',
         fontFamily: 'Courier',
@@ -36,9 +36,9 @@ function linksLoader(stats) {
 
     var linksOptions = {
         start: 'top',
-        diameter: 40,
-        height: 100,
-        width: 100,
+        diameter: 50,
+        height: 150,
+        width: 150,
         lineWidth: 18,
         fontSize: '30px',
         fontFamily: 'Courier',

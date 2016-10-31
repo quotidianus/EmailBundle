@@ -70,7 +70,6 @@ class CRUDController extends BaseCRUDController
                     'error' => $exc->getMessage(),
                 ));
         }
-        $sent = $sender->send($email);
 
         $this->addFlash('sonata_flash_success', "Message " . $id . " envoyé");
         

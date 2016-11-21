@@ -2,7 +2,7 @@
 
 namespace Librinfo\EmailBundle\Entity;
 
-use AppBundle\Entity\Extension\EmailExtension;
+use AppBundle\Entity\OuterExtension\LibrinfoEmailbundle\EmailExtension;
 use Librinfo\OuterExtensionBundle\Entity\Traits\OuterExtensible;
 use Librinfo\DoctrineBundle\Entity\Traits\BaseEntity;
 use Librinfo\DoctrineBundle\Entity\Traits\Searchable;

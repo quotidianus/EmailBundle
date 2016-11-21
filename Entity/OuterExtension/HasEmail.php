@@ -1,6 +1,6 @@
 <?php
 
-namespace Librinfo\EmailBundle\Entity\Traits;
+namespace Librinfo\EmailBundle\Entity\OuterExtension;
 
 trait HasEmail
 {

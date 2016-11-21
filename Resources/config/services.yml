@@ -1,7 +1,12 @@
 services:
     librinfo_email.sender:
         class: Librinfo\EmailBundle\Services\Sender
-        arguments: [ @doctrine.orm.entity_manager, @librinfo_email.tracking, @librinfo_email.inline_attachments, @swiftmailer.mailer.direct_mailer, @swiftmailer.mailer.spool_mailer ]
+        arguments:
+            - @doctrine.orm.entity_manager, 
+            - @librinfo_email.tracking, 
+            - @librinfo_email.inline_attachments, 
+            - @swiftmailer.mailer.direct_mailer, 
+            - @swiftmailer.mailer.spool_mailer 
 
     librinfo_email.tracking:
         class: Librinfo\EmailBundle\Services\Tracking

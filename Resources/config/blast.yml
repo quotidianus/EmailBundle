@@ -1,5 +1,5 @@
 parameters:
-    librinfo:
+    blast:
         configuration:
             templates:
                 show:

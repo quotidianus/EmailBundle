@@ -2,7 +2,7 @@
 
 namespace Librinfo\EmailBundle\Entity;
 
-use AppBundle\Entity\OuterExtension\LibrinfoEmailbundle\EmailExtension;
+use AppBundle\Entity\OuterExtension\LibrinfoEmailBundle\EmailExtension;
 use Librinfo\OuterExtensionBundle\Entity\Traits\OuterExtensible;
 use Librinfo\DoctrineBundle\Entity\Traits\BaseEntity;
 use Librinfo\DoctrineBundle\Entity\Traits\Searchable;
@@ -15,7 +15,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Email extends Spoolable
 {
-
     use BaseEntity;
     use OuterExtensible;
     use EmailExtension;

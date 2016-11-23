@@ -4,9 +4,9 @@ namespace Librinfo\EmailBundle\Entity;
 
 use AppBundle\Entity\OuterExtension\LibrinfoEmailBundle\EmailExtension;
 use Librinfo\OuterExtensionBundle\Entity\Traits\OuterExtensible;
-use Librinfo\DoctrineBundle\Entity\Traits\BaseEntity;
-use Librinfo\DoctrineBundle\Entity\Traits\Searchable;
-use Librinfo\DoctrineBundle\Entity\Traits\Loggable;
+use Librinfo\BaseEntitiesBundle\Entity\Traits\BaseEntity;
+use Librinfo\BaseEntitiesBundle\Entity\Traits\Searchable;
+use Librinfo\BaseEntitiesBundle\Entity\Traits\Loggable;
 use Librinfo\UserBundle\Entity\Traits\Traceable;
 use Doctrine\Common\Collections\ArrayCollection;
 

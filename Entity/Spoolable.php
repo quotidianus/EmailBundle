@@ -6,7 +6,6 @@ use Librinfo\EmailBundle\Services\SwiftMailer\Spool\SpoolStatus;
 
 abstract class Spoolable
 {
-
     /**
      * @var Swift_Mime_Message
      */

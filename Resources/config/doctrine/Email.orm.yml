@@ -1,6 +1,6 @@
 Librinfo\EmailBundle\Entity\Email:
     type: entity
-    librinfo:
+    blast:
         loggable: true
     fields:
         field_from:

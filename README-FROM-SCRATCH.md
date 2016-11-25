@@ -17,7 +17,7 @@ $ composer require sonata-project/easy-extends-bundle
 ```
 
 Then, configure what is needed :
-* [libre-informatique/core-bundle](https://github.com/libre-informatique/SymfonyLibrinfoCoreBundle/blob/master/README.md)
+* [libre-informatique/core-bundle](https://github.com/libre-informatique/SymfonyBlastCoreBundle/blob/master/README.md)
 * [libre-informatique/crm-bundle](https://github.com/libre-informatique/SymfonyLibrinfoCRMBundle/blob/master/README.md)
 * [libre-informatique/decorator-bundle](https://github.com/libre-informatique/SymfonyLibrinfoDecoratorBundle/blob/master/README.md)
 * [friendsofsymfony/user-bundle](http://symfony.com/doc/current/bundles/FOSUserBundle/index.html)

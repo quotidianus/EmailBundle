@@ -3,7 +3,7 @@
 namespace Librinfo\EmailBundle\Admin;
 
 use Html2Text\Html2Text;
-use Librinfo\CoreBundle\Admin\Traits\HandlesRelationsAdmin;
+use Blast\CoreBundle\Admin\Traits\HandlesRelationsAdmin;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\FormEvents;

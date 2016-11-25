@@ -21,7 +21,7 @@
     "minimum-stability": "dev",
     "require": {
         "symfony/swiftmailer-bundle": "~2.3",
-        "libre-informatique/core-bundle": "dev-master",
+        "blast-project/core-bundle": "dev-master",
         "libre-informatique/media-bundle": "dev-master",
         "stfalcon/tinymce-bundle": "2.1",
         "html2text/html2text": "^4.0"

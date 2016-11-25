@@ -3,7 +3,7 @@
 namespace Librinfo\EmailBundle\Admin;
 
 
-use Librinfo\CoreBundle\Admin\Traits\EmbeddedAdmin;
+use Blast\CoreBundle\Admin\Traits\EmbeddedAdmin;
 
 class EmailTemplateAdminConcrete extends EmailTemplateAdmin
 {

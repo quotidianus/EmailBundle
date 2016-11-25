@@ -20,7 +20,7 @@ parameters:
                             edit: ~
                             delete: ~
                             duplicate: 
-                                template: LibrinfoCoreBundle:CRUD:list__action_duplicate.html.twig
+                                template: BlastCoreBundle:CRUD:list__action_duplicate.html.twig
                             send:
                                 template: LibrinfoEmailBundle:CRUD:list__action_send.html.twig
                     _options:

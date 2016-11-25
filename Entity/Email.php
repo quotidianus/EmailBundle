@@ -3,7 +3,7 @@
 namespace Librinfo\EmailBundle\Entity;
 
 use AppBundle\Entity\OuterExtension\LibrinfoEmailBundle\EmailExtension;
-use Librinfo\OuterExtensionBundle\Entity\Traits\OuterExtensible;
+use Blast\OuterExtensionBundle\Entity\Traits\OuterExtensible;
 use Librinfo\BaseEntitiesBundle\Entity\Traits\BaseEntity;
 use Librinfo\BaseEntitiesBundle\Entity\Traits\Searchable;
 use Librinfo\BaseEntitiesBundle\Entity\Traits\Loggable;

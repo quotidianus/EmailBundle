@@ -39,7 +39,7 @@ parameters:
                           class: framacalc
             Sonata\AdminBundle\Show\ShowMapper:
                 add:
-                   default:
+                    default:
                         form_group_general:
                             field_to: ~
                             field_cc: ~
@@ -60,10 +60,10 @@ parameters:
                             - form_group_attachments
                             - form_group_tracking
                             - from_group_misc
-                        _helper_links:
-                            - url: https://framacalc.org/libio_validation_crm
-                              title: Framacalc de validation (CRM)
-                              class: framacalc
+                    _helper_links:
+                        - url: https://framacalc.org/libio_validation_crm
+                          title: Framacalc de validation (CRM)
+                          class: framacalc
             Sonata\AdminBundle\Form\FormMapper:
                 add:
                     form_group_general:

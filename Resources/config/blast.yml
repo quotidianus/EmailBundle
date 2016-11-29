@@ -19,7 +19,7 @@ parameters:
                             show: ~
                             edit: ~
                             delete: ~
-                            duplicate: 
+                            duplicate:
                                 template: BlastCoreBundle:CRUD:list__action_duplicate.html.twig
                             send:
                                 template: LibrinfoEmailBundle:CRUD:list__action_send.html.twig
@@ -33,6 +33,10 @@ parameters:
                         xls: csv
                         json: csv
                         xml: csv
+                    _helper_links:
+                        - url: https://framacalc.org/libio_validation_crm
+                          title: Framacalc de validation (CRM)
+                          class: framacalc
             Sonata\AdminBundle\Show\ShowMapper:
                 add:
                    default:
@@ -56,6 +60,10 @@ parameters:
                             - form_group_attachments
                             - form_group_tracking
                             - from_group_misc
+                        _helper_links:
+                            - url: https://framacalc.org/libio_validation_crm
+                              title: Framacalc de validation (CRM)
+                              class: framacalc
             Sonata\AdminBundle\Form\FormMapper:
                 add:
                     form_group_general:
@@ -111,6 +119,10 @@ parameters:
                                 required: false
                     _options:
                         tabsOrder: [ form_group_general, form_group_specifics ]
+                    _helper_links:
+                        - url: https://framacalc.org/libio_validation_crm
+                          title: Framacalc de validation (CRM)
+                          class: framacalc
             Sonata\AdminBundle\Datagrid\DatagridMapper:
                 add:
                     field_to: ~

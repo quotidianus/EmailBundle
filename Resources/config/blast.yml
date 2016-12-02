@@ -85,7 +85,7 @@ parameters:
                                 attr:
                                     class: template_select
                             content:
-                                type: librinfo_tinymce
+                                type: blast_tinymce
                             attachments:
                                 type: Librinfo\MediaBundle\Form\Type\DropzoneType
                                 required: false

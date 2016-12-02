@@ -10,7 +10,7 @@ THIS PROJECT IS STILL UNUSABLE, IT'S YET A WORK IN PROGRESS
 $ composer require libre-informatique/core-bundle dev-master
 $ composer require libre-informatique/crm-bundle dev-master
 $ composer require libre-informatique/decorator-bundle dev-master
-$ composer require libre-informatique/base-entities-bundle dev-master
+$ composer require blast-project/base-entities-bundle dev-master
 $ composer require friendsofsymfony/user-bundle "~1.3"
 $ composer require sonata-project/user-bundle --no-update
 $ composer require sonata-project/easy-extends-bundle

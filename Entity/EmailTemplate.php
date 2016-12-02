@@ -2,9 +2,9 @@
 
 namespace Librinfo\EmailBundle\Entity;
 
-use Librinfo\BaseEntitiesBundle\Entity\Traits\BaseEntity;
-use Librinfo\BaseEntitiesBundle\Entity\Traits\Searchable;
-use Librinfo\BaseEntitiesBundle\Entity\Traits\Loggable;
+use Blast\BaseEntitiesBundle\Entity\Traits\BaseEntity;
+use Blast\BaseEntitiesBundle\Entity\Traits\Searchable;
+use Blast\BaseEntitiesBundle\Entity\Traits\Loggable;
 use Librinfo\UserBundle\Entity\Traits\Traceable;
 
 /**

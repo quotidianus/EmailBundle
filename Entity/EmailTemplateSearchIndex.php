@@ -8,7 +8,7 @@
 
 namespace Librinfo\EmailBundle\Entity;
 
-use Librinfo\BaseEntitiesBundle\Entity\SearchIndexEntity;
+use Blast\BaseEntitiesBundle\Entity\SearchIndexEntity;
 
 class EmailTemplateSearchIndex extends SearchIndexEntity
 {

@@ -11,28 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 class CRUDController extends BaseCRUDController
 {
     /**
-     * Clones the email excluding the id and passes it to the create action wich returns the response
-     *
-     * @return Response
-     */
-    public function duplicateAction()
-    {
-        $id = $this->getRequest()->get($this->admin->getIdParameter());
-        $email = $this->admin->getObject($id);
-
-        $object = clone $email;
-        
-        foreach($email->getAttachments() as $file)
-        {
-            $new = clone $file;
-            $new->setEmail(null);
-            $object->addAttachment($new);
-        }
-
-        return $this->createAction($object);
-    }
-
-    /**
      * Sends the email and redirects to list view keeping filter parameters
      *
      * @return RedirectResponse

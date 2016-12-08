@@ -7,7 +7,7 @@ use Blast\OuterExtensionBundle\Entity\Traits\OuterExtensible;
 use Blast\BaseEntitiesBundle\Entity\Traits\BaseEntity;
 use Blast\BaseEntitiesBundle\Entity\Traits\Searchable;
 use Blast\BaseEntitiesBundle\Entity\Traits\Loggable;
-use Librinfo\UserBundle\Entity\Traits\Traceable;
+use Blast\BaseEntitiesBundle\Entity\Traits\Traceable;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**

@@ -10,10 +10,12 @@
 
 namespace Librinfo\EmailBundle\Entity;
 
+use AppBundle\Entity\OuterExtension\LibrinfoEmailBundle\EmailTemplateExtension;
 use Blast\BaseEntitiesBundle\Entity\Traits\BaseEntity;
 use Blast\BaseEntitiesBundle\Entity\Traits\Loggable;
 use Blast\BaseEntitiesBundle\Entity\Traits\Searchable;
 use Blast\BaseEntitiesBundle\Entity\Traits\Timestampable;
+use Blast\OuterExtensionBundle\Entity\Traits\OuterExtensible;
 
 /**
  * EmailTemplate
@@ -24,6 +26,8 @@ class EmailTemplate
     use Searchable;
     use Loggable;
     use Timestampable;
+    use OuterExtensible;
+    use EmailTemplateExtension;
 
     /**
      * @var string

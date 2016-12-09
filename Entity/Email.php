@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * Copyright (C) 2015-2016 Libre Informatique
+ *
+ * This file is licenced under the GNU GPL v3.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Librinfo\EmailBundle\Entity;
 
 use AppBundle\Entity\OuterExtension\LibrinfoEmailBundle\EmailExtension;
@@ -7,7 +15,7 @@ use Blast\OuterExtensionBundle\Entity\Traits\OuterExtensible;
 use Blast\BaseEntitiesBundle\Entity\Traits\BaseEntity;
 use Blast\BaseEntitiesBundle\Entity\Traits\Searchable;
 use Blast\BaseEntitiesBundle\Entity\Traits\Loggable;
-use Blast\BaseEntitiesBundle\Entity\Traits\Traceable;
+use Blast\BaseEntitiesBundle\Entity\Traits\Timestampable;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -20,7 +28,7 @@ class Email extends Spoolable
     use EmailExtension;
     use Searchable;
     use Loggable;
-    use Traceable;
+    use Timestampable;
 
     /**
      * @var string
@@ -101,7 +109,7 @@ class Email extends Spoolable
      * @var \Doctrine\Common\Collections\Collection
      */
     private $receipts;
-    
+
     public function initCollections()
     {
         $this->attachments = new ArrayCollection();
@@ -119,7 +127,7 @@ class Email extends Spoolable
         $this->initCollections();
         $this->initOuterExtendedClasses();
     }
-    
+
     // implementation of __clone for duplication
     public function __clone()
     {

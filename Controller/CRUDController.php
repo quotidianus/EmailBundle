@@ -76,7 +76,7 @@ class CRUDController extends BaseCRUDController
                 )
         ;
 
-        if ($object->getTracking())
+        if ( $object->getTracking() )
         {
             $statHelper = $this->get('librinfo_email.stats');
 
@@ -84,6 +84,7 @@ class CRUDController extends BaseCRUDController
 
             $twigArray['stats'] = $statHelper->getStats($object);
         }
+        
         return $this->render($this->admin->getTemplate('show'), $twigArray, null);
     }
 
@@ -106,7 +107,7 @@ class CRUDController extends BaseCRUDController
 
         $class = new \ReflectionClass($this->admin->hasActiveSubClass() ? $this->admin->getActiveSubClass() : $this->admin->getClass());
 
-        if ($class->isAbstract())
+        if ( $class->isAbstract() )
         {
             return $this->render(
                             'SonataAdminBundle:CRUD:select_subclass.html.twig', array(
@@ -205,11 +206,15 @@ class CRUDController extends BaseCRUDController
         // set the theme for the current Admin Form
         $this->get('twig')->getExtension('form')->renderer->setTheme($view, $this->admin->getFormTheme());
 
-        return $this->render($this->admin->getTemplate($templateKey), array(
-                    'action' => 'create',
-                    'form' => $view,
-                    'object' => $object,
-                        ), null);
+        return $this->render(
+            $this->admin->getTemplate($templateKey), 
+            array(
+                'action' => 'create',
+                'form' => $view,
+                'object' => $object,
+                ), 
+            null
+        );
     }
 
     /**
@@ -232,7 +237,7 @@ class CRUDController extends BaseCRUDController
 
         $this->handleFiles($object, $tempId);
 
-        if (!$object)
+        if ( !$object )
         {
             throw $this->createNotFoundException(sprintf('unable to find the object with id : %s', $id));
         }
@@ -252,7 +257,7 @@ class CRUDController extends BaseCRUDController
         $form->setData($object);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted())
+        if ( $form->isSubmitted() )
         {
             //TODO: remove this check for 3.0
             if (method_exists($this->admin, 'preValidate'))
@@ -262,7 +267,7 @@ class CRUDController extends BaseCRUDController
             $isFormValid = $form->isValid();
 
             // persist if the form was valid and if in preview mode the preview was approved
-            if ($isFormValid && (!$this->isInPreviewMode() || $this->isPreviewApproved()))
+            if ( $isFormValid && (!$this->isInPreviewMode() || $this->isPreviewApproved()) )
             {
                 try {
                     $object = $this->admin->update($object);
@@ -340,7 +345,7 @@ class CRUDController extends BaseCRUDController
     protected function handleTest($email)
     {
 
-        if ($email->getIsTest() && $email->getTestAddress())
+        if ( $email->getIsTest() && $email->getTestAddress() )
         {
             $this->get('librinfo_email.sender')->send($email);
         }
@@ -354,7 +359,7 @@ class CRUDController extends BaseCRUDController
     protected function handleTemplate($email)
     {
 
-        if ($email->getIsTemplate() && $email->getNewTemplateName())
+        if ( $email->getIsTemplate() && $email->getNewTemplateName() )
         {
             $template = new \Librinfo\EmailBundle\Entity\EmailTemplate();
             $template->setContent($email->getContent());
@@ -375,7 +380,7 @@ class CRUDController extends BaseCRUDController
             return $preResponse;
         }
 
-        if ($listMode = $request->get('_list_mode')) {
+        if ( $listMode = $request->get('_list_mode') ) {
             $this->admin->setListMode($listMode);
         }
 
@@ -386,12 +391,17 @@ class CRUDController extends BaseCRUDController
         $this->get('twig')->getExtension('form')->renderer->setTheme($formView, $this->admin->getFilterTheme());
 
 
-        return $this->render($this->admin->getTemplate('list'), array(
-            'action'     => 'list',
-            'form'       => $formView,
-            'datagrid'   => $datagrid,
-            'csrf_token' => $this->getCsrfToken('sonata.batch'),
-        ), null, $request);
+        return $this->render(
+            $this->admin->getTemplate('list'), 
+            array(
+                'action'     => 'list',
+                'form'       => $formView,
+                'datagrid'   => $datagrid,
+                'csrf_token' => $this->getCsrfToken('sonata.batch'),
+            ), 
+            null, 
+            $request
+        );
     }
 
     /**
@@ -407,14 +417,16 @@ class CRUDController extends BaseCRUDController
         $url = false;
         $from_admin = $request->get('from_admin'); // admin code
         $from_id = $request->get('from_id');
-        if ($from_admin !== null && $from_id !== null) {
+        
+        if ( $from_admin !== null && $from_id !== null ) {
             $admin = $this->get($from_admin);
             $from_object = $admin->getObject($from_id);
-            if ($admin->isGranted('SHOW', $from_object))
+            
+            if ( $admin->isGranted('SHOW', $from_object) )
                 $url = $admin->generateObjectUrl('show', $from_object);
         }
 
-        if ($url)
+        if ( $url )
             return new RedirectResponse($url);
 
         return parent::redirectTo($object);

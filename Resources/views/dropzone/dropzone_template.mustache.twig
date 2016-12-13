@@ -2,13 +2,10 @@
 {% extends 'LibrinfoMediaBundle:dropzone:dropzone_template.mustache.twig' %}
 
 {% block buttons %}
-    <div> 
-        <button data-dz-remove class="btn btn-danger delete">
-            <i class="glyphicon glyphicon-trash"></i>
-        </button> 
-        <button class="btn btn-info inline">
-            <i class="glyphicon glyphicon-arrow-up"></i>
-        </button>
-    </div>
+    {{ parent() }}
+    
+    <button class="btn btn-info inline">
+        <i class="glyphicon glyphicon-arrow-up"></i>
+    </button>
 {% endblock %}
        

@@ -5,7 +5,7 @@ librinfo_email.getTemplate:
     
 # insert attachments into content
 librinfo_email.insert:
-    path:     librinfo/email/ajax/insert/{fileName}/{fileSize}/{tempId}
+    path:     librinfo/email/ajax/insert/{fileId}
     defaults: { _controller: LibrinfoEmailBundle:Ajax:addTocontent }
     
 #tracking of email openings

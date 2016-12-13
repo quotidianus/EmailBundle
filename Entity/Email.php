@@ -17,6 +17,7 @@ use Blast\BaseEntitiesBundle\Entity\Traits\Searchable;
 use Blast\BaseEntitiesBundle\Entity\Traits\Timestampable;
 use Blast\OuterExtensionBundle\Entity\Traits\OuterExtensible;
 use Doctrine\Common\Collections\ArrayCollection;
+use Librinfo\MediaBundle\Entity\File;
 
 /**
  * Email
@@ -71,7 +72,7 @@ class Email extends Spoolable
     private $sent;
 
     /**
-     * @var Collection
+     * @var \Doctrine\Common\Collections\Collection
      */
     private $attachments;
 
@@ -109,12 +110,17 @@ class Email extends Spoolable
      * @var \Doctrine\Common\Collections\Collection
      */
     private $receipts;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $links;
 
     public function initCollections()
     {
-        $this->attachments = new ArrayCollection();
         $this->receipts = new ArrayCollection();
         $this->links = new ArrayCollection();
+        $this->attachments = new ArrayCollection();
     }
 
     /**
@@ -134,7 +140,11 @@ class Email extends Spoolable
         $this->id = null;
         $this->initCollections();
     }
-
+    
+    public function __toString()
+    {
+        return $this->field_subject;
+    }
 
     /**
      * Set fieldFrom
@@ -331,11 +341,11 @@ class Email extends Spoolable
     /**
      * Add attachment
      *
-     * @param \Librinfo\EmailBundle\Entity\EmailAttachment $attachment
+     * @param \Librinfo\MediaBundle\Entity\File $attachment
      *
      * @return Email
      */
-    public function addAttachment($attachment)
+    public function addAttachment(File $attachment)
     {
         $this->attachments[] = $attachment;
 
@@ -345,11 +355,11 @@ class Email extends Spoolable
     /**
      * Remove attachment
      *
-     * @param \Librinfo\EmailBundle\Entity\EmailAttachment $attachment
+     * @param \Librinfo\MediaBundle\Entity\File $attachment
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeAttachment($attachment)
+    public function removeAttachment(File $attachment)
     {
 
         return $this->attachments->removeElement($attachment);

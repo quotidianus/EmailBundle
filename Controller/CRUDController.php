@@ -120,8 +120,6 @@ class CRUDController extends BaseCRUDController
 
         $object = $object ? $object : $this->admin->getNewInstance();
 
-        $this->handleFiles($object, $tempId);
-
         $preResponse = $this->preCreate($request, $object);
         if ($preResponse !== null)
         {
@@ -135,6 +133,8 @@ class CRUDController extends BaseCRUDController
         $form->setData($object);
         $form->handleRequest($request);
 
+        $this->handleFiles($object, $request->get('file_ids'));
+        
         if ($form->isSubmitted())
         {
             //TODO: remove this check for 3.0
@@ -227,15 +227,12 @@ class CRUDController extends BaseCRUDController
     public function editAction($id = null)
     {
         $request = $this->getRequest();
-        $tempId = $request->get('temp_id');
         $this->manager = $this->getDoctrine()->getManager();
         // the key used to lookup the template
         $templateKey = 'edit';
 
         $id = $request->get($this->admin->getIdParameter());
         $object = $this->admin->getObject($id);
-
-        $this->handleFiles($object, $tempId);
 
         if ( !$object )
         {
@@ -256,6 +253,8 @@ class CRUDController extends BaseCRUDController
         $form = $this->admin->getForm();
         $form->setData($object);
         $form->handleRequest($request);
+        
+        $this->handleFiles($object, $request->get('file_ids'));
 
         if ( $form->isSubmitted() )
         {
@@ -344,11 +343,8 @@ class CRUDController extends BaseCRUDController
      */
     protected function handleTest($email)
     {
-
         if ( $email->getIsTest() && $email->getTestAddress() )
-        {
             $this->get('librinfo_email.sender')->send($email);
-        }
     }
 
     /**
@@ -358,7 +354,6 @@ class CRUDController extends BaseCRUDController
      */
     protected function handleTemplate($email)
     {
-
         if ( $email->getIsTemplate() && $email->getNewTemplateName() )
         {
             $template = new \Librinfo\EmailBundle\Entity\EmailTemplate();
@@ -430,6 +425,25 @@ class CRUDController extends BaseCRUDController
             return new RedirectResponse($url);
 
         return parent::redirectTo($object);
+    }
+    
+    protected function duplicateFiles($object, $clone)
+    {
+        $manager = $this->getDoctrine()->getManager();
+        $rc = new \ReflectionClass($object);
+        $setter = 'set' . $rc->getShortName();
+        dump($setter);
+        foreach($object->getAttachments() as $attachment)
+        {
+            $new = clone $attachment;
+            dump($new);
+            $new->$setter(null);
+            dump($manager->persist($new));
+            
+            $clone->addAttachment($new);
+        }
+        
+        $manager->flush();
     }
 
 }

@@ -8,6 +8,12 @@ $(document).ready(function () {
     $('.sonata-ba-form form').confirmExit();
 });
 
+// Returns the current action (show/list/edit) from url
+function getAction() {
+
+    return window.location.href.split("/").pop();
+}
+
 //handles retrieving and insertion of template into main content
 function templateSelect() {
 
@@ -44,19 +50,22 @@ function checkIsTest() {
 //retrieves img tag generated from file and inserts it into tinymce editor
 function inline() {
 
-    var tempId = $('input[name="temp_id"]').attr("value");
-
-    $('.dropzone').on('click', '.inline', function (e) {
-        e.preventDefault();
-
-        var fileName = $(this).attr('file_name');
-        var fileSize = $(this).attr('file_size');
-
-        $.get('/librinfo/email/ajax/insert/' + fileName + '/' + fileSize + '/' + tempId, function (data) {
+    $('.dropzone').on('click', '.inline', function (event) {
+        
+        var id = $(event.target)
+            .closest('.file-row')
+            .data('file-id')
+        ;
+        
+        event.preventDefault();
+        
+        $.get('/librinfo/email/ajax/insert/' + id, function (data) {
 
             tinyMceInsert(data);
         });
     });
+    
+    return false;
 }
 
 function tinyMceInsert(data) {

@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class AjaxController extends Controller
 {
-
     /**
      * 
      * @param String $templateId
@@ -28,15 +27,11 @@ class AjaxController extends Controller
      * @param String $tempId
      * @return Response img tag that will be embedded into the main content
      */
-    public function addToContentAction($fileName, $fileSize, $tempId)
+    public function addToContentAction($fileId)
     {
         $repo = $this->getDoctrine()->getRepository('LibrinfoMediaBundle:File');
         
-        $file = $repo->findOneBy(array(
-            'name' => $fileName,
-            'size' => $fileSize,
-            'tempId' => $tempId
-        ));
+        $file = $repo->find($fileId);
 
         return new Response($this->renderView('LibrinfoMediaBundle:Generator:img_tag.html.twig', ['img' => $file]));
     }

@@ -3,6 +3,7 @@ $(document).ready(function () {
     templateSelect();
     checkIsTest();
     inline();
+    addEmailLinkListener();
 
     //reset confirmexit plugin
     $('.sonata-ba-form form').confirmExit();
@@ -72,4 +73,12 @@ function tinyMceInsert(data) {
 
     tinymce.activeEditor.execCommand('mceInsertContent', false, data);
     tinymce.activeEditor.execCommand('mceEndUndoLevel', false, data);
+}
+
+var addEmailLinkListener = function(){
+    
+    $('.email-link').click(function(e){
+
+        $('#send-email-form').submit();
+    });
 }

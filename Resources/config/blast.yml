@@ -166,3 +166,15 @@ parameters:
                             email_history:
                                 template: LibrinfoEmailBundle:CRUD:show_field_emails_list.html.twig
                                 mapped: false
+
+################
+#   EMAILABLE  #
+################
+
+        Blast\BaseEntitiesBundle\Entity\Traits\Emailable:
+            Sonata\AdminBundle\Show\ShowMapper:
+                add:
+                    form_group_general:
+                        '':
+                            email:
+                                template: LibrinfoEmailBundle:CRUD:show_field_email.html.twig

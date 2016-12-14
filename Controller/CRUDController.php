@@ -101,8 +101,6 @@ class CRUDController extends BaseCRUDController
         // the key used to lookup the template
         $templateKey = 'edit';
 
-        $tempId = $request->get('temp_id');
-
         $this->admin->checkAccess('create');
 
         $class = new \ReflectionClass($this->admin->hasActiveSubClass() ? $this->admin->getActiveSubClass() : $this->admin->getClass());

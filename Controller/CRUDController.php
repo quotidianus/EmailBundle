@@ -424,24 +424,5 @@ class CRUDController extends BaseCRUDController
 
         return parent::redirectTo($object);
     }
-    
-    protected function duplicateFiles($object, $clone)
-    {
-        $manager = $this->getDoctrine()->getManager();
-        $rc = new \ReflectionClass($object);
-        $setter = 'set' . $rc->getShortName();
-        dump($setter);
-        foreach($object->getAttachments() as $attachment)
-        {
-            $new = clone $attachment;
-            dump($new);
-            $new->$setter(null);
-            dump($manager->persist($new));
-            
-            $clone->addAttachment($new);
-        }
-        
-        $manager->flush();
-    }
 
 }

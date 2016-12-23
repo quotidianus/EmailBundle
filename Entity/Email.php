@@ -351,6 +351,11 @@ class Email extends Spoolable
 
         return $this;
     }
+    
+    public function addLibrinfoFile(File $file)
+    {
+        return $this->addAttachment($file);
+    }
 
     /**
      * Remove attachment
@@ -364,7 +369,12 @@ class Email extends Spoolable
 
         return $this->attachments->removeElement($attachment);
     }
-
+    
+    public function removeLibrinfoFile(File $file)
+    {
+        return $this->removeAttachment($file);
+    }
+            
     /**
      * Get attachments
      *
@@ -373,6 +383,11 @@ class Email extends Spoolable
     public function getAttachments()
     {
         return $this->attachments;
+    }
+    
+    public function getLibrinfoFiles()
+    {
+        return $this->getAttachments();
     }
 
     /**

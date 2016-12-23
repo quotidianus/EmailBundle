@@ -138,6 +138,10 @@
                 <source>librinfo.error.send_email_error</source>
                 <target>Erreur lors de l'envoi de l'email</target>
             </trans-unit>
+            <trans-unit id="librinfo.link.email_list">
+                <source>librinfo.link.email_list</source>
+                <target>Liste des emails</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

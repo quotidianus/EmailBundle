@@ -30,12 +30,23 @@ Librinfo\EmailBundle\Entity\Email:
         tracking:
             type:       boolean
             nullable: true
-    oneToMany:
+    manyToMany:
         attachments:
             targetEntity: \Librinfo\MediaBundle\Entity\File
-            mappedBy: email
+            joinTable:
+                name: librinfo_email_file
+                joinColumns:
+                    email_id:
+                        referencedColumnName: id
+                        onDelete: CASCADE
+                inverseJoinColumns:
+                    file_id:
+                        referencedColumnName: id
+                        onDelete: CASCADE
+                        unique: true
             cascade: [persist, remove]
-            orphanRemoval:  true
+            orphanRemoval: true
+    oneToMany:
         receipts:
             targetEntity: EmailReceipt
             mappedBy: email

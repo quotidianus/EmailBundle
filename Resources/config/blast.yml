@@ -37,6 +37,7 @@ parameters:
                             field_to: ~
                             field_cc: ~
                             field_bcc: ~
+                            field_subject: ~
 
                             textContent:
                                 type: textarea
@@ -124,8 +125,6 @@ parameters:
                     sent: ~
                     createdAt: ~
                     updatedAt: ~
-                    createdBy: ~
-                    updatedBy: ~
                     _options:
                         fieldsOrder:
                             - field_to

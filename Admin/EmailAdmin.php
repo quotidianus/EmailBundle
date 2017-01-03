@@ -108,26 +108,30 @@ class EmailAdmin extends CoreAdmin
     {
         $object = parent::getNewInstance();
 
-        if ($this->hasRequest()) {
+        if ( $this->hasRequest() )
+        {
             $force_user = $this->getRequest()->get('force_user');
-            if ($force_user) {
+            if ( $force_user )
+            {
                 $user = $this->getConfigurationPool()->getContainer()->get('security.context')->getToken()->getUser();
-                if ($user)
+                if ( $user && method_exists($user, 'getEmail') )
                     $object->setFieldFrom($user->getEmail());
             }
 
             $recipients = $this->getRequest()->get('recipients', []);
-            if (!is_array($recipients))
+            if ( !is_array($recipients) )
                 $recipients = [$recipients];
 
             $recipient_class = $this->getRequest()->get('recipient_class');
             $recipient_ids = $this->getRequest()->get('recipient_ids');
-            if ($recipient_ids && $recipient_class) {
+            if ( $recipient_ids && $recipient_class )
+            {
                 $ids = is_array($recipient_ids) ? $recipient_ids : [$recipient_ids];
                 $entities = $this->getModelManager()->findBy($recipient_class, ['id' => $ids]);
                 $rc = new \ReflectionClass($recipient_class);
                 $adder = 'add' . $rc->getShortName();
-                foreach ($entities as $entity){
+                foreach ( $entities as $entity )
+                {
                     $object->$adder($entity);
                     if ($entity->getEmail())
                         $recipients[] = $entity->getEmail();

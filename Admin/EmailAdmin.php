@@ -2,103 +2,79 @@
 
 namespace Librinfo\EmailBundle\Admin;
 
-use Blast\CoreBundle\Admin\CoreAdmin;
-use Sonata\AdminBundle\Datagrid\DatagridMapper;
-use Sonata\AdminBundle\Datagrid\ListMapper;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Show\ShowMapper;
+use Blast\CoreBundle\Admin\CoreAdmin;
+use Blast\CoreBundle\Admin\Traits\HandlesRelationsAdmin;
+use Html2Text\Html2Text;
 
 class EmailAdmin extends CoreAdmin
 {
-    /**
-     * @param DatagridMapper $datagridMapper
-     */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    use HandlesRelationsAdmin { configureFormFields as configFormHandlesRelations; }
+    
+    protected function configureRoutes(RouteCollection $collection)
     {
-        $datagridMapper
-                ->add('field_from')
-                ->add('field_to')
-                ->add('field_cc')
-                ->add('field_bcc')
-                ->add('field_subject')
-                ->add('content')
-                ->add('textContent')
-                ->add('sent')
-                ->add('createdAt')
-                ->add('updatedAt')
-                ->add('id')
-                ->add('tracking')
-        ;
+        parent::configureRoutes($collection);
+        $collection->add('send', $this->getRouterIdParameter().'/send');
+    }
+
+    protected function configureFormFields(FormMapper $mapper)
+    {
+        $this->configFormHandlesRelations($mapper);
+
+        $builder = $mapper->getFormBuilder();
+        $factory = $builder->getFormFactory();
+        $request = $this->getRequest();
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($request, $factory) {
+            $form = $event->getForm();
+            $user = $this->getConfigurationPool()->getContainer()->get('security.context')->getToken()->getUser();
+            if ( !empty($request->get('force_user')) && $user && method_exists($user, 'getEmail') )
+            {
+                $options = $form->get('field_from')->getConfig()->getOptions();
+                $options['auto_initialize'] = false;
+                $options['attr']['readonly'] = 'readonly';
+                $form->remove('field_from');
+                $form->add($factory->createNamed('field_from', 'text', null, $options));
+            }
+        });
     }
 
     /**
-     * @param ListMapper $listMapper
+     * @param FormMapper $mapper
      */
-    protected function configureListFields(ListMapper $listMapper)
+    public function postConfigureFormFields(FormMapper $mapper)
     {
-        $listMapper
-                ->add('field_from')
-                ->add('field_to')
-                ->add('field_cc')
-                ->add('field_bcc')
-                ->add('field_subject')
-                ->add('content')
-                ->add('textContent')
-                ->add('sent')
-                ->add('createdAt')
-                ->add('updatedAt')
-                ->add('id')
-                ->add('tracking')
-                ->add('_action', 'actions', array(
-                    'actions' => array(
-                        'show' => array(),
-                        'edit' => array(),
-                        'delete' => array(),
-                    )
-                ))
-        ;
+
     }
 
-    /**
-     * @param FormMapper $formMapper
-     */
-    protected function configureFormFields(FormMapper $formMapper)
+    public function prePersist($email)
     {
-        $formMapper
-                ->add('field_from')
-                ->add('field_to')
-                ->add('field_cc')
-                ->add('field_bcc')
-                ->add('field_subject')
-                ->add('content')
-                ->add('textContent')
-                ->add('sent')
-                ->add('createdAt')
-                ->add('updatedAt')
-                ->add('id')
-                ->add('tracking')
-        ;
+
+        parent::prePersist($email);
+
+        $email->setTemplate(NULL);
+
+        $this->setText($email);
     }
 
-    /**
-     * @param ShowMapper $showMapper
-     */
-    protected function configureShowFields(ShowMapper $showMapper)
+    public function preUpdate($email)
     {
-        $showMapper
-                ->add('field_from')
-                ->add('field_to')
-                ->add('field_cc')
-                ->add('field_bcc')
-                ->add('field_subject')
-                ->add('content')
-                ->add('textContent')
-                ->add('sent')
-                ->add('createdAt')
-                ->add('updatedAt')
-                ->add('id')
-                ->add('tracking')
-        ;
+
+        parent::preUpdate($email);
+
+        $email->setTemplate(NULL);
+
+        $this->setText($email);
+    }
+
+    protected function setText($email)
+    {
+
+        $html2T = new Html2Text($email->getContent());
+
+        $email->setTextContent($html2T->getText());
     }
 
     /**

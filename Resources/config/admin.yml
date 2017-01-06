@@ -1,6 +1,6 @@
 services:
     librinfo_email.admin.email:
-        class: Librinfo\EmailBundle\Admin\EmailAdminConcrete
+        class: Librinfo\EmailBundle\Admin\EmailAdmin
         arguments: [~, Librinfo\EmailBundle\Entity\Email, LibrinfoEmailBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Email }
@@ -9,7 +9,7 @@ services:
             - [ setTemplate, [show, LibrinfoEmailBundle:CRUD:email_show.html.twig]]
             
     librinfo_email.admin.email_template:
-        class: Librinfo\EmailBundle\Admin\EmailTemplateAdminConcrete
+        class: Librinfo\EmailBundle\Admin\EmailTemplateAdmin
         arguments: [~, Librinfo\EmailBundle\Entity\EmailTemplate, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: EmailTemplate }
@@ -17,13 +17,13 @@ services:
             - [ setTemplate, [edit, LibrinfoEmailBundle:CRUD:email_template_edit.html.twig]]
 
     librinfo_email.admin.email_receipt:
-        class: Librinfo\EmailBundle\Admin\EmailReceiptAdminConcrete
+        class: Librinfo\EmailBundle\Admin\EmailReceiptAdmin
         arguments: [~, Librinfo\EmailBundle\Entity\EmailReceipt, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: EmailReceipt }
 
     librinfo_email.admin.email_link:
-        class: Librinfo\EmailBundle\Admin\EmailLinkAdminConcrete
+        class: Librinfo\EmailBundle\Admin\EmailLinkAdmin
         arguments: [~, Librinfo\EmailBundle\Entity\EmailLink, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: EmailLink }

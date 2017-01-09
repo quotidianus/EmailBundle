@@ -77,12 +77,16 @@ class Tracking
      */
     private function getTracker($address, $emailId)
     {
-        $url = $this->router->generate('librinfo_email.track_opens', [
-            'emailId'   => $emailId,
-            'recipient' => base64_encode($address)
-        ], 
-        UrlGeneratorInterface::ABSOLUTE_URL
+        $url = $this->router->generate(
+            'librinfo_email.track_opens', 
+            [
+                'emailId'   => $emailId,
+                'recipient' => base64_encode($address)
+            ], 
+            UrlGeneratorInterface::ABSOLUTE_URL
         );
+        
+        return '<img src="' . $url . '.png" alt="" width="1" height="1"/>';
     }
 
 }

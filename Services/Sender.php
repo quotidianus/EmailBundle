@@ -138,16 +138,16 @@ class Sender
             $message = \Swift_Message::newInstance();
         
         //don't modify email content yet if it goes to spool
-        if (!$this->needsSpool)
+        if ( !$this->needsSpool )
         {
             $content = $this->inlineAttachmentsHandler->handle($content, $message);
             
             if( $this->email->getTracking())
                 try{
-                $content = $this->tracker->addTracking($content, $to[0], $this->email->getId());
+                    $content = $this->tracker->addTracking($content, $to[0], $this->email->getId());
                  }catch(\Exception $e){
-        die($e);
-    }
+                    die($e);
+                }
         }
         
         $message->setSubject($this->email->getFieldSubject())
@@ -175,7 +175,7 @@ class Sender
      */
     protected function addAttachments($message)
     {
-        if (count($this->attachments) > 0)
+        if ( count($this->attachments) > 0 )
         {
             foreach ($this->attachments as $file)
             {
@@ -196,11 +196,11 @@ class Sender
      */
     protected function updateEmailEntity($message)
     {
-        if ($this->needsSpool)
+        if ( $this->needsSpool )
         {
             //set the id of the swift message so it can be retrieved from spool fulshQueue()
             $this->email->setMessageId($message->getId());
-        } else if (!$this->email->getIsTest())
+        } else if ( !$this->email->getIsTest() )
         {
             $this->email->setSent(true);
         }

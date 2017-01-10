@@ -175,9 +175,9 @@ class Sender
      */
     protected function addAttachments($message)
     {
-        if ( count($this->attachments) > 0 )
+        if ( count($this->attachments ) > 0 )
         {
-            foreach ($this->attachments as $file)
+            foreach ( $this->attachments as $file )
             {
                 $attachment = \Swift_Attachment::newInstance()
                         ->setFilename($file->getName())
@@ -197,13 +197,11 @@ class Sender
     protected function updateEmailEntity($message)
     {
         if ( $this->needsSpool )
-        {
-            //set the id of the swift message so it can be retrieved from spool fulshQueue()
+            //set the id of the swift message so it can be retrieved from spool flushQueue()
             $this->email->setMessageId($message->getId());
-        } else if ( !$this->email->getIsTest() )
-        {
+        else if ( !$this->email->getIsTest() )
             $this->email->setSent(true);
-        }
+
         $this->manager->persist($this->email);
         $this->manager->flush();
     }

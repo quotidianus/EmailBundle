@@ -3,16 +3,15 @@
 namespace Librinfo\EmailBundle\Services;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Cmf\Component\Routing\ChainRouter;
 
 class Tracking
 {
     private $router;
     
     /**
-     * @param ChainRouter
+     * @param mixed $router
      */
-    public function __construct(ChainRouter $router)
+    public function __construct($router)
     {
         $this->router = $router;
     }

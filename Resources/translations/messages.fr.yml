@@ -6,7 +6,8 @@ librinfo:
     msg:
         no_emails_available: 'Aucun email'
         sending_email: 'Envoi en cours...'
-librinfo:
+    link:
+        email_list: 'Liste des emails'
     error:
         send_email_error: 'Erreur lors de l''envoi de l''email'
 'Email': 'Email'

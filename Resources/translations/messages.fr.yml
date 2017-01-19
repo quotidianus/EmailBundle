@@ -53,3 +53,5 @@ librinfo:
 'show_tab_emails': 'Emails'
 'form_group_attachments': 'Pièces jointes'
 'Email Create': 'Nouvel email'
+'Tracking is not enabled for this email': 'Le suivi n''est pas activé pour cet email'
+'No links clicked': 'Aucun lien suivi'

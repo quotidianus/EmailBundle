@@ -1,9 +1,6 @@
 parameters:
     blast:
         configuration:
-            templates:
-                show:
-                    stats: LibrinfoEmailBundle:CRUD:show_field_stats.html.twig
 ######  Email ##########
         Librinfo\EmailBundle\Entity\Email:
             Sonata\AdminBundle\Datagrid\ListMapper:
@@ -47,7 +44,7 @@ parameters:
                                 template: LibrinfoMediaBundle:CRUD:show_images.html.twig
                         form_group_tracking:
                             stats:
-                                type: stats
+                                template: LibrinfoEmailBundle:CRUD:show_field_stats.html.twig
                         _options:
                             groupsOrder:
                             - form_group_general

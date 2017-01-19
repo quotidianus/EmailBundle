@@ -1,6 +1,10 @@
-function displayStats(stats) {
 
-    //stats = JSON.parse(stats);
+$(document).ready(function () {
+        
+    displayStats($('#email-stats').data('stats'));
+});
+
+function displayStats(stats) {
     receiptsLoader(stats);
     linksLoader(stats);
     mostClicked(stats);
@@ -63,7 +67,7 @@ function mostClicked(stats) {
     if (link) {
         html = '<p class="link">' + link + '</p> <span class="link_value">' + stats.links.mostClicked.value + ' % </span>';
     } else {
-        html = '<p class="link">No links clicked</p>';
+        html = '<p class="link">' + $('[data-source="no-links-clicked"]').data('target') + '</p>';
     }
 
     $('#most_clicked').append(html);
@@ -77,7 +81,7 @@ function leastClicked(stats) {
     if (link) {
         html = '<p class="link">' + link + '</p> <span class="link_value">' + stats.links.leastClicked.value + ' % </span>';
     } else {
-        html = '<p class="link">No links clicked</p>';
+        html = '<p class="link">' + $('[data-source="no-links-clicked"]').data('target') + '</p>';
     }
     $('#least_clicked').append(html);
 }

@@ -3,15 +3,19 @@
 namespace Librinfo\EmailBundle\Services;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 class Tracking
 {
+    /**
+     * @var Router 
+     */
     private $router;
     
     /**
-     * @param mixed $router
+     * @param Router $router
      */
-    public function __construct($router)
+    public function __construct(Router $router)
     {
         $this->router = $router;
     }

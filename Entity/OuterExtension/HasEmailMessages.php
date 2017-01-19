@@ -16,7 +16,7 @@ trait HasEmailMessages
      *
      * @param object $emailMessage
      *
-     * @return this
+     * @return self
      */
     public function addEmailMessage($emailMessage)
     {

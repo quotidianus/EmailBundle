@@ -1,12 +1,12 @@
 
-{% extends 'SonataAdminBundle:CRUD:base_show.html.twig' %}
+{% extends 'BlastCoreBundle:CRUD:base_show.html.twig' %}
 
 {% block show %}
     {{ parent() }}
     {% if admin.id(object) is not null %}
         <a class="btn btn-info" href="{{ admin.generateObjectUrl('duplicate', object) }}"><i class="fa fa-files-o"></i> {{ 'Duplicate'|trans({}, 'LibrinfoEmailBundle') }}</a>
     {% endif %}
-{% endblock %}    
+{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -15,9 +15,9 @@
 
 {% block javascripts %}
     {{ parent() }}
-    
+
     {% if stats is defined %}
-        {% include 'LibrinfoEmailBundle:script:stats_script.html.twig' %}      
+        {% include 'LibrinfoEmailBundle:script:stats_script.html.twig' %}
     {% endif %}
-    
+
 {% endblock %}

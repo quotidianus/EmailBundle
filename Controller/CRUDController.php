@@ -19,28 +19,28 @@ class CRUDController extends BaseCRUDController
     {
         $id = $request->get('id');
         $email = $this->admin->getObject($id);
-        
+
         //prevent resending of an email
         if ($email->getSent())
         {
             $this->addFlash('sonata_flash_error', "Message " . $id . " déjà envoyé");
-            
+
             if($this->isXmlHttpRequest())
                 return new JsonResponse(array(
                     'status' => 'NOK',
                     'sent' => true,
                     'error' => 'librinfo_email.error.email_already_sent',
                 ));
-                
+
             return new RedirectResponse($this->admin->generateUrl('list', $this->admin->getFilterParameters()));
         }
 
         $sender = $this->get('librinfo_email.sender');
-        
+
         try {
             $nbSent = $sender->send($email);
         } catch (\Exception $exc) {
-            
+
             if($this->isXmlHttpRequest())
                 return new JsonResponse(array(
                     'status' => 'NOK',
@@ -50,7 +50,7 @@ class CRUDController extends BaseCRUDController
         }
 
         $this->addFlash('sonata_flash_success', "Message " . $id . " envoyé");
-        
+
         if($this->isXmlHttpRequest())
             return new JsonResponse(array(
                 'status' => 'OK',
@@ -76,12 +76,11 @@ class CRUDController extends BaseCRUDController
                 )
         ;
 
+        $this->admin->setSubject($object);
+
         if ( $object->getTracking() )
         {
             $statHelper = $this->get('librinfo_email.stats');
-
-            $this->admin->setSubject($object);
-
             $twigArray['stats'] = $statHelper->getStats($object);
         }
         
@@ -132,7 +131,7 @@ class CRUDController extends BaseCRUDController
         $form->handleRequest($request);
 
         $this->handleFiles($object, $request->get('file_ids'));
-        
+
         if ($form->isSubmitted())
         {
             //TODO: remove this check for 3.0
@@ -205,12 +204,12 @@ class CRUDController extends BaseCRUDController
         $this->get('twig')->getExtension('form')->renderer->setTheme($view, $this->admin->getFormTheme());
 
         return $this->render(
-            $this->admin->getTemplate($templateKey), 
+            $this->admin->getTemplate($templateKey),
             array(
                 'action' => 'create',
                 'form' => $view,
                 'object' => $object,
-                ), 
+                ),
             null
         );
     }
@@ -251,7 +250,7 @@ class CRUDController extends BaseCRUDController
         $form = $this->admin->getForm();
         $form->setData($object);
         $form->handleRequest($request);
-        
+
         $this->handleFiles($object, $request->get('file_ids'));
 
         if ( $form->isSubmitted() )
@@ -385,14 +384,14 @@ class CRUDController extends BaseCRUDController
 
 
         return $this->render(
-            $this->admin->getTemplate('list'), 
+            $this->admin->getTemplate('list'),
             array(
                 'action'     => 'list',
                 'form'       => $formView,
                 'datagrid'   => $datagrid,
                 'csrf_token' => $this->getCsrfToken('sonata.batch'),
-            ), 
-            null, 
+            ),
+            null,
             $request
         );
     }
@@ -410,11 +409,11 @@ class CRUDController extends BaseCRUDController
         $url = false;
         $from_admin = $request->get('from_admin'); // admin code
         $from_id = $request->get('from_id');
-        
+
         if ( $from_admin !== null && $from_id !== null ) {
             $admin = $this->get($from_admin);
             $from_object = $admin->getObject($from_id);
-            
+
             if ( $admin->isGranted('SHOW', $from_object) )
                 $url = $admin->generateObjectUrl('show', $from_object);
         }

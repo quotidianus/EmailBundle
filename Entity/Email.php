@@ -126,8 +126,8 @@ class Email extends Spoolable
     /**
      * constructor
      */
-    public function __construct() {
-
+    public function __construct()
+    {
         $this->sent = false;
         $this->isTemplate = false;
         $this->initCollections();
@@ -143,7 +143,7 @@ class Email extends Spoolable
     
     public function __toString()
     {
-        return $this->field_subject;
+        return $this->getFieldSubject();
     }
 
     /**
@@ -263,7 +263,7 @@ class Email extends Spoolable
      */
     public function getFieldSubject()
     {
-        return $this->field_subject;
+        return $this->field_subject ? $this->field_subject : '<no subject>';
     }
 
     /**

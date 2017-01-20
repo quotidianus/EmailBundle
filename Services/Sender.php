@@ -80,12 +80,13 @@ class Sender
         
         $this->needsSpool = count($addresses) > 1;
         
-        if( $this->needsSpool )
-            $sent = $this->spoolSend($addresses);
-        else
-            $sent = $this->directSend($addresses);
+        if( $this->email->getIsTest() )
+            return $this->directSend($this->email->getTestAdress());
         
-        return $sent;
+        if( $this->needsSpool )
+            return $this->spoolSend($addresses);
+        else
+            return $this->directSend($addresses);
     }
 
     /**

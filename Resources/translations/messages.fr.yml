@@ -55,3 +55,5 @@ librinfo:
 'Email Create': 'Nouvel email'
 'Tracking is not enabled for this email': 'Le suivi n''est pas activé pour cet email'
 'No links clicked': 'Aucun lien suivi'
+'Message not sent': 'Message non envoyé'
+'Message sent': 'Message envoyé'

@@ -21,11 +21,11 @@ class CRUDController extends BaseCRUDController
         $email = $this->admin->getObject($id);
 
         //prevent resending of an email
-        if ($email->getSent())
+        if ( $email->getSent() )
         {
             $this->addFlash('sonata_flash_error', "Message " . $id . " déjà envoyé");
 
-            if($this->isXmlHttpRequest())
+            if( $this->isXmlHttpRequest() )
                 return new JsonResponse(array(
                     'status' => 'NOK',
                     'sent' => true,
@@ -39,19 +39,23 @@ class CRUDController extends BaseCRUDController
 
         try {
             $nbSent = $sender->send($email);
-        } catch (\Exception $exc) {
-
+        } catch ( \Exception $exc ) {
             if($this->isXmlHttpRequest())
                 return new JsonResponse(array(
                     'status' => 'NOK',
                     'sent' => false,
                     'error' => $exc->getMessage(),
                 ));
+            
+            $this->addFlash(
+                'sonata_flash_error', 
+                $this->get('translator')->trans('An error occured') . ': ' . $exc->getMessage()
+            );
         }
 
         $this->addFlash('sonata_flash_success', "Message " . $id . " envoyé");
 
-        if($this->isXmlHttpRequest())
+        if( $this->isXmlHttpRequest() )
             return new JsonResponse(array(
                 'status' => 'OK',
                 'sent' => true,
@@ -69,20 +73,16 @@ class CRUDController extends BaseCRUDController
      */
     protected function preShow(Request $request, $object)
     {
-        $twigArray = array(
+        $twigArray = [
             'action' => 'show',
             'object' => $object,
             'elements' => $this->admin->getShow()
-                )
-        ;
+        ];
 
         $this->admin->setSubject($object);
 
         if ( $object->getTracking() )
-        {
-            $statHelper = $this->get('librinfo_email.stats');
-            $twigArray['stats'] = $statHelper->getStats($object);
-        }
+            $twigArray['stats'] = $this->get('librinfo_email.stats')->getStats($object);
         
         return $this->render($this->admin->getTemplate('show'), $twigArray, null);
     }

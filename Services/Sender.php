@@ -40,19 +40,19 @@ class Sender
      *
      * @var Email $email
      */
-    private $email;
+    protected $email;
 
     /**
      *
      * @var Array $attachments
      */
-    private $attachments;
+    protected $attachments;
 
     /**
      *
      * @var Boolean $needsSpool Wheter the email has one or more recipients
      */
-    private $needsSpool;
+    protected $needsSpool;
     
     /**
      * @param EntityManager $manager

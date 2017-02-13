@@ -2,11 +2,11 @@ services:
     librinfo_email.sender:
         class: Librinfo\EmailBundle\Services\Sender
         arguments:
-            - @doctrine.orm.entity_manager, 
-            - @librinfo_email.tracking, 
-            - @librinfo_email.inline_attachments, 
-            - @swiftmailer.mailer.direct_mailer, 
-            - @swiftmailer.mailer.spool_mailer 
+            - @doctrine.orm.entity_manager
+            - @librinfo_email.tracking
+            - @librinfo_email.inline_attachments
+            - @swiftmailer.mailer.direct_mailer
+            - @swiftmailer.mailer.spool_mailer
 
     librinfo_email.tracking:
         class: Librinfo\EmailBundle\Services\Tracking
@@ -21,7 +21,10 @@ services:
 ### SwiftMailer database spool ###
     swiftmailer.mailer.spool_mailer.spool.db:
         class: Librinfo\EmailBundle\Services\SwiftMailer\Spool\DbSpool
-        arguments: [ @router, @doctrine.orm.entity_manager, %kernel.environment% ]
+        arguments:
+            - @router, 
+            - @doctrine.orm.entity_manager,
+            - %kernel.environment%
 ### SONATA BLOCKS ###
 
     librinfo.email.block.emails_list:

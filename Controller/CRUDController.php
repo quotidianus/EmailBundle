@@ -49,11 +49,14 @@ class CRUDController extends BaseCRUDController
             
             $this->addFlash(
                 'sonata_flash_error', 
-                $this->get('translator')->trans('Message not sent') . ': ' . $exc->getMessage()
+                $this->get('translator')->trans('librinfo_email.flash.message_not_sent') . ': ' . $exc->getMessage()
             );
         }
 
-        $this->addFlash('sonata_flash_success', "Message sent");
+        $this->addFlash(
+            'sonata_flash_success', 
+            $this->get('translator')->trans('librinfo_email.flash.message_sent')
+        );
 
         if( $this->isXmlHttpRequest() )
             return new JsonResponse(array(

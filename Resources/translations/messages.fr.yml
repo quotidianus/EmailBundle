@@ -10,6 +10,9 @@ librinfo:
         email_list: 'Liste des emails'
     error:
         send_email_error: 'Erreur lors de l''envoi de l''email'
+    flash:
+        message_not_sent: 'Message non envoyé'
+        message_sent: 'Message envoyé avec succès'
 'Email': 'Email'
 'Email List': 'Liste Emails'
 'Field From': 'Expéditeur'

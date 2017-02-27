@@ -138,6 +138,9 @@ class Sender
         if( $message == null )
             $message = \Swift_Message::newInstance();
         
+        foreach ( $to as $key => $address )
+            $to[$key] = trim($address);
+        
         //don't modify email content yet if it goes to spool
         if ( !$this->needsSpool )
         {
@@ -153,7 +156,7 @@ class Sender
         
         $message->setSubject($this->email->getFieldSubject())
                 ->setFrom(trim($this->email->getFieldFrom()))
-                ->setTo(trim($to))
+                ->setTo($to)
                 ->setBody($content, 'text/html')
                 ->addPart($this->email->getTextContent(), 'text/plain')
         ;

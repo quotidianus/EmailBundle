@@ -153,7 +153,7 @@ class Sender
         
         $message->setSubject($this->email->getFieldSubject())
                 ->setFrom(trim($this->email->getFieldFrom()))
-                ->setTo($to)
+                ->setTo(trim($to))
                 ->setBody($content, 'text/html')
                 ->addPart($this->email->getTextContent(), 'text/plain')
         ;

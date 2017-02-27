@@ -36,27 +36,32 @@ class CRUDController extends BaseCRUDController
         }
 
         $sender = $this->get('librinfo_email.sender');
-
+        $error = false;
+        
         try {
             $nbSent = $sender->send($email);
         } catch ( \Exception $exc ) {
+            
+            $error = $exc->getMessage();
+            
             if($this->isXmlHttpRequest())
                 return new JsonResponse(array(
                     'status' => 'NOK',
                     'sent' => false,
-                    'error' => $exc->getMessage(),
+                    'error' => $error,
                 ));
-            
-            $this->addFlash(
-                'sonata_flash_error', 
-                $this->get('translator')->trans('librinfo_email.flash.message_not_sent') . ': ' . $exc->getMessage()
-            );
         }
 
-        $this->addFlash(
-            'sonata_flash_success', 
-            $this->get('translator')->trans('librinfo_email.flash.message_sent')
-        );
+        if($error)
+            $this->addFlash(
+                'sonata_flash_error', 
+                $this->get('translator')->trans('librinfo_email.flash.message_not_sent') . ': ' . $error
+            );
+        else
+            $this->addFlash(
+                'sonata_flash_success', 
+                $this->get('translator')->trans('librinfo_email.flash.message_sent')
+            );
 
         if( $this->isXmlHttpRequest() )
             return new JsonResponse(array(

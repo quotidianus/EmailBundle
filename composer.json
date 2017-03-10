@@ -20,10 +20,10 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "symfony/swiftmailer-bundle": "~2.3",
-        "blast-project/core-bundle": "dev-master",
-        "blast-project/base-entities-bundle": "dev-master",
-        "libre-informatique/media-bundle": "dev-master",
+        "symfony/swiftmailer-bundle": "^2.5",
+        "blast-project/core-bundle": "dev-sf3.2",
+        "blast-project/base-entities-bundle": "dev-sf3.2",
+        "libre-informatique/media-bundle": "dev-sf3.2",
         "stfalcon/tinymce-bundle": "2.1",
         "html2text/html2text": "^4.0"
     },

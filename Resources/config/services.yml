@@ -14,7 +14,7 @@ services:
 
     librinfo_email.stats:
         class: Librinfo\EmailBundle\Services\EmailStats
-        
+
     librinfo_email.inline_attachments:
         class: Librinfo\EmailBundle\Services\InlineAttachments
 

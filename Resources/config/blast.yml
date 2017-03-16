@@ -76,7 +76,7 @@ parameters:
                                 attr:
                                     class: template_select
                             content:
-                                type: blast_tinymce
+                                type: Blast\UtilsBundle\Form\Type\TinyMceType
                             attachments:
                                 type: Librinfo\MediaBundle\Form\Type\DropzoneType
                                 required: false

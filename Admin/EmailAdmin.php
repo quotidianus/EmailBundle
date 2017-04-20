@@ -29,7 +29,7 @@ class EmailAdmin extends CoreAdmin
         $request = $this->getRequest();
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($request, $factory) {
             $form = $event->getForm();
-            $user = $this->getConfigurationPool()->getContainer()->get('security.context')->getToken()->getUser();
+            $user = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser();
             if ( !empty($request->get('force_user')) && $user && method_exists($user, 'getEmail') )
             {
                 $options = $form->get('field_from')->getConfig()->getOptions();
@@ -89,7 +89,7 @@ class EmailAdmin extends CoreAdmin
             $force_user = $this->getRequest()->get('force_user');
             if ( $force_user )
             {
-                $user = $this->getConfigurationPool()->getContainer()->get('security.context')->getToken()->getUser();
+                $user = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser();
                 if ( $user && method_exists($user, 'getEmail') )
                     $object->setFieldFrom($user->getEmail());
             }

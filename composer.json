@@ -3,12 +3,18 @@
     "license": "GPL-3.0",
     "type": "symfony-bundle",
     "description": "Email Bundle for Symfony",
-    "keywords": ["email", "spool", "e-venement", "sonata", "symfony"],
+    "keywords": [
+        "email",
+        "spool",
+        "e-venement",
+        "sonata",
+        "symfony"
+    ],
     "homepage": "https://github.com/libre-informatique/SymfonyLibrinfoEmailBundle",
     "authors": [
         {
-           "name": "Romain SANCHEZ",
-           "email": "romain.sanchez@libre-informatique.fr"
+            "name": "Romain SANCHEZ",
+            "email": "romain.sanchez@libre-informatique.fr"
         },
         {
             "name": "Libre Informatique",
@@ -16,7 +22,10 @@
         }
     ],
     "autoload": {
-        "psr-4": { "Librinfo\\EmailBundle\\": "" }
+        "psr-4": {
+            "Librinfo\\EmailBundle\\": "src/",
+            "Librinfo\\EmailBundle\\Tests\\": "tests/"
+        }
     },
     "minimum-stability": "dev",
     "require": {

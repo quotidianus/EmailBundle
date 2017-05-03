@@ -30,12 +30,19 @@
     "minimum-stability": "dev",
     "require": {
         "symfony/swiftmailer-bundle": "^2.5",
-        "blast-project/core-bundle": "dev-master",
         "blast-project/base-entities-bundle": "dev-master",
         "blast-project/outer-extension-bundle": "dev-master",
         "libre-informatique/media-bundle": "dev-master",
         "stfalcon/tinymce-bundle": "2.1",
         "html2text/html2text": "^4.0"
+    },
+    "config": {
+        "sllh-composer-lint": {
+            "php": true,
+            "type": true,
+            "minimum-stability": false,
+            "version-constraints": false
+        }
     },
     "require-dev": {
 	"symfony/phpunit-bridge": "^2.7 || ^3.0"
@@ -59,9 +66,6 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
             "Librinfo\\CoreBundle\\Tools\\Patches\\Patcher::applyPatches"
         ]
-    },
-    "config": {
-        "bin-dir": "bin"
     },
     "extra": {
         "symfony-app-dir": "app",

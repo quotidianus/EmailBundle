@@ -1,5 +1,8 @@
 # SymfonyLibrinfoEmailBundle
 
+[![Travis](https://img.shields.io/travis/libre-informatique/EmailBundle.svg?style=flat-square)][travis]
+[![Coveralls](https://img.shields.io/coveralls/libre-informatique/EmailBundle.svg?style=flat-square)][coveralls]
+
 ## About
 
  The Libre Informatique *EmailBundle* leverages Swiftmailer and the Libre Informatique *CoreBundle* to provide seemless email and newsletter functionalities.
@@ -132,3 +135,8 @@ access_control:
 ```
 
 That's it !
+
+
+[travis]: https://travis-ci.org/libre-informatique/EmailBundle
+[coveralls]: https://coveralls.io/github/libre-informatique/EmailBundle?branch=master
+

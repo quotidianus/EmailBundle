@@ -18,6 +18,7 @@ chmod u+x "${HOME}/bin/coveralls"
 
 # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
 if [ "${COMPOSER_FLAGS}" = '--prefer-lowest' ]; then
-    composer update -vvv --prefer-dist --no-interaction --prefer-stable --quiet
+    php -d memory_limit=-1 composer update --prefer-dist --no-interaction --prefer-stable --quiet
 fi
-composer update -vvv --prefer-dist --no-interaction --prefer-stable ${COMPOSER_FLAGS}
+
+php -d memory_limit=-1 composer update --prefer-dist --no-interaction --prefer-stable ${COMPOSER_FLAGS}

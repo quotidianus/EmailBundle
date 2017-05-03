@@ -2,6 +2,7 @@
 
 [![Travis](https://img.shields.io/travis/libre-informatique/EmailBundle.svg?style=flat-square)][travis]
 [![Coveralls](https://img.shields.io/coveralls/libre-informatique/EmailBundle.svg?style=flat-square)][coveralls]
+[![License](https://img.shields.io/github/license/libre-informatique/EmailBundle.svg?style=flat-square)][license]
 
 ## About
 
@@ -139,4 +140,4 @@ That's it !
 
 [travis]: https://travis-ci.org/libre-informatique/EmailBundle
 [coveralls]: https://coveralls.io/github/libre-informatique/EmailBundle?branch=master
-
+[license]: ./LICENCE.md

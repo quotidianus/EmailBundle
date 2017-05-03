@@ -27,7 +27,6 @@
             "Librinfo\\EmailBundle\\Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
     "require": {
 	"php": "^5.6 || ^7.0",
         "symfony/swiftmailer-bundle": "^2.5",
@@ -37,6 +36,10 @@
         "stfalcon/tinymce-bundle": "2.1",
         "html2text/html2text": "^4.0"
     },
+    "minimum-stability": "dev",
+    "require-dev": {
+	"symfony/phpunit-bridge": "^2.7 || ^3.0"
+    },
     "config": {
         "sllh-composer-lint": {
             "php": true,
@@ -44,9 +47,6 @@
             "minimum-stability": false,
             "version-constraints": false
         }
-    },
-    "require-dev": {
-	"symfony/phpunit-bridge": "^2.7 || ^3.0"
     },
     "scripts": {
         "post-install-cmd": [

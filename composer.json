@@ -37,6 +37,9 @@
         "stfalcon/tinymce-bundle": "2.1",
         "html2text/html2text": "^4.0"
     },
+    "require-dev": {
+	"symfony/phpunit-bridge": "^2.7 || ^3.0"
+    },
     "scripts": {
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",

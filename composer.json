@@ -28,25 +28,17 @@
         }
     },
     "require": {
-	"php": "^5.6 || ^7.0",
-        "symfony/swiftmailer-bundle": "^2.5",
-        "blast-project/base-entities-bundle": "dev-master",
-        "blast-project/outer-extension-bundle": "dev-master",
-        "libre-informatique/media-bundle": "dev-master",
+	"php": ">=5.6",
+	"symfony/symfony": "3.2.*",
+	"symfony/swiftmailer-bundle": "3.2.*",
+        "blast-project/base-entities-bundle": "^0.4",
+        "blast-project/outer-extension-bundle": "^0.4",
+        "libre-informatique/media-bundle": "^0.4",
         "stfalcon/tinymce-bundle": "2.1",
         "html2text/html2text": "^4.0"
     },
-    "minimum-stability": "dev",
     "require-dev": {
-	"symfony/phpunit-bridge": "^2.7 || ^3.0"
-    },
-    "config": {
-        "sllh-composer-lint": {
-            "php": true,
-            "type": true,
-            "minimum-stability": false,
-            "version-constraints": false
-        }
+	"symfony/phpunit-bridge": "3.2.*"
     },
     "scripts": {
         "post-install-cmd": [

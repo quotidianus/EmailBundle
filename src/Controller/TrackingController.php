@@ -20,8 +20,8 @@ class TrackingController extends Controller
     /**
      * Keep track of email openings
      * 
-     * @param String $emailId
-     * @param String $recipient
+     * @param string $emailId
+     * @param string $recipient
      * @return Response
      */
     public function trackOpensAction($emailId, $recipient)
@@ -36,9 +36,9 @@ class TrackingController extends Controller
     /**
      * Keep track of followed email links
      * 
-     * @param String $emailId
-     * @param String $recipient
-     * @param String $destination
+     * @param string $emailId
+     * @param string $recipient
+     * @param string $destination
      * @return RedirectResponse
      */
     public function trackLinksAction($emailId, $recipient, $destination)
@@ -56,8 +56,8 @@ class TrackingController extends Controller
 
     /**
      * 
-     * @param String $emailId
-     * @param String $recipient
+     * @param string $emailId
+     * @param string $recipient
      */
     public function trackOpens($emailId, $recipient)
     {
@@ -90,9 +90,9 @@ class TrackingController extends Controller
 
     /**
      * 
-     * @param String $emailId
-     * @param String $recipient
-     * @param String $destination
+     * @param string $emailId
+     * @param string $recipient
+     * @param string $destination
      */
     private function trackLinks($emailId, $recipient, $destination)
     {
@@ -128,7 +128,7 @@ class TrackingController extends Controller
     /**
      * Creates and persists the EmailReceipt entity
      * @param Email $email
-     * @param String $recipient
+     * @param string $recipient
      */
     private function addReceipt($email, $recipient)
     {

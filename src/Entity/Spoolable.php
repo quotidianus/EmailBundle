@@ -12,17 +12,17 @@ abstract class Spoolable
     private $message;
 
     /**
-     * @var String
+     * @var string
      */
     private $messageId;
 
     /**
-     * @var String
+     * @var string
      */
     private $status;
 
     /**
-     * @var String
+     * @var string
      */
     private $environment;
 
@@ -72,7 +72,7 @@ abstract class Spoolable
     }
 
     /**
-     * @param $message string Serialized \Swift_Mime_Message
+     * @param $messageId string Serialized \Swift_Mime_Message
      */
     public function setMessageId($messageId)
     {

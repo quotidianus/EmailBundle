@@ -11,7 +11,7 @@ class InlineAttachments {
      * Turns inline attachments into links to attachments
      *
      * @param Email $email
-     * @return Array
+     * @return array
      */
     public function handle($content, Swift_Message $message)
     {   

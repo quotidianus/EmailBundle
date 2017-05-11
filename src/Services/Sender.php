@@ -3,6 +3,8 @@
 namespace Librinfo\EmailBundle\Services;
 
 use Doctrine\ORM\EntityManager;
+use Librinfo\EmailBundle\Services\InlineAttachments;
+use Librinfo\EmailBundle\Services\Tracking;
 
 class Sender
 {
@@ -14,13 +16,13 @@ class Sender
     
     /**
      *
-     * @var Librinfo\EmailBundle\Services\Tracking
+     * @var Tracking
      */
     protected $tracker;
     
     /**
      *
-     * @var Librinfo\EmailBundle\Services\InlineAttachments
+     * @var InlineAttachments $inlineAttachmentsHandler
      */
     protected $inlineAttachmentsHandler;
     
@@ -44,18 +46,22 @@ class Sender
 
     /**
      *
-     * @var Array $attachments
+     * @var array $attachments
      */
     protected $attachments;
 
     /**
      *
-     * @var Boolean $needsSpool Wheter the email has one or more recipients
+     * @var boolean $needsSpool Wheter the email has one or more recipients
      */
     protected $needsSpool;
     
     /**
      * @param EntityManager $manager
+     * @param Tracking $tracker
+     * @param InlineAttachments $inlineAttachmentsHandler
+     * @param Swift_Mailer $directMailer
+     * @param Swift_Mailer $spoolMailer
      */
     public function __construct(EntityManager $manager, $tracker, $inlineAttachmentsHandler, $directMailer, $spoolMailer)
     {
@@ -69,8 +75,8 @@ class Sender
     /**
      * Sends an email
      * 
-     * @param type Email $email the email to send
-     * @return int number of successfully sent emails
+     * @param Email $email  The email to send
+     * @return int          Number of successfully sent emails
      */
     public function send($email)
     {
@@ -112,7 +118,7 @@ class Sender
     /**
      * Spools the email
      * 
-     * @param Array $addresses
+     * @param array $addresses
      */
     protected function spoolSend($addresses)
     {
@@ -128,7 +134,8 @@ class Sender
     /**
      * Creates Swift_Message from Email
      * 
-     * @param array $to   The To address
+     * @param array $to   The To addresses
+     * @param string $message
      * @return Swift_Message
      */
     protected function setupSwiftMessage($to, $message = null)
@@ -141,7 +148,7 @@ class Sender
         foreach ( $to as $key => $address )
             $to[$key] = trim($address);
         
-        //don't modify email content yet if it goes to spool
+        // do not modify yet email content if it goes to spool
         if ( !$this->needsSpool )
         {
             $content = $this->inlineAttachmentsHandler->handle($content, $message);
@@ -196,7 +203,6 @@ class Sender
     /**
      *
      * @param Swift_Message $message
-     * @param Boolean $isNewsLetter
      */
     protected function updateEmailEntity($message)
     {

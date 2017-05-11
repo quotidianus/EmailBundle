@@ -23,9 +23,9 @@ class Tracking
     /**
      * Adds tracking to an Email
      * 
-     * @param String $content
-     * @param String $address
-     * @param String $emailId
+     * @param string $content
+     * @param string $address
+     * @param string $emailId
      * @return string email content updated with tracking info
      */
     public function addTracking($content, $address, $emailId)

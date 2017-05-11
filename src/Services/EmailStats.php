@@ -9,7 +9,7 @@ class EmailStats
      * Returns an array with all the stats concerning $email
      * 
      * @param Email $email
-     * @return Array
+     * @return array
      */
     public function getStats($email)
     {
@@ -31,8 +31,8 @@ class EmailStats
     /**
      * Returns the percentage of read receipts from the number of recepients
      * 
-     * @param Array $recipients
-     * @param Array $receipts
+     * @param array $recipients
+     * @param array $receipts
      * @return int
      */
     protected function successRate($recipients, $receipts)
@@ -44,7 +44,7 @@ class EmailStats
     /**
      * Returns average percentage of total email links clicked
      * 
-     * @param Array $linkStats
+     * @param array $linkStats
      * @return int
      */
     protected function linkSuccessRate($linkStats)
@@ -107,10 +107,10 @@ class EmailStats
     /**
      * Returns an array with individual success rates of all links in the email
      * 
-     * @param String $content
-     * @param Array $links
-     * @param Array $recipients
-     * @return Array
+     * @param string $content
+     * @param array $links
+     * @param array $recipients
+     * @return array
      */
     protected function getLinkStats($content, $links, $recipients)
     {
@@ -127,8 +127,8 @@ class EmailStats
     /**
      * Returns an array with individual click count of all links in the email
      * 
-     * @param String $content
-     * @param Array $links
+     * @param string $content
+     * @param array $links
      * @return int
      */
     protected function getClickCount($content, $links)
@@ -166,7 +166,7 @@ class EmailStats
 
     /**
      * 
-     * @param Float $total
+     * @param float $total
      * @param int $number
      * @return int
      */
@@ -181,7 +181,7 @@ class EmailStats
 
     /**
      * 
-     * @param Array $values
+     * @param array $values
      * @return int
      */
     protected function getAverage($values)

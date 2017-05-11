@@ -254,7 +254,9 @@ class CRUDController extends BaseCRUDController
 
         $this->admin->setSubject($object);
 
-        /** @var $form Form */
+        /** 
+         * @var $form Form 
+         */
         $form = $this->admin->getForm();
         $form->setData($object);
         $form->handleRequest($request);

@@ -30,7 +30,7 @@ trait HasEmailMessages
      *
      * @param object $emailMessage
      *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise
      */
     public function removeEmailMessage($emailMessage)
     {

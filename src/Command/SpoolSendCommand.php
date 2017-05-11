@@ -57,7 +57,7 @@ EOF
 
     /**
      * 
-     * @param String $name
+     * @param string $name
      * @param InputInterface $input
      * @param OutputInterface $output
      * @throws \InvalidArgumentException

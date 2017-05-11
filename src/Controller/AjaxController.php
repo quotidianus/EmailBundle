@@ -9,7 +9,7 @@ class AjaxController extends Controller
 {
     /**
      * 
-     * @param String $templateId
+     * @param string $templateId
      * @return Response The template content that will be inserted into the main content
      */
     public function getEmailTemplateAction($templateId)
@@ -22,9 +22,7 @@ class AjaxController extends Controller
 
     /**
      * 
-     * @param String $fileName
-     * @param String $fileSize
-     * @param String $tempId
+     * @param string $fileId
      * @return Response img tag that will be embedded into the main content
      */
     public function addToContentAction($fileId)

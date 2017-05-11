@@ -1,5 +1,18 @@
 # Change Log
 
+## [Unreleased](https://github.com/libre-informatique/EmailBundle/tree/HEAD)
+
+[Full Changelog](https://github.com/libre-informatique/EmailBundle/compare/0.4.2...HEAD)
+
+**Closed issues:**
+
+- Add to composer.json [\#4](https://github.com/libre-informatique/EmailBundle/issues/4)
+
+**Merged pull requests:**
+
+- Annotations of methods corrected [\#7](https://github.com/libre-informatique/EmailBundle/pull/7) ([quotidianus](https://github.com/quotidianus))
+- Modified READ.md concerning the dependies of the bundle [\#5](https://github.com/libre-informatique/EmailBundle/pull/5) ([quotidianus](https://github.com/quotidianus))
+
 ## [0.4.2](https://github.com/libre-informatique/EmailBundle/tree/0.4.2) (2017-05-04)
 [Full Changelog](https://github.com/libre-informatique/EmailBundle/compare/0.2...0.4.2)
 

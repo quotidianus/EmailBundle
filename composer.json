@@ -3,11 +3,12 @@
     "type": "symfony-bundle",
     "description": "Email Bundle for Symfony",
     "require": {
-	"php": ">=5.6",
-	"symfony/symfony": "3.2.*",
-	"symfony/swiftmailer-bundle": "^2.5",
+        "php": ">=5.6",
+        "symfony/symfony": "3.2.*",
+        "symfony/swiftmailer-bundle": "^2.5",
         "blast-project/base-entities-bundle": "^0.4",
         "blast-project/outer-extension-bundle": "^0.4",
+	"blast-project/utils-bundle": "^0.4",
         "libre-informatique/media-bundle": "^0.4",
         "stfalcon/tinymce-bundle": "2.1",
         "html2text/html2text": "^4.0"
@@ -61,7 +62,7 @@
         ]
     },
     "extra": {
-	"branch-alias": {
+        "branch-alias": {
             "dev-master": "0.4.x-dev"
         },
         "symfony-app-dir": "app",

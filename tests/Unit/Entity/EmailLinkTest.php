@@ -35,7 +35,6 @@ class EmailLinkTest extends TestCase
 
     /**
      * @covers Librinfo\EmailBundle\Entity\EmailLink::setDestination
-     * @todo   Implement testSetDestination().
      */
     public function testSetDestination()
     {
@@ -45,7 +44,6 @@ class EmailLinkTest extends TestCase
 
     /**
      * @covers Librinfo\EmailBundle\Entity\EmailLink::getDestination
-     * @todo   Implement testGetDestination().
      */
     public function testGetDestination()
     {
@@ -55,7 +53,6 @@ class EmailLinkTest extends TestCase
 
     /**
      * @covers Librinfo\EmailBundle\Entity\EmailLink::setAddress
-     * @todo   Implement testSetAddress().
      */
     public function testSetAddress()
     {
@@ -65,7 +62,6 @@ class EmailLinkTest extends TestCase
 
     /**
      * @covers Librinfo\EmailBundle\Entity\EmailLink::getAddress
-     * @todo   Implement testGetAddress().
      */
     public function testGetAddress()
     {
@@ -75,7 +71,6 @@ class EmailLinkTest extends TestCase
 
     /**
      * @covers Librinfo\EmailBundle\Entity\EmailLink::setDate
-     * @todo   Implement testSetDate().
      */
     public function testSetDate()
     {
@@ -86,7 +81,6 @@ class EmailLinkTest extends TestCase
 
     /**
      * @covers Librinfo\EmailBundle\Entity\EmailLink::getDate
-     * @todo   Implement testGetDate().
      */
     public function testGetDate()
     {
@@ -96,7 +90,6 @@ class EmailLinkTest extends TestCase
 
     /**
      * @covers Librinfo\EmailBundle\Entity\EmailLink::setEmail
-     * @todo   Implement testSetEmail().
      */
     public function testSetEmail()
     {
@@ -107,7 +100,6 @@ class EmailLinkTest extends TestCase
 
     /**
      * @covers Librinfo\EmailBundle\Entity\EmailLink::getEmail
-     * @todo   Implement testGetEmail().
      */
     public function testGetEmail()
     {

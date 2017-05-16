@@ -7,8 +7,7 @@ use Blast\BaseEntitiesBundle\Entity\Traits\BaseEntity;
 /**
  * EmailLink
  */
-class EmailLink
-{
+class EmailLink {
 
     use BaseEntity;
 
@@ -39,10 +38,8 @@ class EmailLink
      *
      * @return EmailLink
      */
-    public function setDestination($destination)
-    {
+    public function setDestination($destination) {
         $this->destination = $destination;
-
         return $this;
     }
 
@@ -51,8 +48,7 @@ class EmailLink
      *
      * @return string
      */
-    public function getDestination()
-    {
+    public function getDestination() {
         return $this->destination;
     }
 
@@ -63,10 +59,8 @@ class EmailLink
      *
      * @return EmailLink
      */
-    public function setAddress($address)
-    {
+    public function setAddress($address) {
         $this->address = $address;
-
         return $this;
     }
 
@@ -75,8 +69,7 @@ class EmailLink
      *
      * @return string
      */
-    public function getAddress()
-    {
+    public function getAddress() {
         return $this->address;
     }
 
@@ -87,10 +80,8 @@ class EmailLink
      *
      * @return EmailLink
      */
-    public function setDate($date)
-    {
+    public function setDate(\DateTime $date) {
         $this->date = $date;
-
         return $this;
     }
 
@@ -99,8 +90,7 @@ class EmailLink
      *
      * @return \DateTime
      */
-    public function getDate()
-    {
+    public function getDate() {
         return $this->date;
     }
 
@@ -111,10 +101,8 @@ class EmailLink
      *
      * @return EmailLink
      */
-    public function setEmail(\Librinfo\EmailBundle\Entity\Email $email = null)
-    {
+    public function setEmail(\Librinfo\EmailBundle\Entity\Email $email = null) {
         $this->email = $email;
-
         return $this;
     }
 
@@ -123,8 +111,7 @@ class EmailLink
      *
      * @return \Librinfo\EmailBundle\Entity\Email
      */
-    public function getEmail()
-    {
+    public function getEmail() {
         return $this->email;
     }
 

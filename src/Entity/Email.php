@@ -130,6 +130,7 @@ class Email extends Spoolable
         $this->sent = false;
         $this->isTemplate = false;
         $this->isTest = false;
+        $this->tracking = false;
         $this->initCollections();
         $this->initOuterExtendedClasses();
     }

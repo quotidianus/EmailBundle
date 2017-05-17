@@ -42,33 +42,6 @@ class EmailTest extends TestCase {
     }
 
     /**
-     * @covers Librinfo\EmailBundle\Entity\Email::initCollections
-     * @todo   Implement testInitCollections().
-     */
-    public function testInitCollections() {
-        $this->markTestIncomplete(
-        );
-    }
-
-    /**
-     * @covers Librinfo\EmailBundle\Entity\Email::__clone
-     * @todo   Implement test__clone().
-     */
-    public function test__clone() {
-        $this->markTestIncomplete(
-        );
-    }
-
-    /**
-     * @covers Librinfo\EmailBundle\Entity\Email::__toString
-     * @todo   Implement test__toString().
-     */
-    public function test__toString() {
-        $this->markTestIncomplete(
-        );
-    }
-
-    /**
      * @covers Librinfo\EmailBundle\Entity\Email::setFieldFrom
      */
     public function testSetFieldFrom() {
@@ -177,7 +150,7 @@ class EmailTest extends TestCase {
      */
     public function testGetTextContent() {
         $textcontent = $this->emailtest->getTextContent();
-        $this->assertEquals($textcontent,"");
+        $this->assertEquals($textcontent, "");
     }
 
     /**
@@ -201,17 +174,17 @@ class EmailTest extends TestCase {
      * @covers Librinfo\EmailBundle\Entity\Email::removeAttachment
      * @covers Librinfo\EmailBundle\Entity\Email::getAttachments
      * @covers Librinfo\EmailBundle\Entity\Email::setAttachments
-     */   
+     */
     public function testAddAttachmentRemoveAttachmentGetAttachmentsSetAttachments() {
         $this->emailtest->addAttachment($this->emailattachmentmock);
         $this->assertArraySubset(array($this->emailattachmentmock), $this->emailtest->getAttachments());
         $this->assertTrue($this->emailtest->removeAttachment($this->emailattachmentmock));
         $this->emailtest->removeAttachment($this->emailattachmentmock);
-        $this->assertFalse($this->emailtest->removeAttachment($this->emailattachmentmock));      
+        $this->assertFalse($this->emailtest->removeAttachment($this->emailattachmentmock));
         $this->assertNotContains(array($this->emailattachmentmock), $this->emailtest->getAttachments());
         $this->emailtest->setAttachments($this->emailattachmentsmock);
         $this->assertEquals($this->emailattachmentsmock, $this->emailtest->getAttachments());
-        }
+    }
 
     /**
      * @covers Librinfo\EmailBundle\Entity\Email::setIsTest
@@ -234,15 +207,15 @@ class EmailTest extends TestCase {
      */
     public function testGetTestAddress() {
         $testaddress = $this->emailtest->getTestAddress();
-        $this->assertEquals($testaddress,"");
+        $this->assertEquals($testaddress, "");
     }
 
     /**
      * @covers Librinfo\EmailBundle\Entity\Email::setTestAddress
      */
     public function testSetTestAddress() {
-        $this->emailtest->setTestAddress('Email address test');
-        $this->assertEquals('Email address test', $this->emailtest->getTestAddress());
+        $this->emailtest->setTestAddress('Email addresstest');
+        $this->assertEquals('Email addresstest', $this->emailtest->getTestAddress());
     }
 
     /**
@@ -250,7 +223,7 @@ class EmailTest extends TestCase {
      */
     public function testGetTemplate() {
         $template = $this->emailtest->getTemplate();
-        $this->assertEquals($template,"");
+        $this->assertEquals($template, "");
     }
 
     /**
@@ -333,130 +306,10 @@ class EmailTest extends TestCase {
         $this->assertNotContains(array($this->emaillinkmock), $this->emailtest->getLinks());
     }
 
-    
-   // tests du parent abstrait Spoolable 
-    
-    /**
-     * @covers Librinfo\EmailBundle\Entity\Email::getId
-     * @todo   Implement testGetId().
-     */
-    public function testGetId() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Librinfo\EmailBundle\Entity\Email::setId
-     * @todo   Implement testSetId().
-     */
-    public function testSetId() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Librinfo\EmailBundle\Entity\Email::isNew
-     * @todo   Implement testIsNew().
-     */
-    public function testIsNew() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Librinfo\EmailBundle\Entity\Email::addSearchIndex
-     * @todo   Implement testAddSearchIndex().
-     */
-    public function testAddSearchIndex() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Librinfo\EmailBundle\Entity\Email::removeSearchIndex
-     * @todo   Implement testRemoveSearchIndex().
-     */
-    public function testRemoveSearchIndex() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Librinfo\EmailBundle\Entity\Email::getSearchIndexes
-     * @todo   Implement testGetSearchIndexes().
-     */
-    public function testGetSearchIndexes() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Librinfo\EmailBundle\Entity\Email::setSearchIndexes
-     * @todo   Implement testSetSearchIndexes().
-     */
-    public function testSetSearchIndexes() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Librinfo\EmailBundle\Entity\Email::analyseField
-     * @todo   Implement testAnalyseField().
-     */
-    public function testAnalyseField() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Librinfo\EmailBundle\Entity\Email::getCreatedAt
-     */
-    public function testGetCreatedAt() {
-        $date = $this->emailtest->getCreatedAt();
-        $this->assertEquals($date, '');
-    }
-
-    /**
-     * @covers Librinfo\EmailBundle\Entity\Email::setCreatedAt
-     */
-    public function testSetCreatedAt() {
-        $date = new \DateTime("now");
-        $this->emailtest->setCreatedAt($date);
-        $this->assertEquals($date, $this->emailtest->getCreatedAt());
-    }
-
-    /**
-     * @covers Librinfo\EmailBundle\Entity\Email::getUpdatedAt
-     */
-    public function testGetUpdatedAt() {
-        $date = $this->emailtest->getUpdatedAt();
-        $this->assertEquals($date, '');
-    }
-
-    /**
-     * @covers Librinfo\EmailBundle\Entity\Email::setUpdatedAt
-     * @covers Librinfo\EmailBundle\Entity\Spoolable::setUpdatedAt
-     */
-    public function testSetUpdatedAt() {
-        $date = new \DateTime("now");
-        $this->emailtest->setUpdatedAt($date);
-        $this->assertEquals($date, $this->emailtest->getUpdatedAt());
-    }
-
 }
+
+/**
+* NB: This class uses also some Traits that will be tested in their own bundles
+ * The functions addLibrinfoFile, etc. are not tested as it seems that they are about to be interchanged by addAttachment, etc.
+ * An issue has been proposed for this on the forked project.
+*/

@@ -99,3 +99,7 @@ class EmailLinkTest extends TestCase {
     }
 
 }
+
+/**
+ * NB: This class uses also a Trait (BaseEntity) that will be tested in its own bundle
+ */

@@ -10,6 +10,7 @@
 
 namespace Librinfo\EmailBundle\Entity;
 
+// use AppBundle\Entity\OuterExtension\LibrinfoEmailBundle\EmailExtension;
 use Blast\BaseEntitiesBundle\Entity\Traits\BaseEntity;
 use Blast\BaseEntitiesBundle\Entity\Traits\Loggable;
 use Blast\BaseEntitiesBundle\Entity\Traits\Searchable;

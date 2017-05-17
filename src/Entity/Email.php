@@ -26,7 +26,7 @@ class Email extends Spoolable
 {
     use BaseEntity;
     use OuterExtensible;
- //   use EmailExtension;
+    use EmailExtension;
     use Searchable;
     use Loggable;
     use Timestampable;
@@ -130,8 +130,6 @@ class Email extends Spoolable
     {
         $this->sent = false;
         $this->isTemplate = false;
-        $this->isTest = false;
-        $this->tracking = false;
         $this->initCollections();
         $this->initOuterExtendedClasses();
     }

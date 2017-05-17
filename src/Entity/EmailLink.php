@@ -87,7 +87,7 @@ class EmailLink
      *
      * @return EmailLink
      */
-    public function setDate($date)
+    public function setDate(\DateTime $date)
     {
         $this->date = $date;
 
@@ -127,5 +127,4 @@ class EmailLink
     {
         return $this->email;
     }
-
 }

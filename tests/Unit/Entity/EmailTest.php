@@ -31,6 +31,12 @@ class EmailTest extends TestCase {
         $this->emailreceiptmock = $this->createMock('Librinfo\EmailBundle\Entity\EmailReceipt');
         $this->emailattachmentmock = $this->createMock('Librinfo\MediaBundle\Entity\File');
         $this->emailattachmentsmock = $this->createMock('Doctrine\Common\Collections\Collection');
+        /* @todo
+         *  Add "$this->isTest = false;" in function __construct() of Email class
+         *  Add "$this->tracking = false;" in function __construct() of Email class
+         */
+        $this->emailtest->setIsTest(FALSE);
+        $this->emailtest->setTracking(FALSE);
     }
 
     /**

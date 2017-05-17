@@ -17,6 +17,9 @@ class EmailTest extends TestCase {
      */
     protected $emailtest;
     protected $emaillinkmock;
+    protected $emailreceiptmock;
+    protected $emailattachmentmock;
+    protected $emailattachmentsmock;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -26,6 +29,8 @@ class EmailTest extends TestCase {
         $this->emailtest = new Email;
         $this->emaillinkmock = $this->createMock('Librinfo\EmailBundle\Entity\EmailLink');
         $this->emailreceiptmock = $this->createMock('Librinfo\EmailBundle\Entity\EmailReceipt');
+        $this->emailattachmentmock = $this->createMock('Librinfo\MediaBundle\Entity\File');
+        $this->emailattachmentsmock = $this->createMock('Doctrine\Common\Collections\Collection');
     }
 
     /**
@@ -41,9 +46,7 @@ class EmailTest extends TestCase {
      * @todo   Implement testInitCollections().
      */
     public function testInitCollections() {
-        // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
-                'This test has not been implemented yet.'
         );
     }
 
@@ -52,9 +55,7 @@ class EmailTest extends TestCase {
      * @todo   Implement test__clone().
      */
     public function test__clone() {
-        // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
-                'This test has not been implemented yet.'
         );
     }
 
@@ -63,9 +64,7 @@ class EmailTest extends TestCase {
      * @todo   Implement test__toString().
      */
     public function test__toString() {
-        // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
-                'This test has not been implemented yet.'
         );
     }
 
@@ -199,66 +198,20 @@ class EmailTest extends TestCase {
 
     /**
      * @covers Librinfo\EmailBundle\Entity\Email::addAttachment
-     * @todo   Implement testAddAttachment().
-     */
-    public function testAddAttachment() {
-        $this->markTestIncomplete(
-        );
-    }
-
-    /**
-     * @covers Librinfo\EmailBundle\Entity\Email::addLibrinfoFile
-     * @todo   Implement testAddLibrinfoFile().
-     */
-    public function testAddLibrinfoFile() {
-        $this->markTestIncomplete(
-        );
-    }
-
-    /**
      * @covers Librinfo\EmailBundle\Entity\Email::removeAttachment
-     * @todo   Implement testRemoveAttachment().
-     */
-    public function testRemoveAttachment() {
-        $this->markTestIncomplete(
-        );
-    }
-
-    /**
-     * @covers Librinfo\EmailBundle\Entity\Email::removeLibrinfoFile
-     * @todo   Implement testRemoveLibrinfoFile().
-     */
-    public function testRemoveLibrinfoFile() {
-        $this->markTestIncomplete(
-        );
-    }
-
-    /**
      * @covers Librinfo\EmailBundle\Entity\Email::getAttachments
-     * @todo   Implement testGetAttachments().
-     */
-    public function testGetAttachments() {
-        $this->markTestIncomplete(
-        );
-    }
-
-    /**
-     * @covers Librinfo\EmailBundle\Entity\Email::getLibrinfoFiles
-     * @todo   Implement testGetLibrinfoFiles().
-     */
-    public function testGetLibrinfoFiles() {
-        $this->markTestIncomplete(
-        );
-    }
-
-    /**
      * @covers Librinfo\EmailBundle\Entity\Email::setAttachments
-     * @todo   Implement testSetAttachments().
-     */
-    public function testSetAttachments() {
-        $this->markTestIncomplete(
-        );
-    }
+     */   
+    public function testAddAttachmentRemoveAttachmentGetAttachmentsSetAttachments() {
+        $this->emailtest->addAttachment($this->emailattachmentmock);
+        $this->assertArraySubset(array($this->emailattachmentmock), $this->emailtest->getAttachments());
+        $this->assertTrue($this->emailtest->removeAttachment($this->emailattachmentmock));
+        $this->emailtest->removeAttachment($this->emailattachmentmock);
+        $this->assertFalse($this->emailtest->removeAttachment($this->emailattachmentmock));      
+        $this->assertNotContains(array($this->emailattachmentmock), $this->emailtest->getAttachments());
+        $this->emailtest->setAttachments($this->emailattachmentsmock);
+        $this->assertEquals($this->emailattachmentsmock, $this->emailtest->getAttachments());
+        }
 
     /**
      * @covers Librinfo\EmailBundle\Entity\Email::setIsTest
@@ -380,6 +333,9 @@ class EmailTest extends TestCase {
         $this->assertNotContains(array($this->emaillinkmock), $this->emailtest->getLinks());
     }
 
+    
+   // tests du parent abstrait Spoolable 
+    
     /**
      * @covers Librinfo\EmailBundle\Entity\Email::getId
      * @todo   Implement testGetId().
@@ -495,6 +451,7 @@ class EmailTest extends TestCase {
 
     /**
      * @covers Librinfo\EmailBundle\Entity\Email::setUpdatedAt
+     * @covers Librinfo\EmailBundle\Entity\Spoolable::setUpdatedAt
      */
     public function testSetUpdatedAt() {
         $date = new \DateTime("now");

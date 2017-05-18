@@ -5,3 +5,5 @@
 /vendor/
 /Resources/doc/_build
 /bin/phpunit
+*~
+
